@@ -9,19 +9,15 @@ import SwiftUI
 
 struct MainTabView: View {
     @State private var showMenu = false;
-    // @State private var selectedIndex = 0
     @ObservedObject var router = ViewRouter()
     
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
-                Spacer()
                 
                 router.view
                 
-                Spacer()
-                
-                HStack(alignment: .top) {
+                HStack() {
                     Spacer()
                     TabIcon(viewModel: .exercises, router: router)
                     TabIcon(viewModel: .templates, router: router)
@@ -39,17 +35,17 @@ struct MainTabView: View {
                     Spacer()
 
                 }
-                .frame(height: UIScreen.main.bounds.height / 8)
+                .frame(height: UIScreen.main.bounds.height / 14)
                 .frame(maxWidth: .infinity)
                 .background(Color(.systemGray5))
             }
             
             if showMenu {
                 PopUpMenuView()
-                    .padding(.bottom, 144)
+                    .padding(.bottom, 100)
             }
         }
-        .ignoresSafeArea()
+        //.ignoresSafeArea()
         //.preferredColorScheme(.dark)
     }
 }
@@ -77,7 +73,7 @@ struct TabMenuIcon: View {
             Text("Workout")
                 .font(.caption)
         }
-        .offset(y: -40)
+        .offset(y: -20)
     }
 }
 
