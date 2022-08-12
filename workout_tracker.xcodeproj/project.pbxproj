@@ -16,6 +16,7 @@
 		7F02754928A6ED2B009536CF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754828A6ED2B009536CF /* FirebaseAuth */; };
 		7F02754B28A6ED2B009536CF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754A28A6ED2B009536CF /* FirebaseFirestore */; };
 		7F02754D28A6ED2B009536CF /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754C28A6ED2B009536CF /* FirebaseFirestoreSwift */; };
+		7F0E8F5C28A6EE3600824BED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F0E8F5B28A6EE3600824BED /* GoogleService-Info.plist */; };
 		7FA3209128A3F8F30071D835 /* workout_trackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */; };
 		7FA3209328A3F8F30071D835 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209228A3F8F30071D835 /* ContentView.swift */; };
 		7FA3209528A3F8F30071D835 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA3209428A3F8F30071D835 /* Assets.xcassets */; };
@@ -57,6 +58,7 @@
 		7F02753C28A5A932009536CF /* TemplateGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateGridView.swift; sourceTree = "<group>"; };
 		7F02754128A6B362009536CF /* AddExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExerciseView.swift; sourceTree = "<group>"; };
 		7F02754328A6E968009536CF /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		7F0E8F5B28A6EE3600824BED /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7FA3208D28A3F8F30071D835 /* workout_tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = workout_tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = workout_trackerApp.swift; sourceTree = "<group>"; };
 		7FA3209228A3F8F30071D835 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */,
 				7FA3209228A3F8F30071D835 /* ContentView.swift */,
 				7FA3209428A3F8F30071D835 /* Assets.xcassets */,
+				7F0E8F5B28A6EE3600824BED /* GoogleService-Info.plist */,
 				7FA3209628A3F8F30071D835 /* Preview Content */,
 			);
 			path = workout_tracker;
@@ -465,6 +468,7 @@
 			files = (
 				7FA3209828A3F8F30071D835 /* Preview Assets.xcassets in Resources */,
 				7FA3209528A3F8F30071D835 /* Assets.xcassets in Resources */,
+				7F0E8F5C28A6EE3600824BED /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
