@@ -2,7 +2,7 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
-workout_tracker/GoogleService-Info.plist
+*/GoogleService-Info.plist
 
 ## User settings
 xcuserdata/
