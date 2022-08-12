@@ -11,42 +11,59 @@ struct MainTabView: View {
     @State private var showMenu = false;
     @ObservedObject var router = ViewRouter()
     
+    let tabBarHeight: CGFloat = UIScreen.main.bounds.height / 14
+    
     var body: some View {
-        ZStack(alignment: .bottom) {
-            VStack {
-                
-                router.view
-                
-                HStack() {
-                    Spacer()
-                    TabIcon(viewModel: .exercises, router: router)
-                    TabIcon(viewModel: .templates, router: router)
+        NavigationView {
+            ZStack(alignment: .bottom) {
+                VStack(spacing: 0) {
                     
-                    TabMenuIcon(showMenu: $showMenu)
+                    router.view
+                    
+                    HStack {
+                        Spacer()
+                        TabIcon(viewModel: .exercises, router: router)
+                        TabIcon(viewModel: .templates, router: router)
+                        
+                        // add an object with the same size as the start workout button to space the other tab bar buttons around it
+                        Rectangle()
+                            .foregroundColor(.clear)
+                        
+                        TabIcon(viewModel: .history, router: router)
+                        TabIcon(viewModel: .visualize, router: router)
+                        
+                        Spacer()
+
+                    }
+                    .frame(height: tabBarHeight)
+                    .frame(maxWidth: .infinity)
+                    .background(Color(.systemGray5))
+                }
+                
+                if showMenu {
+                    // dim the rest of the screen
+                    Rectangle()
+                        .foregroundColor(.black)
+                        .opacity(0.66)
+                        .ignoresSafeArea()
                         .onTapGesture {
-                            withAnimation {
-                                showMenu.toggle()
-                            }
+                            // dont allow users to tap on things below the rectangle object
                         }
                     
-                    TabIcon(viewModel: .history, router: router)
-                    TabIcon(viewModel: .visualize, router: router)
-                    
-                    Spacer()
-
+                    // display the popup options
+                    PopUpMenuView()
+                        .padding(.bottom, 100)
                 }
-                .frame(height: UIScreen.main.bounds.height / 14)
-                .frame(maxWidth: .infinity)
-                .background(Color(.systemGray5))
-            }
-            
-            if showMenu {
-                PopUpMenuView()
-                    .padding(.bottom, 100)
+                
+                TabMenuIcon(showMenu: $showMenu)
+                    .onTapGesture {
+                        withAnimation {
+                            showMenu.toggle()
+                        }
+                    }
+                    .frame(height: tabBarHeight)
             }
         }
-        //.ignoresSafeArea()
-        //.preferredColorScheme(.dark)
     }
 }
 
@@ -101,7 +118,7 @@ struct TabIcon: View {
                     .fontWeight(isSelected ? .bold : .regular)
             }
         }
-        .foregroundColor(.black)
+        .foregroundColor(.primary)
         .scaleEffect(x: isSelected ? selectedScaleFactor : 1.0,
                      y: isSelected ? selectedScaleFactor : 1.0,
                      anchor: .center)

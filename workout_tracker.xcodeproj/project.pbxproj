@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F02753228A5A2E9009536CF /* TemplatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F02753128A5A2E9009536CF /* TemplatesView.swift */; };
+		7F02753828A5A42E009536CF /* AddNewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F02753728A5A42E009536CF /* AddNewHeaderView.swift */; };
+		7F02753A28A5A6B7009536CF /* TemplatesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F02753928A5A6B7009536CF /* TemplatesViewModel.swift */; };
+		7F02753D28A5A932009536CF /* TemplateGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F02753C28A5A932009536CF /* TemplateGridView.swift */; };
+		7F02754228A6B362009536CF /* AddExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F02754128A6B362009536CF /* AddExerciseView.swift */; };
+		7F02754428A6E968009536CF /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F02754328A6E968009536CF /* Exercise.swift */; };
+		7F02754928A6ED2B009536CF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754828A6ED2B009536CF /* FirebaseAuth */; };
+		7F02754B28A6ED2B009536CF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754A28A6ED2B009536CF /* FirebaseFirestore */; };
+		7F02754D28A6ED2B009536CF /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754C28A6ED2B009536CF /* FirebaseFirestoreSwift */; };
 		7FA3209128A3F8F30071D835 /* workout_trackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */; };
 		7FA3209328A3F8F30071D835 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209228A3F8F30071D835 /* ContentView.swift */; };
 		7FA3209528A3F8F30071D835 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA3209428A3F8F30071D835 /* Assets.xcassets */; };
@@ -42,6 +51,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F02753128A5A2E9009536CF /* TemplatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatesView.swift; sourceTree = "<group>"; };
+		7F02753728A5A42E009536CF /* AddNewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewHeaderView.swift; sourceTree = "<group>"; };
+		7F02753928A5A6B7009536CF /* TemplatesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatesViewModel.swift; sourceTree = "<group>"; };
+		7F02753C28A5A932009536CF /* TemplateGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateGridView.swift; sourceTree = "<group>"; };
+		7F02754128A6B362009536CF /* AddExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExerciseView.swift; sourceTree = "<group>"; };
+		7F02754328A6E968009536CF /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		7FA3208D28A3F8F30071D835 /* workout_tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = workout_tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = workout_trackerApp.swift; sourceTree = "<group>"; };
 		7FA3209228A3F8F30071D835 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -67,6 +82,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F02754928A6ED2B009536CF /* FirebaseAuth in Frameworks */,
+				7F02754B28A6ED2B009536CF /* FirebaseFirestore in Frameworks */,
+				7F02754D28A6ED2B009536CF /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +105,85 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F02752C28A59EC5009536CF /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				7F02753028A5A2CF009536CF /* ViewModel */,
+				7F02752F28A5A2CB009536CF /* Views */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
+		7F02752D28A59ECB009536CF /* History */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		7F02752E28A59ED3009536CF /* Visualize */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Visualize;
+			sourceTree = "<group>";
+		};
+		7F02752F28A5A2CB009536CF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7F02753128A5A2E9009536CF /* TemplatesView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7F02753028A5A2CF009536CF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7F02753928A5A6B7009536CF /* TemplatesViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7F02753628A5A40C009536CF /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				7F02753728A5A42E009536CF /* AddNewHeaderView.swift */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
+		7F02753B28A5A915009536CF /* Template */ = {
+			isa = PBXGroup;
+			children = (
+				7F02753C28A5A932009536CF /* TemplateGridView.swift */,
+			);
+			path = Template;
+			sourceTree = "<group>";
+		};
+		7F02753E28A6B31B009536CF /* AddExercise */ = {
+			isa = PBXGroup;
+			children = (
+				7F02754028A6B342009536CF /* ViewModels */,
+				7F02753F28A6B33F009536CF /* View */,
+			);
+			path = AddExercise;
+			sourceTree = "<group>";
+		};
+		7F02753F28A6B33F009536CF /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7F02754128A6B362009536CF /* AddExerciseView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7F02754028A6B342009536CF /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		7FA3208428A3F8F30071D835 = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +210,11 @@
 				7FA320BA28A3FC480071D835 /* Model */,
 				7FA320BB28A3FC660071D835 /* Service */,
 				7FA320BC28A3FC6D0071D835 /* Core */,
+				7FA320C228A3FE1E0071D835 /* Exercises */,
+				7F02753E28A6B31B009536CF /* AddExercise */,
+				7F02752C28A59EC5009536CF /* Templates */,
+				7F02752D28A59ECB009536CF /* History */,
+				7F02752E28A59ED3009536CF /* Visualize */,
 				7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */,
 				7FA3209228A3F8F30071D835 /* ContentView.swift */,
 				7FA3209428A3F8F30071D835 /* Assets.xcassets */,
@@ -149,6 +251,7 @@
 		7FA320BA28A3FC480071D835 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7F02754328A6E968009536CF /* Exercise.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -166,7 +269,6 @@
 				7FA320BD28A3FCA20071D835 /* Components */,
 				7FA320BE28A3FCAB0071D835 /* Authentication */,
 				7FA320BF28A3FCB40071D835 /* TabBar */,
-				7FA320C228A3FE1E0071D835 /* Exercises */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -174,7 +276,9 @@
 		7FA320BD28A3FCA20071D835 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				7F02753628A5A40C009536CF /* Header */,
 				7FA320D528A592540071D835 /* Exercise */,
+				7F02753B28A5A915009536CF /* Template */,
 				7FA320D128A551820071D835 /* SearchBar.swift */,
 			);
 			path = Components;
@@ -263,6 +367,11 @@
 			dependencies = (
 			);
 			name = workout_tracker;
+			packageProductDependencies = (
+				7F02754828A6ED2B009536CF /* FirebaseAuth */,
+				7F02754A28A6ED2B009536CF /* FirebaseFirestore */,
+				7F02754C28A6ED2B009536CF /* FirebaseFirestoreSwift */,
+			);
 			productName = workout_tracker;
 			productReference = 7FA3208D28A3F8F30071D835 /* workout_tracker.app */;
 			productType = "com.apple.product-type.application";
@@ -335,6 +444,9 @@
 				Base,
 			);
 			mainGroup = 7FA3208428A3F8F30071D835;
+			packageReferences = (
+				7F02754728A6ED2B009536CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 7FA3208E28A3F8F30071D835 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -378,15 +490,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FA320CC28A540C80071D835 /* TabBarViewModel.swift in Sources */,
+				7F02754428A6E968009536CF /* Exercise.swift in Sources */,
 				7FA320C628A3FE7F0071D835 /* ExercisesView.swift in Sources */,
 				7FA3209328A3F8F30071D835 /* ContentView.swift in Sources */,
 				7FA320D428A552DD0071D835 /* ExercisesViewModel.swift in Sources */,
+				7F02753828A5A42E009536CF /* AddNewHeaderView.swift in Sources */,
 				7FA3209128A3F8F30071D835 /* workout_trackerApp.swift in Sources */,
 				7FA320D028A548E70071D835 /* PopUpMenuViewModel.swift in Sources */,
 				7FA320D228A551820071D835 /* SearchBar.swift in Sources */,
+				7F02753A28A5A6B7009536CF /* TemplatesViewModel.swift in Sources */,
 				7FA320D928A5927D0071D835 /* ExerciseRowView.swift in Sources */,
+				7F02753D28A5A932009536CF /* TemplateGridView.swift in Sources */,
 				7FA320CE28A544120071D835 /* PopUpMenuView.swift in Sources */,
 				7FA320C128A3FDA20071D835 /* MainTabView.swift in Sources */,
+				7F02754228A6B362009536CF /* AddExerciseView.swift in Sources */,
+				7F02753228A5A2E9009536CF /* TemplatesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -711,6 +829,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7F02754728A6ED2B009536CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7F02754828A6ED2B009536CF /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7F02754728A6ED2B009536CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		7F02754A28A6ED2B009536CF /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7F02754728A6ED2B009536CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		7F02754C28A6ED2B009536CF /* FirebaseFirestoreSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7F02754728A6ED2B009536CF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7FA3208528A3F8F30071D835 /* Project object */;
 }
