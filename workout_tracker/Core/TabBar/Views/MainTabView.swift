@@ -30,7 +30,7 @@ struct MainTabView: View {
                             .foregroundColor(.clear)
                         
                         TabIcon(viewModel: .history, router: router)
-                        TabIcon(viewModel: .visualize, router: router)
+                        TabIcon(viewModel: .settings, router: router)
                         
                         Spacer()
 
