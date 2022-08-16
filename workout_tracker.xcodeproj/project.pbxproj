@@ -20,7 +20,6 @@
 		7F0E8F6228A6F7A600824BED /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F6128A6F7A600824BED /* AuthViewModel.swift */; };
 		7F0E8F6428A6F98500824BED /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F6328A6F98500824BED /* LoginView.swift */; };
 		7F0E8F6728A6F9BF00824BED /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F6628A6F9BF00824BED /* AuthHeaderView.swift */; };
-		7F0E8F6928A6FA4100824BED /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F6828A6FA4100824BED /* RegistrationView.swift */; };
 		7F0E8F6B28A6FA8D00824BED /* CustomInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F6A28A6FA8D00824BED /* CustomInputField.swift */; };
 		7F0E8F6D28A7434700824BED /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F6C28A7434700824BED /* UserService.swift */; };
 		7F0E8F6F28A7439900824BED /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F6E28A7439900824BED /* User.swift */; };
@@ -70,7 +69,6 @@
 		7F0E8F6128A6F7A600824BED /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		7F0E8F6328A6F98500824BED /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7F0E8F6628A6F9BF00824BED /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
-		7F0E8F6828A6FA4100824BED /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		7F0E8F6A28A6FA8D00824BED /* CustomInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputField.swift; sourceTree = "<group>"; };
 		7F0E8F6C28A7434700824BED /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		7F0E8F6E28A7439900824BED /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -214,7 +212,6 @@
 			isa = PBXGroup;
 			children = (
 				7F0E8F6328A6F98500824BED /* LoginView.swift */,
-				7F0E8F6828A6FA4100824BED /* RegistrationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -563,7 +560,6 @@
 				7F02754228A6B362009536CF /* AddExerciseView.swift in Sources */,
 				7F0E8F7128A74BCF00824BED /* AuthCardView.swift in Sources */,
 				7F02753228A5A2E9009536CF /* TemplatesView.swift in Sources */,
-				7F0E8F6928A6FA4100824BED /* RegistrationView.swift in Sources */,
 				7F0E8F6F28A7439900824BED /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
