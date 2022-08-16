@@ -13,6 +13,19 @@ class ExercisesViewModel: ObservableObject {
     private let service = ExerciseService()
     private let userService = UserService()
     
+    // Allow the user to filter their exercises by title or type
+    var searchableExercises: [Exercise] {
+        if searchText.isEmpty {
+            return exercises
+        } else {
+            let lowercasedQuery = searchText.lowercased()
+            
+            return exercises.filter({
+                $0.name.lowercased().contains(lowercasedQuery) || $0.type.lowercased().contains(lowercasedQuery)
+            })
+        }
+    }
+    
     init() {
         fetchExercises()
     }

@@ -41,6 +41,7 @@
 		7FC0000F28ABEED900D484C6 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0000E28ABEED900D484C6 /* TabBarViewModel.swift */; };
 		7FC0001128ABFD0400D484C6 /* ExerciseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0001028ABFD0400D484C6 /* ExerciseService.swift */; };
 		7FC0001328ABFFC200D484C6 /* AddExerciseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0001228ABFFC200D484C6 /* AddExerciseViewModel.swift */; };
+		7FC0001728AC0ADF00D484C6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0001628AC0ADF00D484C6 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		7FC0000E28ABEED900D484C6 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		7FC0001028ABFD0400D484C6 /* ExerciseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseService.swift; sourceTree = "<group>"; };
 		7FC0001228ABFFC200D484C6 /* AddExerciseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExerciseViewModel.swift; sourceTree = "<group>"; };
+		7FC0001628AC0ADF00D484C6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,11 +143,13 @@
 			path = History;
 			sourceTree = "<group>";
 		};
-		7F02752E28A59ED3009536CF /* Visualize */ = {
+		7F02752E28A59ED3009536CF /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				7FC0001528AC0ACC00D484C6 /* ViewModel */,
+				7FC0001428AC0AC600D484C6 /* Views */,
 			);
-			path = Visualize;
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		7F02752F28A5A2CB009536CF /* Views */ = {
@@ -317,7 +321,7 @@
 				7F02753E28A6B31B009536CF /* AddExercise */,
 				7F02752C28A59EC5009536CF /* Templates */,
 				7F02752D28A59ECB009536CF /* History */,
-				7F02752E28A59ED3009536CF /* Visualize */,
+				7F02752E28A59ED3009536CF /* Settings */,
 				7FA320BF28A3FCB40071D835 /* TabBar */,
 			);
 			path = Core;
@@ -403,6 +407,21 @@
 				7FA320D828A5927D0071D835 /* ExerciseRowView.swift */,
 			);
 			path = Exercise;
+			sourceTree = "<group>";
+		};
+		7FC0001428AC0AC600D484C6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7FC0001628AC0ADF00D484C6 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7FC0001528AC0ACC00D484C6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -569,6 +588,7 @@
 				7F0E8F7128A74BCF00824BED /* AuthCardView.swift in Sources */,
 				7F02753228A5A2E9009536CF /* TemplatesView.swift in Sources */,
 				7F0E8F6F28A7439900824BED /* User.swift in Sources */,
+				7FC0001728AC0ADF00D484C6 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

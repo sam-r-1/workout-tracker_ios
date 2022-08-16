@@ -11,18 +11,8 @@ struct ExercisesView: View {
     @State private var showAddExerciseView = false
     @ObservedObject var viewModel = ExercisesViewModel()
     
-    @EnvironmentObject var authViewModel: AuthViewModel //temporary
-    
     var body: some View {
         VStack(alignment: .leading) {
-            
-            // temporary
-            Button {
-                authViewModel.signOut()
-            } label: {
-                Text("Sign out")
-            }
-            // end temporary
 
             AddNewHeaderView(title: "My Exercises",
                              showView: $showAddExerciseView,
@@ -33,7 +23,7 @@ struct ExercisesView: View {
             
             ScrollView {
                 LazyVStack {
-                    ForEach(viewModel.exercises) {exercise in
+                    ForEach(viewModel.searchableExercises) {exercise in
                         ExerciseRowView(exercise: exercise)
                     }
                 }

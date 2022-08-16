@@ -39,7 +39,7 @@ enum TabBarViewModel: Int, CaseIterable {
         case .exercises: return AnyView(ExercisesView())
         case .templates: return AnyView(TemplatesView())
         case .history: return AnyView(Text("History"))
-        case .settings: return AnyView(Text("Settings"))
+        case .settings: return AnyView(SettingsView())
         }
     }
 }
