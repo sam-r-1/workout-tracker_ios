@@ -49,7 +49,6 @@ class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     @Published var didAuthenticateUser = false
     @Published var currentUser: User?
-    private var tempUserSession: FirebaseAuth.User?
     
     private let service = UserService()
     
@@ -83,7 +82,7 @@ class AuthViewModel: ObservableObject {
             }
             
             guard let user = result?.user else { return }
-            self.tempUserSession = user
+            self.userSession = user
             
             let data = ["email": email]
             
