@@ -29,7 +29,7 @@ enum TabBarViewModel: Int, CaseIterable {
         switch self {
         case .exercises: return "bell"
         case .templates: return "globe"
-        case .history: return "time"
+        case .history: return "clock"
         case .settings: return "gear"
         }
     }

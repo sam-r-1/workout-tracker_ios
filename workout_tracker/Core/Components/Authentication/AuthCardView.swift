@@ -11,15 +11,13 @@ struct AuthCardView: View {
     @State private var authMode = AuthMode.login
     @State private var email = ""
     @State private var password = ""
-    let headerText: String
-    @State var isLogin: Bool
     
     @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack {
             // header view
-            AuthHeaderView(logoImage: "bell", line1Text: headerText)
+            AuthHeaderView(logoImage: "bell", line1Text: authMode.headerText)
                 .padding(.top)
             
             // email and password fields
@@ -35,8 +33,9 @@ struct AuthCardView: View {
             HStack {
                 Spacer()
                 
-                // Reset password link
-                NavigationLink {
+                // Reset password link (show only in "login" auth mode)
+                switch authMode {
+                case .login: NavigationLink {
                     Text("Reset Password View")
                 } label: {
                     Text("Forgot Password?")
@@ -46,13 +45,23 @@ struct AuthCardView: View {
                         .padding(.top)
                         .padding(.trailing, 24)
                 }
+                .frame(height: 30)
+                // Empty rectangle if auth mode == Sign In
+                case .signup: Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(height: 30)
+                }
             }
             
-            // Sign-in button
+            // Sign-in/create account button
             Button {
-                 viewModel.login(withEmail: email, password: password)
+                switch authMode {
+                case .login: viewModel.login(withEmail: email, password: password)
+                    
+                case .signup: viewModel.register(withEmail: email, password: password)
+                }
             } label: {
-                Text("Sign In")
+                Text(authMode.buttonText)
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(width: 250, height: 50)
@@ -70,12 +79,14 @@ struct AuthCardView: View {
             // Link to RegistrationView if the user doesn't have an account
             Button {
                 authMode.toggle()
+                email = ""
+                password = ""
             } label: {
                 HStack {
-                    Text("Don't have an account?")
+                    Text(authMode.toggleText[0])
                         .font(.footnote)
                     
-                    Text("Sign Up")
+                    Text(authMode.toggleText[1])
                         .font(.footnote)
                         .fontWeight(.semibold)
                 }
@@ -89,8 +100,8 @@ struct AuthCardView: View {
     }
 }
 
-//struct AuthCardView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AuthCardView()
-//    }
-//}
+struct AuthCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        AuthCardView()
+    }
+}

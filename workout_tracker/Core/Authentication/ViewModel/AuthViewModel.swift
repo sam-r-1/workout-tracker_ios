@@ -11,10 +11,27 @@ import Firebase
 enum AuthMode {
     case login, signup
     
+    // The header text
     var headerText: String {
         switch self {
         case .login: return "Login"
         case .signup: return "Create an account"
+        }
+    }
+    
+    // The button text
+    var buttonText: String {
+        switch self {
+        case .login: return "Sign In"
+        case .signup: return "Sign Up"
+        }
+    }
+    
+    // The text to toggle to the other auth mode
+    var toggleText: [String] {
+        switch self {
+        case .login: return ["Don't have an account?", "Sign Up"]
+        case .signup: return ["Already have an account?", "Log In"]
         }
     }
     
