@@ -10,13 +10,16 @@ import SwiftUI
 struct AddExerciseView: View {
     @State private var name = ""
     @State private var type = ""
+    @State private var details = ""
+    @State private var includeWeight = false
     @State private var includeReps = false
     @State private var includeTime = false
     @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var viewModel = AddExerciseViewModel()
     
     // validate the form and enable the submit button
     var formValidated: Bool {
-        !name.isEmpty && (includeReps || includeTime)
+        !name.isEmpty && (includeReps || includeTime || includeWeight)
     }
     
     var body: some View {
@@ -28,8 +31,16 @@ struct AddExerciseView: View {
             Section(header: Text("CATEGORY/TYPE (OPTIONAL)")) {
                 TextField("Exercise type, muscle group, etc.", text: $type)
             }
+            
+            Section(header: Text("DETAILS (OPTIONAL)")) {
+                TextField("Proper form, machine settings, etc.", text: $details)
+            }
 
             Section(header: Text("DATA FIELDS (select at least one)")) {
+                Toggle(isOn: $includeWeight) {
+                    Text("Weight")
+                }
+                
                 Toggle(isOn: $includeReps) {
                     Text("# of Reps")
                 }
@@ -55,12 +66,18 @@ struct AddExerciseView: View {
             // submit button - only enable if form is validated
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    print("DEBUG: Adding exercise to database..")
+                    viewModel.createExercise(name: name, type: type, details: details, includeWeight: includeWeight, includeReps: includeReps, includeTime: includeTime)
                 } label: {
                     Text("Add")
                         .padding(.trailing, 12)
                 }
                 .disabled(!formValidated)
+            }
+        }
+        // dismiss view if exercise created successfully
+        .onReceive(viewModel.$didCreateExercise) { success in
+            if success {
+                presentationMode.wrappedValue.dismiss()
             }
         }
     }

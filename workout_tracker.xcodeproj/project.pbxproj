@@ -39,6 +39,8 @@
 		7FA320D428A552DD0071D835 /* ExercisesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA320D328A552DD0071D835 /* ExercisesViewModel.swift */; };
 		7FA320D928A5927D0071D835 /* ExerciseRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA320D828A5927D0071D835 /* ExerciseRowView.swift */; };
 		7FC0000F28ABEED900D484C6 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0000E28ABEED900D484C6 /* TabBarViewModel.swift */; };
+		7FC0001128ABFD0400D484C6 /* ExerciseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0001028ABFD0400D484C6 /* ExerciseService.swift */; };
+		7FC0001328ABFFC200D484C6 /* AddExerciseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0001228ABFFC200D484C6 /* AddExerciseViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +93,8 @@
 		7FA320D328A552DD0071D835 /* ExercisesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesViewModel.swift; sourceTree = "<group>"; };
 		7FA320D828A5927D0071D835 /* ExerciseRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRowView.swift; sourceTree = "<group>"; };
 		7FC0000E28ABEED900D484C6 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
+		7FC0001028ABFD0400D484C6 /* ExerciseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseService.swift; sourceTree = "<group>"; };
+		7FC0001228ABFFC200D484C6 /* AddExerciseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExerciseViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +200,7 @@
 		7F02754028A6B342009536CF /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				7FC0001228ABFFC200D484C6 /* AddExerciseViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -298,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				7F0E8F6C28A7434700824BED /* UserService.swift */,
+				7FC0001028ABFD0400D484C6 /* ExerciseService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -539,7 +545,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F02754428A6E968009536CF /* Exercise.swift in Sources */,
+				7FC0001128ABFD0400D484C6 /* ExerciseService.swift in Sources */,
 				7FA320C628A3FE7F0071D835 /* ExercisesView.swift in Sources */,
+				7FC0001328ABFFC200D484C6 /* AddExerciseViewModel.swift in Sources */,
 				7FA3209328A3F8F30071D835 /* ContentView.swift in Sources */,
 				7F0E8F6B28A6FA8D00824BED /* CustomInputField.swift in Sources */,
 				7FA320D428A552DD0071D835 /* ExercisesViewModel.swift in Sources */,

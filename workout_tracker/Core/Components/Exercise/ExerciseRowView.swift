@@ -8,19 +8,21 @@
 import SwiftUI
 
 struct ExerciseRowView: View {
+    let exercise: Exercise
+    
     var body: some View {
         VStack {
             Divider()
             
             HStack {
                 VStack(alignment: .leading) {
-                    Text("An exercise")
+                    Text(exercise.name)
                         .font(.title2)
                         .bold()
                     
-                    Text("Arms")
+                    Text(exercise.type)
                     
-                    Text("Time, Reps")
+                    Text(exercise.dataFieldTextList())
                 }
                 
                 Spacer()
@@ -41,8 +43,8 @@ struct ExerciseRowView: View {
     }
 }
 
-struct ExerciseRowView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExerciseRowView()
-    }
-}
+//struct ExerciseRowView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ExerciseRowView()
+//    }
+//}

@@ -33,8 +33,8 @@ struct ExercisesView: View {
             
             ScrollView {
                 LazyVStack {
-                    ForEach(1...20, id: \.self) {_ in
-                       ExerciseRowView()
+                    ForEach(viewModel.exercises) {exercise in
+                        ExerciseRowView(exercise: exercise)
                     }
                 }
             }
