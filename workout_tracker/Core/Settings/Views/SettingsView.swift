@@ -19,6 +19,7 @@ struct SettingsView: View {
             }
 
         }
+        .navigationBarTitle("Settings")
     }
 }
 

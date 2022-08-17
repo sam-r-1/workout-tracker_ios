@@ -42,6 +42,10 @@
 		7FC0001128ABFD0400D484C6 /* ExerciseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0001028ABFD0400D484C6 /* ExerciseService.swift */; };
 		7FC0001328ABFFC200D484C6 /* AddExerciseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0001228ABFFC200D484C6 /* AddExerciseViewModel.swift */; };
 		7FC0001728AC0ADF00D484C6 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0001628AC0ADF00D484C6 /* SettingsView.swift */; };
+		7FC0001C28AC11DA00D484C6 /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0001B28AC11DA00D484C6 /* WorkoutView.swift */; };
+		7FC0002228AC307400D484C6 /* StopwatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0002128AC307400D484C6 /* StopwatchManager.swift */; };
+		7FC0002428AC319300D484C6 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0002328AC319300D484C6 /* TimerView.swift */; };
+		7FC0002628AD4E3900D484C6 /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0002528AD4E3900D484C6 /* WorkoutViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +101,10 @@
 		7FC0001028ABFD0400D484C6 /* ExerciseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseService.swift; sourceTree = "<group>"; };
 		7FC0001228ABFFC200D484C6 /* AddExerciseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExerciseViewModel.swift; sourceTree = "<group>"; };
 		7FC0001628AC0ADF00D484C6 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		7FC0001B28AC11DA00D484C6 /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
+		7FC0002128AC307400D484C6 /* StopwatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchManager.swift; sourceTree = "<group>"; };
+		7FC0002328AC319300D484C6 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		7FC0002528AD4E3900D484C6 /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,12 +324,14 @@
 			isa = PBXGroup;
 			children = (
 				7FA320BD28A3FCA20071D835 /* Components */,
+				7FC0002028AC305E00D484C6 /* Workout */,
 				7FA320BE28A3FCAB0071D835 /* Authentication */,
 				7FA320C228A3FE1E0071D835 /* Exercises */,
 				7F02753E28A6B31B009536CF /* AddExercise */,
 				7F02752C28A59EC5009536CF /* Templates */,
 				7F02752D28A59ECB009536CF /* History */,
 				7F02752E28A59ED3009536CF /* Settings */,
+				7FC0001828AC117900D484C6 /* Workout */,
 				7FA320BF28A3FCB40071D835 /* TabBar */,
 			);
 			path = Core;
@@ -422,6 +432,41 @@
 			children = (
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7FC0001828AC117900D484C6 /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				7FC0001A28AC11B500D484C6 /* ViewModel */,
+				7FC0001928AC11AA00D484C6 /* Views */,
+			);
+			path = Workout;
+			sourceTree = "<group>";
+		};
+		7FC0001928AC11AA00D484C6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7FC0001B28AC11DA00D484C6 /* WorkoutView.swift */,
+				7FC0002328AC319300D484C6 /* TimerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7FC0001A28AC11B500D484C6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7FC0002528AD4E3900D484C6 /* WorkoutViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7FC0002028AC305E00D484C6 /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				7FC0002128AC307400D484C6 /* StopwatchManager.swift */,
+			);
+			name = Workout;
+			path = Components/Workout;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -567,6 +612,8 @@
 				7FC0001128ABFD0400D484C6 /* ExerciseService.swift in Sources */,
 				7FA320C628A3FE7F0071D835 /* ExercisesView.swift in Sources */,
 				7FC0001328ABFFC200D484C6 /* AddExerciseViewModel.swift in Sources */,
+				7FC0002628AD4E3900D484C6 /* WorkoutViewModel.swift in Sources */,
+				7FC0001C28AC11DA00D484C6 /* WorkoutView.swift in Sources */,
 				7FA3209328A3F8F30071D835 /* ContentView.swift in Sources */,
 				7F0E8F6B28A6FA8D00824BED /* CustomInputField.swift in Sources */,
 				7FA320D428A552DD0071D835 /* ExercisesViewModel.swift in Sources */,
@@ -579,12 +626,14 @@
 				7F02753A28A5A6B7009536CF /* TemplatesViewModel.swift in Sources */,
 				7FA320D928A5927D0071D835 /* ExerciseRowView.swift in Sources */,
 				7F0E8F6428A6F98500824BED /* LoginView.swift in Sources */,
+				7FC0002228AC307400D484C6 /* StopwatchManager.swift in Sources */,
 				7F02753D28A5A932009536CF /* TemplateGridView.swift in Sources */,
 				7FA320CE28A544120071D835 /* PopUpMenuView.swift in Sources */,
 				7FC0000F28ABEED900D484C6 /* TabBarViewModel.swift in Sources */,
 				7FA320C128A3FDA20071D835 /* MainTabView.swift in Sources */,
 				7F0E8F6728A6F9BF00824BED /* AuthHeaderView.swift in Sources */,
 				7F02754228A6B362009536CF /* AddExerciseView.swift in Sources */,
+				7FC0002428AC319300D484C6 /* TimerView.swift in Sources */,
 				7F0E8F7128A74BCF00824BED /* AuthCardView.swift in Sources */,
 				7F02753228A5A2E9009536CF /* TemplatesView.swift in Sources */,
 				7F0E8F6F28A7439900824BED /* User.swift in Sources */,
