@@ -12,10 +12,12 @@ struct TimerView: View {
     @Environment(\.presentationMode) var presentationMode
     let formatter: DateComponentsFormatter
     
+    @ObservedObject var viewModel: WorkoutViewModel
     let title: String
     let setCount: String?
     
-    init(title: String, setCount: String? = nil) {
+    init(viewModel: WorkoutViewModel, title: String, setCount: String? = nil) {
+        self.viewModel = viewModel
         self.title = title
         self.setCount = setCount
         
@@ -51,36 +53,7 @@ struct TimerView: View {
 
                 Spacer()
                 
-                // If the timer is paused after being allowed to run for some time,
-                // present the user with the option to press "Done" and submit the time.
-                if stopwatchManager.mode == .paused && stopwatchManager.elapsedTime > 0.0 {
-                    HStack(spacing: 0) {
-                        Button {
-                            presentationMode.wrappedValue.dismiss()
-                        } label: {
-                            Image(systemName: "checkmark")
-                                .padding()
-                                .foregroundColor(.white)
-                                .frame(width: 155, height: 60)
-                                .background(Color(.systemGreen))
-                        }
-                        
-                        Button {
-                            presentationMode.wrappedValue.dismiss()
-                        } label: {
-                            Text("X")
-                                .bold()
-                                .padding()
-                                .foregroundColor(.white)
-                                .frame(width: 155, height: 60)
-                                .background(Color(.systemRed))
-                        }
-                    }
-                    .clipShape(Capsule())
-                }
-                else {
-                    HStack{}.frame(height: 60)
-                }
+                submitTimeButton
             }
             
             Spacer()
@@ -91,7 +64,7 @@ struct TimerView: View {
 
 struct TimerView_Previews: PreviewProvider {
     static var previews: some View {
-        TimerView(title: "Leg Press")
+        TimerView(viewModel: WorkoutViewModel(), title: "Leg Press")
     }
 }
 
@@ -134,10 +107,49 @@ extension TimerView {
         }
     }
         
+    
     // the circular border to be used w/ the timer button
     var timerButtonBorder: some View {
         Circle()
             .stroke(Color.primary, lineWidth: 5)
             .frame(width: 150, height: 150)
+    }
+    
+    
+    // If the timer is paused after being allowed to run for some time,
+    // present the user with the option to submit or discard the time.
+    var submitTimeButton: some View {
+        ZStack {
+            if stopwatchManager.mode == .paused && stopwatchManager.elapsedTime > 0.0 {
+                HStack(spacing: 0) {
+                    
+                    Button {
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("X")
+                            .bold()
+                            .padding()
+                            .foregroundColor(.white)
+                            .frame(width: 155, height: 60)
+                            .background(Color(.systemRed))
+                    }
+                    
+                    Button {
+                        viewModel.updateTime(stopwatchManager.elapsedTime)
+                        presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Image(systemName: "checkmark")
+                            .padding()
+                            .foregroundColor(.white)
+                            .frame(width: 155, height: 60)
+                            .background(Color(.systemGreen))
+                    }
+                }
+                .clipShape(Capsule())
+            }
+            else {
+                HStack{}.frame(height: 60)
+            }
+        }
     }
 }

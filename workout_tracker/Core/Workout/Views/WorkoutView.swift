@@ -9,35 +9,32 @@ import SwiftUI
 
 struct WorkoutView: View {
     @State private var showTimer = false
+    @State private var showAddExercise = false
     @State private var topExpanded: Bool = true
     @State private var reps = ""
+    @ObservedObject var viewModel = WorkoutViewModel()
+    @ObservedObject var exercisesViewModel = ExerciseInstancesViewModel()
     
     var body: some View {
         VStack {
-            DisclosureGroup("Leg Press", isExpanded: $topExpanded) {
-                HStack {
-                    Text("# of Reps")
-                    TextField("reps", text: $reps)
+            ScrollView {
+                LazyVStack {
+                    ForEach($exercisesViewModel.exerciseInstances, id: \.timestamp) { $instance in
+                        ExerciseDisclosureGroupView(viewModel: viewModel)
+                            .padding(.horizontal)
+                    }
                 }
                 
-                HStack {
-                    Text("Time")
-                    TextField("time", text: $reps)
-                    Button {
-                        showTimer.toggle()
-                    } label: {
-                        Text("Timer")
-                    }
-
-                }
-            }
-            .fullScreenCover(isPresented: $showTimer) {
-                print("DEBUG: timer dismissed")
-            } content: {
-                TimerView(title: "Leg Press")
+                Spacer()
             }
             
-            Spacer()
+            Button("Add Exercise") {
+                showAddExercise.toggle()
+            }
+        }
+        .navigationBarHidden(true)
+        .fullScreenCover(isPresented: $showAddExercise) {
+            SelectExerciseView(viewModel: exercisesViewModel)
         }
     }
 }

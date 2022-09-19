@@ -24,6 +24,7 @@
 		7F0E8F6D28A7434700824BED /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F6C28A7434700824BED /* UserService.swift */; };
 		7F0E8F6F28A7439900824BED /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F6E28A7439900824BED /* User.swift */; };
 		7F0E8F7128A74BCF00824BED /* AuthCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F7028A74BCF00824BED /* AuthCardView.swift */; };
+		7F43D9E828AEAED300069817 /* SelectExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F43D9E728AEAED300069817 /* SelectExerciseView.swift */; };
 		7FA3209128A3F8F30071D835 /* workout_trackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */; };
 		7FA3209328A3F8F30071D835 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209228A3F8F30071D835 /* ContentView.swift */; };
 		7FA3209528A3F8F30071D835 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA3209428A3F8F30071D835 /* Assets.xcassets */; };
@@ -46,6 +47,8 @@
 		7FC0002228AC307400D484C6 /* StopwatchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0002128AC307400D484C6 /* StopwatchManager.swift */; };
 		7FC0002428AC319300D484C6 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0002328AC319300D484C6 /* TimerView.swift */; };
 		7FC0002628AD4E3900D484C6 /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0002528AD4E3900D484C6 /* WorkoutViewModel.swift */; };
+		7FC0002828AD532400D484C6 /* ExerciseInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0002728AD532400D484C6 /* ExerciseInstance.swift */; };
+		7FC0002A28AD5D7800D484C6 /* ExerciseDisclosureGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0002928AD5D7800D484C6 /* ExerciseDisclosureGroupView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +83,7 @@
 		7F0E8F6C28A7434700824BED /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		7F0E8F6E28A7439900824BED /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7F0E8F7028A74BCF00824BED /* AuthCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCardView.swift; sourceTree = "<group>"; };
+		7F43D9E728AEAED300069817 /* SelectExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectExerciseView.swift; sourceTree = "<group>"; };
 		7FA3208D28A3F8F30071D835 /* workout_tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = workout_tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = workout_trackerApp.swift; sourceTree = "<group>"; };
 		7FA3209228A3F8F30071D835 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 		7FC0002128AC307400D484C6 /* StopwatchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchManager.swift; sourceTree = "<group>"; };
 		7FC0002328AC319300D484C6 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		7FC0002528AD4E3900D484C6 /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
+		7FC0002728AD532400D484C6 /* ExerciseInstance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseInstance.swift; sourceTree = "<group>"; };
+		7FC0002928AD5D7800D484C6 /* ExerciseDisclosureGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDisclosureGroupView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -306,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				7F02754328A6E968009536CF /* Exercise.swift */,
+				7FC0002728AD532400D484C6 /* ExerciseInstance.swift */,
 				7F0E8F6E28A7439900824BED /* User.swift */,
 			);
 			path = Model;
@@ -448,6 +455,7 @@
 			children = (
 				7FC0001B28AC11DA00D484C6 /* WorkoutView.swift */,
 				7FC0002328AC319300D484C6 /* TimerView.swift */,
+				7F43D9E728AEAED300069817 /* SelectExerciseView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -464,6 +472,7 @@
 			isa = PBXGroup;
 			children = (
 				7FC0002128AC307400D484C6 /* StopwatchManager.swift */,
+				7FC0002928AD5D7800D484C6 /* ExerciseDisclosureGroupView.swift */,
 			);
 			name = Workout;
 			path = Components/Workout;
@@ -611,6 +620,7 @@
 				7F02754428A6E968009536CF /* Exercise.swift in Sources */,
 				7FC0001128ABFD0400D484C6 /* ExerciseService.swift in Sources */,
 				7FA320C628A3FE7F0071D835 /* ExercisesView.swift in Sources */,
+				7FC0002828AD532400D484C6 /* ExerciseInstance.swift in Sources */,
 				7FC0001328ABFFC200D484C6 /* AddExerciseViewModel.swift in Sources */,
 				7FC0002628AD4E3900D484C6 /* WorkoutViewModel.swift in Sources */,
 				7FC0001C28AC11DA00D484C6 /* WorkoutView.swift in Sources */,
@@ -618,6 +628,7 @@
 				7F0E8F6B28A6FA8D00824BED /* CustomInputField.swift in Sources */,
 				7FA320D428A552DD0071D835 /* ExercisesViewModel.swift in Sources */,
 				7F0E8F6D28A7434700824BED /* UserService.swift in Sources */,
+				7FC0002A28AD5D7800D484C6 /* ExerciseDisclosureGroupView.swift in Sources */,
 				7F02753828A5A42E009536CF /* AddNewHeaderView.swift in Sources */,
 				7FA3209128A3F8F30071D835 /* workout_trackerApp.swift in Sources */,
 				7F0E8F6228A6F7A600824BED /* AuthViewModel.swift in Sources */,
@@ -631,6 +642,7 @@
 				7FA320CE28A544120071D835 /* PopUpMenuView.swift in Sources */,
 				7FC0000F28ABEED900D484C6 /* TabBarViewModel.swift in Sources */,
 				7FA320C128A3FDA20071D835 /* MainTabView.swift in Sources */,
+				7F43D9E828AEAED300069817 /* SelectExerciseView.swift in Sources */,
 				7F0E8F6728A6F9BF00824BED /* AuthHeaderView.swift in Sources */,
 				7F02754228A6B362009536CF /* AddExerciseView.swift in Sources */,
 				7FC0002428AC319300D484C6 /* TimerView.swift in Sources */,

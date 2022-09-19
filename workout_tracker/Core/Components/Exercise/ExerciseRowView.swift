@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ExerciseRowView: View {
     let exercise: Exercise
+    let buttonLabel: AnyView
+    let onButtonPressed: () -> Void
     
     var body: some View {
         VStack {
@@ -28,12 +30,9 @@ struct ExerciseRowView: View {
                 Spacer()
                 
                 Button {
-                    print("DEBUG: open exercise options")
+                    onButtonPressed()
                 } label: {
-                    Image(systemName: "ellipsis")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 20, height: 20)
+                    buttonLabel
                 }
 
             }

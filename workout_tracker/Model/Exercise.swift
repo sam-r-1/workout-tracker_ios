@@ -18,6 +18,7 @@ struct Exercise: Identifiable, Decodable {
     let includeReps: Bool
     let includeTime: Bool
 
+    // Returns a string listing the data fields that this exercise uses. To be used in the ExerciseRowView
     func dataFieldTextList() -> String {
         var text = ""
         var count = 0

@@ -31,11 +31,4 @@ class StopwatchManager: ObservableObject {
         timer.invalidate()
         mode = .paused
     }
-    
-    // stop the timer
-//    func stop() {
-//        timer.invalidate()
-//        elapsedTime = 0.0
-//        mode = .stopped
-//    }
 }
