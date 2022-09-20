@@ -8,27 +8,38 @@
 import Foundation
 import Firebase
 
-class WorkoutViewModel: ObservableObject {
+class ExerciseInstanceViewModel: ObservableObject {
+    @Published var exercise: Exercise? = nil
     @Published var time = 0.0
     @Published var formattedTimeString = "0:00"
     @Published var open = false
     let formatter: DateComponentsFormatter
     
-    init() {
+    private let service = ExerciseService()
+    
+    init(_ id: String) {
         formatter = DateComponentsFormatter()
         formatter.zeroFormattingBehavior = .dropLeading
         formatter.allowedUnits = [.minute, .second]
         formatter.allowsFractionalUnits = true
         formatter.unitsStyle = .abbreviated
+        
+        fetchExerciseById(id)
     }
     
     func updateTime(_ newTime: Double) {
         self.time = newTime
         formattedTimeString = formatter.string(from: time)!
     }
+    
+    func fetchExerciseById(_ id: String) {
+        service.fetchExerciseById(id: id) { exercise in
+            self.exercise = exercise
+        }
+    }
 }
 
-class ExerciseInstancesViewModel: ObservableObject {
+class WorkoutViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var exercises = [Exercise]()
     @Published var exerciseInstances = [ExerciseInstance]()

@@ -11,7 +11,8 @@ struct ExerciseDisclosureGroupView: View {
     @State private var reps = ""
     @State private var showTimer = false
     @State private var isExpanded: Bool = true
-    @ObservedObject var viewModel: WorkoutViewModel
+    @ObservedObject var viewModel: ExerciseInstanceViewModel
+    let instance: ExerciseInstance
     
     var body: some View {
                
@@ -37,7 +38,7 @@ struct ExerciseDisclosureGroupView: View {
             .font(.title3)
         } label: {
             HStack {
-                Text("Leg Press")
+                Text(viewModel.exercise?.name ?? "Error loading exercise name")
                     .bold()
                 
                 Text("(set 1 of 3)")
@@ -55,8 +56,8 @@ struct ExerciseDisclosureGroupView: View {
     }
 }
 
-struct ExerciseDisclosureGroupView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExerciseDisclosureGroupView(viewModel: WorkoutViewModel())
-    }
-}
+//struct ExerciseDisclosureGroupView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ExerciseDisclosureGroupView(viewModel: ExerciseInstanceViewModel())
+//    }
+//}

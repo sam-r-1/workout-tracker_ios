@@ -12,11 +12,11 @@ struct TimerView: View {
     @Environment(\.presentationMode) var presentationMode
     let formatter: DateComponentsFormatter
     
-    @ObservedObject var viewModel: WorkoutViewModel
+    @ObservedObject var viewModel: ExerciseInstanceViewModel
     let title: String
     let setCount: String?
     
-    init(viewModel: WorkoutViewModel, title: String, setCount: String? = nil) {
+    init(viewModel: ExerciseInstanceViewModel, title: String, setCount: String? = nil) {
         self.viewModel = viewModel
         self.title = title
         self.setCount = setCount
@@ -62,11 +62,11 @@ struct TimerView: View {
     }
 }
 
-struct TimerView_Previews: PreviewProvider {
-    static var previews: some View {
-        TimerView(viewModel: WorkoutViewModel(), title: "Leg Press")
-    }
-}
+//struct TimerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TimerView(viewModel: ExerciseInstanceViewModel(), title: "Leg Press")
+//    }
+//}
 
 extension TimerView {
     

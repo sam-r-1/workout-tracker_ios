@@ -13,14 +13,13 @@ struct WorkoutView: View {
     @State private var topExpanded: Bool = true
     @State private var reps = ""
     @ObservedObject var viewModel = WorkoutViewModel()
-    @ObservedObject var exercisesViewModel = ExerciseInstancesViewModel()
     
     var body: some View {
         VStack {
             ScrollView {
                 LazyVStack {
-                    ForEach($exercisesViewModel.exerciseInstances, id: \.timestamp) { $instance in
-                        ExerciseDisclosureGroupView(viewModel: viewModel)
+                    ForEach($viewModel.exerciseInstances, id: \.timestamp) { $instance in
+                        ExerciseDisclosureGroupView(viewModel: ExerciseInstanceViewModel(instance.exerciseID), instance: instance)
                             .padding(.horizontal)
                     }
                 }
@@ -28,13 +27,47 @@ struct WorkoutView: View {
                 Spacer()
             }
             
-            Button("Add Exercise") {
-                showAddExercise.toggle()
+            HStack {
+                Spacer()
+                
+                Button(action: {
+                    showAddExercise.toggle()
+                }, label: {
+                    VStack(spacing: 4) {
+                        Text("Add Exercise")
+                        Image(systemName: "plus")
+                    }
+                })
+                .font(.title3)
+                .frame(width: 140, height: 50)
+                .padding(8)
+                .background(Color(.systemGray5))
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                
+                Spacer()
+                
+                Button(action: {
+                    print("DEBUG: Finishing workout")
+                }, label: {
+                    VStack(spacing: 4) {
+                        Text("Finish Workout")
+                        Image(systemName: "checkmark")
+                    }
+                })
+                .font(.title3)
+                .frame(width: 140, height: 50)
+                .padding(8)
+                .foregroundColor(.white)
+                .background(Color(.systemGreen))
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                
+                Spacer()
             }
+            
         }
         .navigationBarHidden(true)
         .fullScreenCover(isPresented: $showAddExercise) {
-            SelectExerciseView(viewModel: exercisesViewModel)
+            SelectExerciseView(viewModel: viewModel)
         }
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SelectExerciseView: View {
-    @ObservedObject var viewModel: ExerciseInstancesViewModel
+    @ObservedObject var viewModel: WorkoutViewModel
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
@@ -28,6 +28,7 @@ struct SelectExerciseView: View {
                             exercise: exercise,
                             buttonLabel: AnyView(Text("Add").foregroundColor(Color(.systemBlue)))) {
                                 viewModel.addExerciseToWorkout(exercise.id!)
+                                presentationMode.wrappedValue.dismiss()
                             }
                     }
                 }
@@ -38,6 +39,6 @@ struct SelectExerciseView: View {
 
 struct SelectExerciseView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectExerciseView(viewModel: ExerciseInstancesViewModel())
+        SelectExerciseView(viewModel: WorkoutViewModel())
     }
 }
