@@ -14,28 +14,35 @@ struct ExerciseDisclosureGroupView: View {
     @ObservedObject var viewModel: ExerciseInstanceViewModel
     let instance: ExerciseInstance
     
+    @State private var intFormatter: NumberFormatter = {
+            let numFormatter = NumberFormatter()
+            numFormatter.numberStyle = .none
+            return numFormatter
+        }()
+    
+    @State private var doubleFormatter: NumberFormatter = {
+            let numFormatter = NumberFormatter()
+            numFormatter.numberStyle = .decimal
+            return numFormatter
+        }()
+    
     var body: some View {
                
         DisclosureGroup(isExpanded: $isExpanded) {
             Divider()
             
-            HStack {
-                Text("# of Reps")
-                Spacer()
-                TextField("reps", text: $reps)
+            if viewModel.showWeight {
+                weightFieldView
             }
-            .font(.title3)
             
-            HStack {
-                Text("Time")
-                TextField(viewModel.formattedTimeString, text: $reps)
-                Button {
-                    showTimer.toggle()
-                } label: {
-                    Text("Timer")
-                }
+            if viewModel.showReps {
+                repsFieldView
             }
-            .font(.title3)
+            
+            if viewModel.showTime {
+                timeFieldView
+            }
+            
         } label: {
             HStack {
                 Text(viewModel.exercise?.name ?? "Error loading exercise name")
@@ -61,3 +68,39 @@ struct ExerciseDisclosureGroupView: View {
 //        ExerciseDisclosureGroupView(viewModel: ExerciseInstanceViewModel())
 //    }
 //}
+
+extension ExerciseDisclosureGroupView {
+    
+    var weightFieldView: some View {
+        HStack {
+            Text("Weight (lbs):")
+            Spacer()
+            TextField("weight", value: $viewModel.weight, formatter: doubleFormatter)
+                .keyboardType(.decimalPad)
+        }
+        .font(.title3)
+    }
+    
+    var repsFieldView: some View {
+        HStack {
+            Text("# of Reps:")
+            Spacer()
+            TextField("reps", value: $viewModel.reps, formatter: intFormatter)
+                .keyboardType(.numberPad)
+        }
+        .font(.title3)
+    }
+    
+    var timeFieldView: some View {
+        HStack {
+            Text("Time:")
+            TextField(viewModel.formattedTimeString, text: $reps)
+            Button {
+                showTimer.toggle()
+            } label: {
+                Text("Timer")
+            }
+        }
+        .font(.title3)
+    }
+}

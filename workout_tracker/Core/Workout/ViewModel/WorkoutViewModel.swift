@@ -10,9 +10,18 @@ import Firebase
 
 class ExerciseInstanceViewModel: ObservableObject {
     @Published var exercise: Exercise? = nil
+    
+    @Published var weight = 0.0
+    @Published var reps: Int = 0
     @Published var time = 0.0
     @Published var formattedTimeString = "0:00"
-    @Published var open = false
+    
+    @Published var open = true
+    
+    @Published var showWeight = true
+    @Published var showReps = false
+    @Published var showTime = false
+    
     let formatter: DateComponentsFormatter
     
     private let service = ExerciseService()
@@ -35,7 +44,19 @@ class ExerciseInstanceViewModel: ObservableObject {
     func fetchExerciseById(_ id: String) {
         service.fetchExerciseById(id: id) { exercise in
             self.exercise = exercise
+            
+            self.fetchFields()
         }
+    }
+    
+    // check the exercise template and show the appropriate fields
+    func fetchFields() {
+        if exercise != nil {
+            self.showWeight = exercise!.includeWeight
+            self.showReps = exercise!.includeReps
+            self.showTime = exercise!.includeTime
+        } else { print("DEBUG: exercise is nil") }
+        
     }
 }
 
