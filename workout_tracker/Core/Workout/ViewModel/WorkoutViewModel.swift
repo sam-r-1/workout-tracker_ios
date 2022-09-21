@@ -65,16 +65,22 @@ class WorkoutViewModel: ObservableObject {
     @Published var exercises = [Exercise]()
     @Published var exerciseInstances = [ExerciseInstance]()
     
-    private let service = ExerciseService()
-    private let userService = UserService()
+    @Published var didCreateWorkout = false
+    
+    private let exerciseService = ExerciseService()
+    // private let userService = UserService()
+    private let workoutService = WorkoutService()
+    private let instanceService = ExerciseInstanceService()
     
     
     init() {
         fetchExercises()
     }
     
-    func addExerciseToWorkout(_ exerciseID: String) {
-        exerciseInstances.append(ExerciseInstance(uid: "uid", exerciseID: exerciseID, timestamp: Timestamp(date: Date()), repCount: 0, time: 0.0, weight: 0, open: true))
+    func addExerciseToWorkout(_ exerciseId: String) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        exerciseInstances.append(ExerciseInstance(uid: uid, exerciseId: exerciseId, timestamp: Timestamp(date: Date()), repCount: 0, time: 0.0, weight: 0, open: true))
     }
     
     // Allow the user to filter their exercises by title or type
@@ -91,8 +97,33 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func fetchExercises() {
-        service.fetchExercises { exercises in
+        exerciseService.fetchExercises { exercises in
         self.exercises = exercises
+        }
+    }
+    
+    func finishWorkout() {
+        var idList: [String] = []
+        
+        // upload the individual exercise data
+        for instance in self.exerciseInstances {
+            idList.append(instance.uid)
+            
+            instanceService.uploadInstance(instance) { success in
+                if !success {
+                    print("DEBUG: instance upload failed")
+                    return
+                }
+            }
+        }
+        
+        workoutService.uploadWorkout(exerciseInstanceIdList: idList) { success in
+            if success {
+                // dismiss workout screen
+                self.didCreateWorkout = true
+            } else {
+                // show error message to user
+            }
         }
     }
 }

@@ -48,7 +48,7 @@ struct ExerciseDisclosureGroupView: View {
                 Text(viewModel.exercise?.name ?? "Error loading exercise name")
                     .bold()
                 
-                Text("(set 1 of 3)")
+                // Text("(set 1 of 3)") *Placeholder for potential set count text
             }
             .font(.title2)
         }
@@ -75,8 +75,9 @@ extension ExerciseDisclosureGroupView {
         HStack {
             Text("Weight (lbs):")
             Spacer()
-            TextField("weight", value: $viewModel.weight, formatter: doubleFormatter)
+            TextField("", value: $viewModel.weight, formatter: doubleFormatter)
                 .keyboardType(.decimalPad)
+                .foregroundColor(Color(.systemGray))
         }
         .font(.title3)
     }
@@ -87,6 +88,7 @@ extension ExerciseDisclosureGroupView {
             Spacer()
             TextField("reps", value: $viewModel.reps, formatter: intFormatter)
                 .keyboardType(.numberPad)
+                .foregroundColor(Color(.systemGray))
         }
         .font(.title3)
     }
@@ -94,7 +96,11 @@ extension ExerciseDisclosureGroupView {
     var timeFieldView: some View {
         HStack {
             Text("Time:")
-            TextField(viewModel.formattedTimeString, text: $reps)
+            Text(viewModel.formattedTimeString)
+                .foregroundColor(Color(.systemGray))
+            
+            Spacer()
+            
             Button {
                 showTimer.toggle()
             } label: {
