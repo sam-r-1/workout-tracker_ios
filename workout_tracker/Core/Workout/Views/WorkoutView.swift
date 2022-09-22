@@ -49,7 +49,9 @@ struct WorkoutView: View {
                 
                 Button(action: {
                     print("DEBUG: Finishing workout")
-                    viewModel.finishWorkout()
+                    Task {
+                        await viewModel.finishWorkout()
+                    }
                 }, label: {
                     VStack(spacing: 4) {
                         Text("Finish Workout")

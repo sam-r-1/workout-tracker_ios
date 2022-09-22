@@ -102,27 +102,35 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
-    func finishWorkout() {
+    // upload the exercise instances to the database, returning a list of their id's in a closure
+    func uploadInstances(completion: @escaping ([String]) -> Void) async {
         var idList: [String] = []
+        var id: String
         
         // upload the individual exercise data
         for instance in self.exerciseInstances {
-            idList.append(instance.uid)
             
-            instanceService.uploadInstance(instance) { success in
-                if !success {
-                    print("DEBUG: instance upload failed")
-                    return
-                }
-            }
+            do {
+                id = try await instanceService.uploadInstance(instance)
+                idList.append(id)
+            } catch _ {}
+            
         }
+        completion(idList)
+    }
+    
+    func finishWorkout() async {
         
-        workoutService.uploadWorkout(exerciseInstanceIdList: idList) { success in
-            if success {
-                // dismiss workout screen
-                self.didCreateWorkout = true
-            } else {
-                // show error message to user
+        await uploadInstances { idList in
+            print(idList)
+            
+            self.workoutService.uploadWorkout(exerciseInstanceIdList: idList) { success in
+                if success {
+                    // dismiss workout screen
+                    self.didCreateWorkout = true
+                } else {
+                    // show error message to user
+                }
             }
         }
     }
