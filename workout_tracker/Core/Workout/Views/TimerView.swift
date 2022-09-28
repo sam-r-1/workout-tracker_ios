@@ -12,12 +12,13 @@ struct TimerView: View {
     @Environment(\.presentationMode) var presentationMode
     let formatter: DateComponentsFormatter
     
-    @ObservedObject var viewModel: ExerciseInstanceViewModel
+    // @ObservedObject var viewModel: ExerciseInstanceViewModel
+    let item: ExerciseDataFields
     let title: String
     let setCount: String?
     
-    init(viewModel: ExerciseInstanceViewModel, title: String, setCount: String? = nil) {
-        self.viewModel = viewModel
+    init(_ item: ExerciseDataFields, title: String, setCount: String? = nil) {
+        self.item = item
         self.title = title
         self.setCount = setCount
         
@@ -135,7 +136,7 @@ extension TimerView {
                     }
                     
                     Button {
-                        // viewModel.updateTime(stopwatchManager.elapsedTime)
+                        self.item.time = stopwatchManager.elapsedTime
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         Image(systemName: "checkmark")

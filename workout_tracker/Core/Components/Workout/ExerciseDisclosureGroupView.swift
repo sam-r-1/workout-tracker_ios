@@ -10,22 +10,31 @@ import SwiftUI
 struct ExerciseDisclosureGroupView: View {
     @State private var showTimer = false
     @State private var isExpanded: Bool = true
-    @State var item: DataFields
-    @ObservedObject var viewModel = ExerciseInstanceViewModel()
+    @State var item: ExerciseDataFields
     
     // Formatters
     @State private var intFormatter: NumberFormatter = {
-            let numFormatter = NumberFormatter()
-            numFormatter.numberStyle = .none
-            return numFormatter
-        }()
+        let numFormatter = NumberFormatter()
+        numFormatter.numberStyle = .none
+        return numFormatter
+    }()
     
     @State private var doubleFormatter: NumberFormatter = {
-            let numFormatter = NumberFormatter()
-            numFormatter.numberStyle = .decimal
-            return numFormatter
-        }()
+        let numFormatter = NumberFormatter()
+        numFormatter.numberStyle = .decimal
+        return numFormatter
+    }()
     
+    @State private var timeFormatter: DateComponentsFormatter = {
+        let timeFormatter = DateComponentsFormatter()
+        timeFormatter.zeroFormattingBehavior = .dropLeading
+        timeFormatter.allowedUnits = [.minute, .second]
+        timeFormatter.allowsFractionalUnits = true
+        timeFormatter.unitsStyle = .abbreviated
+        return timeFormatter
+    }()
+    
+    // View body
     var body: some View {
                
         DisclosureGroup(isExpanded: $isExpanded) {
@@ -58,7 +67,7 @@ struct ExerciseDisclosureGroupView: View {
         .fullScreenCover(isPresented: $showTimer) {
             print("DEBUG: timer dismissed")
         } content: {
-             TimerView(viewModel: viewModel, title: "Leg Press")
+            TimerView(item, title: item.exercise.name)
         }
     }
 }
@@ -96,7 +105,7 @@ extension ExerciseDisclosureGroupView {
     var timeFieldView: some View {
         HStack {
             Text("Time:")
-            Text("0s")
+            Text(timeFormatter.string(from: item.time) ?? "0s")
                 .foregroundColor(Color(.systemGray))
             
             Spacer()

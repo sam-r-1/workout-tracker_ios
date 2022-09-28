@@ -12,9 +12,7 @@ class ExerciseInstanceViewModel: ObservableObject {
     @Published var open = true
     
     let timeFormatter: DateComponentsFormatter
-    
-    private let service = ExerciseService()
-    
+
     init() {
         timeFormatter = DateComponentsFormatter()
         timeFormatter.zeroFormattingBehavior = .dropLeading
@@ -24,17 +22,9 @@ class ExerciseInstanceViewModel: ObservableObject {
         
         print("DEBUG: init instance viewmodel")
     }
-    
-//    func updateTime(_ newTime: Double) {
-//        self.time = newTime
-//    }
-    
-    
-    
-    
 }
 
-class DataFields: Identifiable {
+class ExerciseDataFields: Identifiable {
     init(parent: WorkoutViewModel, exercise: Exercise) {
         self.parent = parent
         self.exercise = exercise
@@ -70,7 +60,7 @@ class WorkoutViewModel: ObservableObject {
     private let workoutService = WorkoutService()
     private let instanceService = ExerciseInstanceService()
     
-    @Published var items = [DataFields]()
+    @Published var items = [ExerciseDataFields]()
     
     func update() {
         self.objectWillChange.send()
@@ -78,7 +68,7 @@ class WorkoutViewModel: ObservableObject {
     
     func addItem(_ exerciseId: String) {
         fetchAndSetExerciseById(exerciseId) { exercise in
-            self.items.append(DataFields(parent: self, exercise: exercise))
+            self.items.append(ExerciseDataFields(parent: self, exercise: exercise))
         }
     }
     
@@ -114,7 +104,7 @@ class WorkoutViewModel: ObservableObject {
     }
     
     // Add the items the user has added to the workout to a list as [ExerciseInstance] for upload
-    private func addExerciseToWorkout(_ item: DataFields, uid: String) {
+    private func addExerciseToWorkout(_ item: ExerciseDataFields, uid: String) {
         exerciseInstances.append(ExerciseInstance(uid: uid, exerciseId: item.exercise.id!, timestamp: Timestamp(), reps: item.reps, time: item.time, weight: item.weight))
     }
     
