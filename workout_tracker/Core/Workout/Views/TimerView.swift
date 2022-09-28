@@ -135,7 +135,7 @@ extension TimerView {
                     }
                     
                     Button {
-                        viewModel.updateTime(stopwatchManager.elapsedTime)
+                        // viewModel.updateTime(stopwatchManager.elapsedTime)
                         presentationMode.wrappedValue.dismiss()
                     } label: {
                         Image(systemName: "checkmark")

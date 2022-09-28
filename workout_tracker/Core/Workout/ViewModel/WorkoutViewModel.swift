@@ -9,103 +9,126 @@ import Foundation
 import Firebase
 
 class ExerciseInstanceViewModel: ObservableObject {
-    @Published var exercise: Exercise? = nil
-    
-    @Published var weight = 0.0
-    @Published var reps: Int = 0
-    @Published var time = 0.0
-    @Published var formattedTimeString = "0:00"
-    
     @Published var open = true
     
-    @Published var showWeight = true
-    @Published var showReps = false
-    @Published var showTime = false
-    
-    let formatter: DateComponentsFormatter
+    let timeFormatter: DateComponentsFormatter
     
     private let service = ExerciseService()
     
-    init(_ id: String) {
-        formatter = DateComponentsFormatter()
-        formatter.zeroFormattingBehavior = .dropLeading
-        formatter.allowedUnits = [.minute, .second]
-        formatter.allowsFractionalUnits = true
-        formatter.unitsStyle = .abbreviated
+    init() {
+        timeFormatter = DateComponentsFormatter()
+        timeFormatter.zeroFormattingBehavior = .dropLeading
+        timeFormatter.allowedUnits = [.minute, .second]
+        timeFormatter.allowsFractionalUnits = true
+        timeFormatter.unitsStyle = .abbreviated
         
-        fetchExerciseById(id)
+        print("DEBUG: init instance viewmodel")
     }
     
-    func updateTime(_ newTime: Double) {
-        self.time = newTime
-        formattedTimeString = formatter.string(from: time)!
+//    func updateTime(_ newTime: Double) {
+//        self.time = newTime
+//    }
+    
+    
+    
+    
+}
+
+class DataFields: Identifiable {
+    init(parent: WorkoutViewModel, exercise: Exercise) {
+        self.parent = parent
+        self.exercise = exercise
     }
     
-    func fetchExerciseById(_ id: String) {
-        service.fetchExerciseById(id: id) { exercise in
-            self.exercise = exercise
-            
-            self.fetchFields()
-        }
+    let id = UUID()
+    private let parent: WorkoutViewModel
+    // let exerciseId: String
+    let exercise: Exercise
+    private let service = ExerciseService()
+    
+    var weight = 0.0 {
+        didSet { self.parent.update() }
     }
     
-    // check the exercise template and show the appropriate fields
-    func fetchFields() {
-        if exercise != nil {
-            self.showWeight = exercise!.includeWeight
-            self.showReps = exercise!.includeReps
-            self.showTime = exercise!.includeTime
-        } else { print("DEBUG: exercise is nil") }
-        
+    var reps = 0 {
+        didSet { self.parent.update() }
+    }
+    
+    var time = 0.0 {
+        didSet { self.parent.update() }
     }
 }
 
 class WorkoutViewModel: ObservableObject {
     @Published var searchText = ""
-    @Published var exercises = [Exercise]()
+    @Published var userExercises = [Exercise]()
     @Published var exerciseInstances = [ExerciseInstance]()
     
-    @Published var didCreateWorkout = false
+    @Published var didUploadWorkout = false
     
     private let exerciseService = ExerciseService()
-    // private let userService = UserService()
     private let workoutService = WorkoutService()
     private let instanceService = ExerciseInstanceService()
     
+    @Published var items = [DataFields]()
+    
+    func update() {
+        self.objectWillChange.send()
+    }
+    
+    func addItem(_ exerciseId: String) {
+        fetchAndSetExerciseById(exerciseId) { exercise in
+            self.items.append(DataFields(parent: self, exercise: exercise))
+        }
+    }
     
     init() {
         fetchExercises()
     }
     
-    func addExerciseToWorkout(_ exerciseId: String) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        exerciseInstances.append(ExerciseInstance(uid: uid, exerciseId: exerciseId, timestamp: Timestamp(date: Date()), repCount: 0, time: 0.0, weight: 0, open: true))
-    }
     
     // Allow the user to filter their exercises by title or type
     var searchableExercises: [Exercise] {
         if searchText.isEmpty {
-            return exercises
+            return userExercises
         } else {
             let lowercasedQuery = searchText.lowercased()
             
-            return exercises.filter({
+            return userExercises.filter({
                 $0.name.lowercased().contains(lowercasedQuery) || $0.type.lowercased().contains(lowercasedQuery)
             })
         }
     }
     
-    func fetchExercises() {
+    // Fetch the list of the user's exercises for selection
+    private func fetchExercises() {
         exerciseService.fetchExercises { exercises in
-        self.exercises = exercises
+        self.userExercises = exercises
         }
     }
     
+    private func fetchAndSetExerciseById(_ id: String, completion: @escaping (Exercise) -> Void) {
+        exerciseService.fetchExerciseById(id: id) { exercise in
+            completion(exercise)
+        }
+    }
+    
+    // Add the items the user has added to the workout to a list as [ExerciseInstance] for upload
+    private func addExerciseToWorkout(_ item: DataFields, uid: String) {
+        exerciseInstances.append(ExerciseInstance(uid: uid, exerciseId: item.exercise.id!, timestamp: Timestamp(), reps: item.reps, time: item.time, weight: item.weight))
+    }
+    
     // upload the exercise instances to the database, returning a list of their id's in a closure
-    func uploadInstances(completion: @escaping ([String]) -> Void) async {
+    private func uploadInstances(completion: @escaping ([String]) -> Void) async {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
         var idList: [String] = []
         var id: String
+        
+        // create exercise instances from the workout items
+        for item in self.items {
+            addExerciseToWorkout(item, uid: uid)
+        }
         
         // upload the individual exercise data
         for instance in self.exerciseInstances {
@@ -120,14 +143,13 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func finishWorkout() async {
-        
         await uploadInstances { idList in
             print(idList)
             
             self.workoutService.uploadWorkout(exerciseInstanceIdList: idList) { success in
                 if success {
                     // dismiss workout screen
-                    self.didCreateWorkout = true
+                    self.didUploadWorkout = true
                 } else {
                     // show error message to user
                 }

@@ -13,13 +13,12 @@ struct ExerciseInstance: Identifiable, Decodable {
     let uid: String
     let exerciseId: String
     let timestamp: Timestamp
-    var repCount: Int
+    var reps: Int
     var time: Double // time in seconds
     var weight: Double
-    var open: Bool
     
     enum CodingKeys: String, CodingKey {
-        case uid, exerciseId, timestamp, repCount, time, weight, open
+        case uid, exerciseId, timestamp, reps, time, weight
     }
     
     // Initialize from Firebase
@@ -28,24 +27,18 @@ struct ExerciseInstance: Identifiable, Decodable {
         uid = try container.decode(String.self, forKey: .uid)
         exerciseId = try container.decode(String.self, forKey: .exerciseId)
         timestamp = try container.decode(Timestamp.self, forKey: .timestamp)
-        repCount = try container.decode(Int.self, forKey: .repCount)
+        reps = try container.decode(Int.self, forKey: .reps)
         time = try container.decode(Double.self, forKey: .time)
         weight = try container.decode(Double.self, forKey: .weight)
-        do {
-            open = try container.decode(Bool.self, forKey: .open)
-        } catch {
-            open = false
-        }
     }
     
     // initialize from code
-    init(uid: String, exerciseId: String, timestamp: Timestamp, repCount: Int, time: Double, weight: Double, open: Bool) {
+    init(uid: String, exerciseId: String, timestamp: Timestamp, reps: Int, time: Double, weight: Double) {
         self.uid = uid
         self.exerciseId = exerciseId
         self.timestamp = timestamp
-        self.repCount = repCount
+        self.reps = reps
         self.time = time
         self.weight = weight
-        self.open = open
     }
 }

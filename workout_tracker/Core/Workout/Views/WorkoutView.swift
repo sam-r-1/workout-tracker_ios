@@ -11,16 +11,15 @@ struct WorkoutView: View {
     @State private var showTimer = false
     @State private var showAddExercise = false
     @State private var topExpanded: Bool = true
-    @State private var reps = ""
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var viewModel = WorkoutViewModel()
+    @StateObject var viewModel = WorkoutViewModel()
     
     var body: some View {
         VStack {
             ScrollView {
                 LazyVStack {
-                    ForEach($viewModel.exerciseInstances, id: \.timestamp) { $instance in
-                        ExerciseDisclosureGroupView(viewModel: ExerciseInstanceViewModel(instance.exerciseId), instance: instance)
+                    ForEach(viewModel.items) {item in
+                        ExerciseDisclosureGroupView(item: item)
                             .padding(.horizontal)
                     }
                 }
@@ -74,7 +73,7 @@ struct WorkoutView: View {
             SelectExerciseView(viewModel: viewModel)
         }
         // dismiss view if workout created successfully
-        .onReceive(viewModel.$didCreateWorkout) { success in
+        .onReceive(viewModel.$didUploadWorkout) { success in
             if success {
                 presentationMode.wrappedValue.dismiss()
             }
@@ -86,8 +85,4 @@ struct WorkoutView_Previews: PreviewProvider {
     static var previews: some View {
         WorkoutView()
     }
-}
-
-extension WorkoutView {
-    
 }

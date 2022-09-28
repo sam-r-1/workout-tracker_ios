@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ExerciseDisclosureGroupView: View {
-    @State private var reps = ""
     @State private var showTimer = false
     @State private var isExpanded: Bool = true
-    @ObservedObject var viewModel: ExerciseInstanceViewModel
-    let instance: ExerciseInstance
+    @State var item: DataFields
+    @ObservedObject var viewModel = ExerciseInstanceViewModel()
     
+    // Formatters
     @State private var intFormatter: NumberFormatter = {
             let numFormatter = NumberFormatter()
             numFormatter.numberStyle = .none
@@ -31,21 +31,21 @@ struct ExerciseDisclosureGroupView: View {
         DisclosureGroup(isExpanded: $isExpanded) {
             Divider()
             
-            if viewModel.showWeight {
+            if item.exercise.includeWeight {
                 weightFieldView
             }
-            
-            if viewModel.showReps {
+
+            if item.exercise.includeReps {
                 repsFieldView
             }
-            
-            if viewModel.showTime {
+
+            if item.exercise.includeTime {
                 timeFieldView
             }
             
         } label: {
             HStack {
-                Text(viewModel.exercise?.name ?? "Error loading exercise name")
+                Text(item.exercise.name)
                     .bold()
                 
                 // Text("(set 1 of 3)") *Placeholder for potential set count text
@@ -58,7 +58,7 @@ struct ExerciseDisclosureGroupView: View {
         .fullScreenCover(isPresented: $showTimer) {
             print("DEBUG: timer dismissed")
         } content: {
-            TimerView(viewModel: viewModel, title: "Leg Press")
+             TimerView(viewModel: viewModel, title: "Leg Press")
         }
     }
 }
@@ -75,8 +75,8 @@ extension ExerciseDisclosureGroupView {
         HStack {
             Text("Weight (lbs):")
             Spacer()
-            TextField("", value: $viewModel.weight, formatter: doubleFormatter)
-                .keyboardType(.decimalPad)
+            TextField("", value: $item.weight, formatter: doubleFormatter)
+                // .keyboardType(.decimalPad)
                 .foregroundColor(Color(.systemGray))
         }
         .font(.title3)
@@ -86,7 +86,7 @@ extension ExerciseDisclosureGroupView {
         HStack {
             Text("# of Reps:")
             Spacer()
-            TextField("reps", value: $viewModel.reps, formatter: intFormatter)
+            TextField("reps", value: $item.reps, formatter: intFormatter)
                 .keyboardType(.numberPad)
                 .foregroundColor(Color(.systemGray))
         }
@@ -96,7 +96,7 @@ extension ExerciseDisclosureGroupView {
     var timeFieldView: some View {
         HStack {
             Text("Time:")
-            Text(viewModel.formattedTimeString)
+            Text("0s")
                 .foregroundColor(Color(.systemGray))
             
             Spacer()

@@ -27,7 +27,7 @@ struct SelectExerciseView: View {
                         ExerciseRowView(
                             exercise: exercise,
                             buttonLabel: AnyView(Text("Add").foregroundColor(Color(.systemBlue)))) {
-                                viewModel.addExerciseToWorkout(exercise.id!)
+                                viewModel.addItem(exercise.id!)
                                 presentationMode.wrappedValue.dismiss()
                             }
                     }
