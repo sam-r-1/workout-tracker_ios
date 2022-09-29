@@ -85,7 +85,6 @@ extension ExerciseDisclosureGroupView {
             Text("Weight (lbs):")
             Spacer()
             TextField("", value: $item.weight, formatter: doubleFormatter)
-                // .keyboardType(.decimalPad)
                 .foregroundColor(Color(.systemGray))
         }
         .font(.title3)
@@ -96,7 +95,6 @@ extension ExerciseDisclosureGroupView {
             Text("# of Reps:")
             Spacer()
             TextField("reps", value: $item.reps, formatter: intFormatter)
-                .keyboardType(.numberPad)
                 .foregroundColor(Color(.systemGray))
         }
         .font(.title3)

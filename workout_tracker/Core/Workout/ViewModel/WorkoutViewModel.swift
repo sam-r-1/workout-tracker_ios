@@ -8,22 +8,6 @@
 import Foundation
 import Firebase
 
-class ExerciseInstanceViewModel: ObservableObject {
-    @Published var open = true
-    
-    let timeFormatter: DateComponentsFormatter
-
-    init() {
-        timeFormatter = DateComponentsFormatter()
-        timeFormatter.zeroFormattingBehavior = .dropLeading
-        timeFormatter.allowedUnits = [.minute, .second]
-        timeFormatter.allowsFractionalUnits = true
-        timeFormatter.unitsStyle = .abbreviated
-        
-        print("DEBUG: init instance viewmodel")
-    }
-}
-
 class ExerciseDataFields: Identifiable {
     init(parent: WorkoutViewModel, exercise: Exercise) {
         self.parent = parent
@@ -32,9 +16,7 @@ class ExerciseDataFields: Identifiable {
     
     let id = UUID()
     private let parent: WorkoutViewModel
-    // let exerciseId: String
     let exercise: Exercise
-    private let service = ExerciseService()
     
     var weight = 0.0 {
         didSet { self.parent.update() }

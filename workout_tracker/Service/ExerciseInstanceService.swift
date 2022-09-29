@@ -14,6 +14,10 @@ struct ExerciseInstanceService {
         case authenticationError, uploadFailed
     }
     
+    enum DownloadError: Error {
+        case authenticationError, downloadFailed
+    }
+    
     func uploadInstance(_ instance: ExerciseInstance) async throws -> String {
         guard let uid = Auth.auth().currentUser?.uid else { throw UploadError.authenticationError }
         
@@ -30,5 +34,24 @@ struct ExerciseInstanceService {
         try await ref.setData(data)
         
         return ref.documentID
+    }
+    
+    // fetch the previous exercise instance for a given exercise, returning the weight and rep count
+    func fetchPreviousInstanceDataById(_ exerciseId: String) async throws -> (ExerciseInstance?) {
+        guard let uid = Auth.auth().currentUser?.uid else { throw DownloadError.authenticationError }
+        
+        let snapshot = try await Firestore.firestore().collection("exercise-instances")
+            .whereField("uid", isEqualTo: uid)
+            .whereField("exerciseId", isEqualTo: exerciseId)
+            // .order(by: "timestamp", descending: true)
+            .limit(to: 1)
+            .getDocuments()
+        
+        let documents = snapshot.documents
+        
+        let instances = documents.compactMap({ try? $0.data(as: ExerciseInstance.self) })
+        
+        return instances.first
+        
     }
 }

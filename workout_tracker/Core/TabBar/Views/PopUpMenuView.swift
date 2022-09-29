@@ -38,7 +38,6 @@ struct MenuItem: View {
     
     var body: some View {
         Button {
-            print("starting a workout")
             $showMenu.wrappedValue = false
             $isActiveWorkout.wrappedValue.toggle()
         }
