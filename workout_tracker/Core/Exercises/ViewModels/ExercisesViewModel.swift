@@ -27,7 +27,7 @@ class ExercisesViewModel: ObservableObject {
     }
     
     init() {
-        print("DEBUG: init")
+        print("DEBUG: init ExercisesViewModel")
         fetchExercises()
     }
     

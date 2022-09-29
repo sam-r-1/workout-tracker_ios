@@ -16,6 +16,8 @@ struct WorkoutView: View {
     
     var body: some View {
         VStack {
+            header
+            
             ScrollView {
                 LazyVStack {
                     ForEach(viewModel.items) {item in
@@ -85,5 +87,21 @@ struct WorkoutView: View {
 struct WorkoutView_Previews: PreviewProvider {
     static var previews: some View {
         WorkoutView()
+    }
+}
+
+extension WorkoutView {
+    var header: some View {
+        VStack {
+            HStack {
+                Text("My Workout")
+                    .font(.largeTitle)
+                    .bold()
+                Spacer()
+            }
+            
+            Divider()
+        }
+        .padding([.top, .horizontal])
     }
 }
