@@ -10,7 +10,7 @@ import SwiftUI
 struct MainTabView: View {
     @State private var showMenu = false
     @State private var isActiveWorkout = false
-    @ObservedObject var router = ViewRouter()
+    @StateObject var router = ViewRouter()
     
     let tabBarHeight: CGFloat = UIScreen.main.bounds.height / 14
     
@@ -108,7 +108,9 @@ struct TabIcon: View {
         let isSelected = router.currentItem == viewModel
         
         Button {
+            if router.currentItem != viewModel {
                 router.currentItem = viewModel
+            }
         } label: {
             VStack {
                 Image(systemName: viewModel.imageName)
