@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @State private var showMenu = false;
+    @State private var showMenu = false
+    @State private var isActiveWorkout = false
     @ObservedObject var router = ViewRouter()
     
     let tabBarHeight: CGFloat = UIScreen.main.bounds.height / 14
@@ -51,7 +52,7 @@ struct MainTabView: View {
                         }
                     
                     // display the popup options
-                    PopUpMenuView()
+                    PopUpMenuView($showMenu, $isActiveWorkout)
                         .padding(.bottom, 100)
                 }
                 
@@ -63,6 +64,9 @@ struct MainTabView: View {
                     }
                     .frame(height: tabBarHeight)
             }
+        }
+        .fullScreenCover(isPresented: $isActiveWorkout) {
+            WorkoutView()
         }
     }
 }

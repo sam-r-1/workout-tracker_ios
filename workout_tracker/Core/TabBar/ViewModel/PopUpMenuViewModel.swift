@@ -8,14 +8,20 @@
 import SwiftUI
 
 enum PopUpMenuViewModel: Int, CaseIterable {
-    case fromTemplate
+    // case fromTemplate
     case fromScratch
     
     
     var title: String {
         switch self {
-        case .fromTemplate: return "Start from template"
-        case .fromScratch: return "Start from scratch"
+            // case .fromTemplate: return "Start from template"
+            case .fromScratch: return "Start a workout"
+        }
+    }
+    
+    var workoutView: some View {
+        switch self {
+            case.fromScratch: return WorkoutView()
         }
     }
 }

@@ -8,12 +8,20 @@
 import SwiftUI
 
 struct PopUpMenuView: View {
+    @Binding var showMenu: Bool
+    @Binding var isActiveWorkout: Bool
+    
+    init(_ showMenu: Binding<Bool>, _ isActiveWorkout: Binding<Bool>) {
+        self._showMenu = showMenu
+        self._isActiveWorkout = isActiveWorkout
+    }
+    
     var body: some View {
         HStack(spacing: 36) {
             Spacer()
             
             ForEach(PopUpMenuViewModel.allCases, id: \.self) { item in
-                MenuItem(viewModel: item)
+                MenuItem(viewModel: item, showMenu: $showMenu, isActiveWorkout: $isActiveWorkout)
             }
             
             Spacer()
@@ -25,10 +33,14 @@ struct PopUpMenuView: View {
 struct MenuItem: View {
     let viewModel: PopUpMenuViewModel;
     let size: CGFloat = 48
+    @Binding var showMenu: Bool
+    @Binding var isActiveWorkout: Bool
     
     var body: some View {
         Button {
             print("starting a workout")
+            $showMenu.wrappedValue = false
+            $isActiveWorkout.wrappedValue.toggle()
         }
         label: {
             ZStack {
@@ -48,6 +60,6 @@ struct MenuItem: View {
 
 struct PopUpMenuView_Previews: PreviewProvider {
     static var previews: some View {
-        PopUpMenuView()
+        PopUpMenuView(.constant(true), .constant(false))
     }
 }

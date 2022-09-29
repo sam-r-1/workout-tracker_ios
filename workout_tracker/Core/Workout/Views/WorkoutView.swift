@@ -51,6 +51,7 @@ struct WorkoutView: View {
                     Task {
                         await viewModel.finishWorkout()
                     }
+                    presentationMode.wrappedValue.dismiss()
                 }, label: {
                     VStack(spacing: 4) {
                         Text("Finish Workout")
