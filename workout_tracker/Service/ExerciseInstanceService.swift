@@ -37,21 +37,24 @@ struct ExerciseInstanceService {
     }
     
     // fetch the previous exercise instance for a given exercise, returning the weight and rep count
-    func fetchPreviousInstanceDataById(_ exerciseId: String) async throws -> (ExerciseInstance?) {
-        guard let uid = Auth.auth().currentUser?.uid else { throw DownloadError.authenticationError }
+    func fetchPreviousInstanceDataById(_ exerciseId: String, completion: @escaping(ExerciseInstance) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        let snapshot = try await Firestore.firestore().collection("exercise-instances")
+        Firestore.firestore().collection("exercise-instances")
             .whereField("uid", isEqualTo: uid)
             .whereField("exerciseId", isEqualTo: exerciseId)
-            // .order(by: "timestamp", descending: true)
+            .order(by: "timestamp", descending: true)
             .limit(to: 1)
-            .getDocuments()
-        
-        let documents = snapshot.documents
-        
-        let instances = documents.compactMap({ try? $0.data(as: ExerciseInstance.self) })
-        
-        return instances.first
-        
+            .getDocuments { snapshot, error in
+                guard error == nil else {
+                    print("DEBUG: \(error!.localizedDescription)")
+                    return
+                }
+                
+                let instances = snapshot!.documents.compactMap({ try? $0.data(as: ExerciseInstance.self) })
+                
+                guard let prevInstance = instances.first else { return }
+                completion(prevInstance)
+            }
     }
 }
