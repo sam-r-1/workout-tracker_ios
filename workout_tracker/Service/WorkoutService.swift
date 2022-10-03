@@ -10,7 +10,7 @@ import Firebase
 
 struct WorkoutService {
     
-    // post a workout to the database
+    // create a workout and post it to the database
     func uploadWorkout(exerciseInstanceIdList: [String], completion: @escaping(Bool) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -27,6 +27,21 @@ struct WorkoutService {
                 }
                 
                 completion(true)
+            }
+    }
+    
+    // fetch all of the user's workouts from the backend
+    func fetchWorkouts(completion: @escaping([Workout]) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        Firestore.firestore().collection("workouts")
+            .whereField("uid", isEqualTo: uid)
+            .order(by: "timestamp", descending: true)
+            .getDocuments { snapshot, _ in
+                guard let documents = snapshot?.documents else { return }
+                
+                let workouts = documents.compactMap({ try? $0.data(as: Workout.self) })
+                completion(workouts)
             }
     }
 }

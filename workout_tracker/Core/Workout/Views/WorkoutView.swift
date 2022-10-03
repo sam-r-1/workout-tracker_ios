@@ -16,7 +16,7 @@ struct WorkoutView: View {
     
     var body: some View {
         VStack {
-            header
+            HeaderView("My Workout", includeDivider: true)
             
             ScrollView {
                 LazyVStack {
@@ -49,7 +49,6 @@ struct WorkoutView: View {
                 Spacer()
                 
                 Button(action: {
-                    print("DEBUG: Finishing workout")
                     Task {
                         await viewModel.finishWorkout()
                     }
@@ -87,21 +86,5 @@ struct WorkoutView: View {
 struct WorkoutView_Previews: PreviewProvider {
     static var previews: some View {
         WorkoutView()
-    }
-}
-
-extension WorkoutView {
-    var header: some View {
-        VStack {
-            HStack {
-                Text("My Workout")
-                    .font(.largeTitle)
-                    .bold()
-                Spacer()
-            }
-            
-            Divider()
-        }
-        .padding([.top, .horizontal])
     }
 }

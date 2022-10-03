@@ -8,14 +8,26 @@
 import SwiftUI
 
 struct HistoryView: View {
+    @StateObject var viewModel = HistoryViewModel()
+    
     var body: some View {
-        VStack {
-            Spacer()
+        VStack(alignment: .leading) {
             
-            Text("History coming soon...")
+            HeaderView("Workout History")
             
-            Spacer()
+            ScrollView {
+                LazyVStack {
+                    ForEach(viewModel.workouts, id: \.timestamp) { workout in
+                        NavigationLink {
+                            Text("workout details")
+                        } label: {
+                            WorkoutRowView(workout: workout)
+                        }
+                    }
+                }
+            }
         }
+        .navigationBarHidden(true)
     }
 }
 

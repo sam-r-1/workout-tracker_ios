@@ -116,7 +116,6 @@ class WorkoutViewModel: ObservableObject {
     
     func finishWorkout() async {
         await uploadInstances { idList in
-            print(idList)
             
             self.workoutService.uploadWorkout(exerciseInstanceIdList: idList) { success in
                 if success {
