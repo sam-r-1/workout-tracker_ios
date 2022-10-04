@@ -40,7 +40,13 @@ struct WorkoutService {
             .getDocuments { snapshot, _ in
                 guard let documents = snapshot?.documents else { return }
                 
-                let workouts = documents.compactMap({ try? $0.data(as: Workout.self) })
+                var workouts = documents.compactMap({ try? $0.data(as: Workout.self) })
+                
+                // add the id's
+                for i in 0...(workouts.count - 1) {
+                    workouts[i].id = documents[i].documentID
+                }
+                
                 completion(workouts)
             }
     }

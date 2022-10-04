@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Firebase
 
 struct WorkoutRowView: View {
     let workout: Workout
@@ -53,8 +52,8 @@ struct WorkoutRowView: View {
     }
 }
 
-struct WorkoutRowView_Previews: PreviewProvider {
-    static var previews: some View {
-        WorkoutRowView(workout: Workout(uid: "", timestamp: Timestamp(), exerciseInstanceIdList: ["id1", "id2", "id3"]))
-    }
-}
+//struct WorkoutRowView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WorkoutRowView(workout: Workout(uid: "", timestamp: Timestamp(), exerciseInstanceIdList: ["id1", "id2", "id3"]))
+//    }
+//}
