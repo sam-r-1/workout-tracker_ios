@@ -19,7 +19,7 @@ struct HistoryView: View {
                 LazyVStack {
                     ForEach(viewModel.workouts, id: \.timestamp) { workout in
                         NavigationLink {
-                            NavigationLazyView(WorkoutDetailsView(workout))
+                            NavigationLazyView(WorkoutDetailsView(workout, viewModel: viewModel))
                         } label: {
                             WorkoutRowView(workout: workout)
                         }

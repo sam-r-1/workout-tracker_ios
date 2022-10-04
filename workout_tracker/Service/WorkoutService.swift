@@ -50,4 +50,17 @@ struct WorkoutService {
                 completion(workouts)
             }
     }
+    
+    // Delete a workout from the backend
+    func deleteWorkout(id: String, completion: @escaping (Bool) -> Void) {
+        Firestore.firestore().collection("workouts").document(id)
+            .delete { error in
+                guard error == nil else {
+                    print("DEBUG: \(error!.localizedDescription)")
+                    return
+                }
+                
+                completion(true)
+            }
+    }
 }

@@ -9,7 +9,9 @@ import SwiftUI
 
 struct WorkoutDetailsView: View {
     let workout: Workout
-    @ObservedObject var viewModel: WorkoutDetailsViewModel
+    @State private var showDeleteDialog = false
+    @ObservedObject var viewModel: HistoryViewModel
+    @Environment(\.presentationMode) var presentationMode
     
     @State private var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -18,9 +20,9 @@ struct WorkoutDetailsView: View {
         return dateFormatter
     }()
     
-    init(_ workout: Workout) {
+    init(_ workout: Workout, viewModel: HistoryViewModel) {
         self.workout = workout
-        self.viewModel = WorkoutDetailsViewModel(workout)
+        self.viewModel = viewModel
     }
     
     var body: some View {
@@ -32,19 +34,28 @@ struct WorkoutDetailsView: View {
             
             Spacer(minLength: 12)
             
-            ScrollView {
-                LazyVStack {
-                    ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
-                        InstanceHistoryRowView(instance)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 4)
+            WorkoutDetailsScrollView(workout)
+                .equatable()
+        }
+        .navigationTitle(dateFormatter.string(from: workout.timestamp.dateValue()))
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+
+            // delete button
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    self.showDeleteDialog = true
+                } label: {
+                    Text("Delete")
+                }
+                .foregroundColor(Color(.systemRed))
+                .alert("Delete data for this workout?", isPresented: $showDeleteDialog) {
+                    Button("Delete", role: .destructive) {
+                        viewModel.deleteWorkout(workout: workout)
+                        presentationMode.wrappedValue.dismiss()
                     }
                 }
-                
-                Spacer()
             }
-            .navigationTitle(dateFormatter.string(from: workout.timestamp.dateValue()))
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
