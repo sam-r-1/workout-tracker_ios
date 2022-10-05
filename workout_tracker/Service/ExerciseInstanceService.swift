@@ -86,6 +86,8 @@ struct ExerciseInstanceService {
     
     // Delete all instances of an [Exercise] given it's ID
     func deleteInstances(ofExercise exerciseId: String) {
+        let workoutService = WorkoutService()
+        
         let query = Firestore.firestore().collection("exercise-instances")
             .whereField("exerciseId", isEqualTo: exerciseId)
         
@@ -98,7 +100,13 @@ struct ExerciseInstanceService {
             let documents = snapshot!.documents
             
             documents.forEach { doc in
+                let id = doc.reference.documentID
+                
+                // delete the instances
                 doc.reference.delete()
+                
+                // remove the instances from the associated workouts
+                workoutService.deleteInstanceRef(id)
             }
         }
     }
