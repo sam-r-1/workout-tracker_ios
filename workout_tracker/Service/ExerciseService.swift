@@ -10,8 +10,8 @@ import Firebase
 
 struct ExerciseService {
     
-    // create an exercise and post it
-    func createExercise(name: String, type: String, details: String, includeWeight: Bool, includeReps: Bool, includeTime: Bool, completion: @escaping(Bool) -> Void) {
+    // create/edit an exercise and post it
+    func setExercise(id: String? = nil, name: String, type: String, details: String, includeWeight: Bool, includeReps: Bool, includeTime: Bool, completion: @escaping(Bool) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         let data = ["uid": uid,
@@ -22,16 +22,25 @@ struct ExerciseService {
                     "includeReps": includeReps,
                     "includeTime": includeTime] as [String: Any]
         
-        Firestore.firestore().collection("exercises").document()
-            .setData(data) { error in
-                if let error = error {
-                    print("DEBUG: Failed to upload exercise with error \(error.localizedDescription)")
-                    completion(false)
-                    return
-                }
-                
-                completion(true)
+        let collectionRef = Firestore.firestore().collection("exercises")
+        
+        // if an id is provided, set the ref to that location, otherwise give a blank one
+        let ref: DocumentReference
+        if id != nil {
+            ref = collectionRef.document(id!)
+        } else {
+            ref = collectionRef.document()
+        }
+        
+        ref.setData(data) { error in
+            if let error = error {
+                print("DEBUG: Failed to upload exercise with error \(error.localizedDescription)")
+                completion(false)
+                return
             }
+            
+            completion(true)
+        }
     }
     
     // fetch a specific exercise from the backend by its ID
@@ -62,6 +71,19 @@ struct ExerciseService {
                 }
                 
                 completion(exercises.sorted(by: { $0.name < $1.name }))
+            }
+    }
+    
+    // Delete an exercise from the backend
+    func deleteExercise(id: String, completion: @escaping (Bool) -> Void) {
+        Firestore.firestore().collection("exercises").document(id)
+            .delete { error in
+                guard error == nil else {
+                    print("DEBUG: \(error!.localizedDescription)")
+                    return
+                }
+                
+                completion(true)
             }
     }
 }

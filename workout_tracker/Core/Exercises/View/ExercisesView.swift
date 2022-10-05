@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ExercisesView: View {
-    @State private var showAddExerciseView = false
+    @State private var showModifyExerciseView = false
     @ObservedObject var viewModel = ExercisesViewModel()
     
     var body: some View {
         VStack(alignment: .leading) {
 
             AddNewHeaderView(title: "My Exercises",
-                             showView: $showAddExerciseView,
-                             view: AnyView(AddExerciseView()))
+                             showView: $showModifyExerciseView,
+                             view: AnyView(ModifyExerciseView(parentViewModel: viewModel)))
             
             SearchBar(text: $viewModel.searchText)
                 .padding(.horizontal)
@@ -24,10 +24,14 @@ struct ExercisesView: View {
             ScrollView {
                 LazyVStack {
                     ForEach(viewModel.searchableExercises) {exercise in
-                        ExerciseRowView(
-                            exercise: exercise,
-                            trailingIcon: AnyView(Image(systemName: "arrow.right").foregroundColor(.gray))
-                        )
+                        NavigationLink {
+                            NavigationLazyView(ModifyExerciseView(parentViewModel: viewModel, exercise: exercise))
+                        } label: {
+                            ExerciseRowView(
+                                exercise: exercise,
+                                trailingIcon: AnyView(Image(systemName: "arrow.right").foregroundColor(.gray))
+                            )
+                        }
                     }
                 }
             }

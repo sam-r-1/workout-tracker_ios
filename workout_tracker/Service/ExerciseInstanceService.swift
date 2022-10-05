@@ -83,4 +83,23 @@ struct ExerciseInstanceService {
                 .delete()
         }
     }
+    
+    // Delete all instances of an [Exercise] given it's ID
+    func deleteInstances(ofExercise exerciseId: String) {
+        let query = Firestore.firestore().collection("exercise-instances")
+            .whereField("exerciseId", isEqualTo: exerciseId)
+        
+        query.getDocuments { snapshot, error in
+            guard error == nil else {
+                print("DEBUG: \(error!.localizedDescription)")
+                return
+            }
+            
+            let documents = snapshot!.documents
+            
+            documents.forEach { doc in
+                doc.reference.delete()
+            }
+        }
+    }
 }
