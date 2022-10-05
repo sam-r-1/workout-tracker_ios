@@ -8,6 +8,7 @@
 import Foundation
 
 class ExercisesViewModel: ObservableObject {
+    @Published var loadingState = LoadingState.loading
     @Published var searchText = ""
     @Published var exercises = [Exercise]()
     private let service = ExerciseService()
@@ -33,6 +34,7 @@ class ExercisesViewModel: ObservableObject {
     func fetchExercises() {
         service.fetchExercises { exercises in
             self.exercises = exercises
+            self.loadingState = .data
         }
     }
 }

@@ -19,7 +19,7 @@ struct HistoryView: View {
             switch viewModel.loadingState {
                 case .data: dataView
 
-                case .loading: loadingView
+                case .loading: LoadingView()
                     
                 case .error: Text("--") // placeholder for error message; should never be used currently
             }
@@ -61,15 +61,6 @@ extension HistoryView {
                 .multilineTextAlignment(.center)
                 .foregroundColor(Color(.systemGray))
             
-            Spacer()
-        }
-    }
-    
-    // View to display when loading data
-    var loadingView: some View {
-        VStack {
-            Spacer()
-            LoadingIndicator(animation: .circleBars, speed: .fast)
             Spacer()
         }
     }

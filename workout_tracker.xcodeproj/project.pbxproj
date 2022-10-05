@@ -42,6 +42,7 @@
 		7FA320D428A552DD0071D835 /* ExercisesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA320D328A552DD0071D835 /* ExercisesViewModel.swift */; };
 		7FA320D928A5927D0071D835 /* ExerciseRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA320D828A5927D0071D835 /* ExerciseRowView.swift */; };
 		7FA5480728EDE8E7009B1508 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA5480628EDE8E7009B1508 /* LoadingState.swift */; };
+		7FA5480A28EDEF9D009B1508 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA5480928EDEF9D009B1508 /* LoadingView.swift */; };
 		7FA56BFA28EB74AF00E977AC /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA56BF928EB74AF00E977AC /* HeaderView.swift */; };
 		7FA56BFC28EB792900E977AC /* WorkoutRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA56BFB28EB792900E977AC /* WorkoutRowView.swift */; };
 		7FA56BFE28EB7C7E00E977AC /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA56BFD28EB7C7E00E977AC /* HistoryViewModel.swift */; };
@@ -121,6 +122,7 @@
 		7FA320D328A552DD0071D835 /* ExercisesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesViewModel.swift; sourceTree = "<group>"; };
 		7FA320D828A5927D0071D835 /* ExerciseRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRowView.swift; sourceTree = "<group>"; };
 		7FA5480628EDE8E7009B1508 /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
+		7FA5480928EDEF9D009B1508 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		7FA56BF928EB74AF00E977AC /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		7FA56BFB28EB792900E977AC /* WorkoutRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutRowView.swift; sourceTree = "<group>"; };
 		7FA56BFD28EB7C7E00E977AC /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
@@ -408,15 +410,12 @@
 		7FA320BD28A3FCA20071D835 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				7FA5480828EDEF7A009B1508 /* General */,
 				7F0E8F6528A6F9AF00824BED /* Authentication */,
 				7F02753628A5A40C009536CF /* Header */,
 				7FA320D528A592540071D835 /* Exercise */,
 				7F02753B28A5A915009536CF /* Template */,
 				7FC0002028AC305E00D484C6 /* Workout */,
-				7FA320D128A551820071D835 /* SearchBar.swift */,
-				7F0E8F6A28A6FA8D00824BED /* CustomInputField.swift */,
-				7FA56C0328EB900200E977AC /* NavigationLazyView.swift */,
-				7FA5480628EDE8E7009B1508 /* LoadingState.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -488,6 +487,18 @@
 				7FA320D828A5927D0071D835 /* ExerciseRowView.swift */,
 			);
 			path = Exercise;
+			sourceTree = "<group>";
+		};
+		7FA5480828EDEF7A009B1508 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				7FA320D128A551820071D835 /* SearchBar.swift */,
+				7F0E8F6A28A6FA8D00824BED /* CustomInputField.swift */,
+				7FA56C0328EB900200E977AC /* NavigationLazyView.swift */,
+				7FA5480628EDE8E7009B1508 /* LoadingState.swift */,
+				7FA5480928EDEF9D009B1508 /* LoadingView.swift */,
+			);
+			path = General;
 			sourceTree = "<group>";
 		};
 		7FC0001428AC0AC600D484C6 /* Views */ = {
@@ -727,6 +738,7 @@
 				7F43D9E828AEAED300069817 /* SelectExerciseView.swift in Sources */,
 				7F0E8F6728A6F9BF00824BED /* AuthHeaderView.swift in Sources */,
 				7F02754228A6B362009536CF /* ModifyExerciseView.swift in Sources */,
+				7FA5480A28EDEF9D009B1508 /* LoadingView.swift in Sources */,
 				7FA56C0428EB900200E977AC /* NavigationLazyView.swift in Sources */,
 				7FC0002428AC319300D484C6 /* TimerView.swift in Sources */,
 				7F0E8F7128A74BCF00824BED /* AuthCardView.swift in Sources */,
