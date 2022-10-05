@@ -9,6 +9,7 @@ import Foundation
 
 class HistoryViewModel: ObservableObject {
     @Published var workouts = [Workout]()
+    @Published var loadingState = LoadingState.loading
     private let service = WorkoutService()
     private let instanceService = ExerciseInstanceService()
     
@@ -19,6 +20,7 @@ class HistoryViewModel: ObservableObject {
     func fetchWorkouts() {
         service.fetchWorkouts { workouts in
             self.workouts = workouts
+            self.loadingState = .data
         }
     }
     
