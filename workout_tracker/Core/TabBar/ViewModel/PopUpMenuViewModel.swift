@@ -7,7 +7,20 @@
 
 import SwiftUI
 
-enum PopUpMenuViewModel: Int, CaseIterable {
+class PopUpMenuViewModel: ObservableObject {
+    let service = ExerciseService()
+    
+    func userHasExercises(_ option: PopUpMenuOption, completion: @escaping(Bool) -> Void) {
+        // if starting a workout from scratch, confirm that the user has at least one exercise created
+        if option == .fromScratch {
+            service.fetchExercises { exercises in
+                completion(!exercises.isEmpty)
+            }
+        } else { completion(false) }
+    }
+}
+
+enum PopUpMenuOption: Int, CaseIterable {
     // case fromTemplate
     case fromScratch
     

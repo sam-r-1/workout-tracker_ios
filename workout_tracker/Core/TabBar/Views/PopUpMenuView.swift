@@ -9,19 +9,16 @@ import SwiftUI
 
 struct PopUpMenuView: View {
     @Binding var showMenu: Bool
+    @Binding var showNoExercisesMessage: Bool
     @Binding var isActiveWorkout: Bool
-    
-    init(_ showMenu: Binding<Bool>, _ isActiveWorkout: Binding<Bool>) {
-        self._showMenu = showMenu
-        self._isActiveWorkout = isActiveWorkout
-    }
+    @StateObject var viewModel = PopUpMenuViewModel()
     
     var body: some View {
         HStack(spacing: 36) {
             Spacer()
             
-            ForEach(PopUpMenuViewModel.allCases, id: \.self) { item in
-                MenuItem(viewModel: item, showMenu: $showMenu, isActiveWorkout: $isActiveWorkout)
+            ForEach(PopUpMenuOption.allCases, id: \.self) { item in
+                MenuItem(viewModel: viewModel, option: item, showMenu: $showMenu, showNoExercisesMessage: $showNoExercisesMessage, isActiveWorkout: $isActiveWorkout)
             }
             
             Spacer()
@@ -31,15 +28,20 @@ struct PopUpMenuView: View {
 }
 
 struct MenuItem: View {
-    let viewModel: PopUpMenuViewModel;
+    let viewModel: PopUpMenuViewModel
+    let option: PopUpMenuOption;
     let size: CGFloat = 48
     @Binding var showMenu: Bool
+    @Binding var showNoExercisesMessage: Bool
     @Binding var isActiveWorkout: Bool
     
     var body: some View {
         Button {
             $showMenu.wrappedValue = false
-            $isActiveWorkout.wrappedValue.toggle()
+            viewModel.userHasExercises(option) { yes in
+                if yes { $isActiveWorkout.wrappedValue.toggle() }
+                else { $showNoExercisesMessage.wrappedValue.toggle() }
+            }
         }
         label: {
             ZStack {
@@ -48,7 +50,7 @@ struct MenuItem: View {
                     .frame(height: size)
                     .shadow(radius: 4)
                 
-                Text(viewModel.title)
+                Text(option.title)
                     .padding(2)
                     .foregroundColor(.white)
                     .font(.footnote)
@@ -59,6 +61,6 @@ struct MenuItem: View {
 
 struct PopUpMenuView_Previews: PreviewProvider {
     static var previews: some View {
-        PopUpMenuView(.constant(true), .constant(false))
+        PopUpMenuView(showMenu: .constant(false), showNoExercisesMessage: .constant(false), isActiveWorkout: .constant(false))
     }
 }
