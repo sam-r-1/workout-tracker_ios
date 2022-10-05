@@ -9,8 +9,7 @@ import SwiftUI
 
 struct ExerciseRowView: View {
     let exercise: Exercise
-    let buttonLabel: AnyView
-    let onButtonPressed: () -> Void
+    let trailingIcon: AnyView
     
     var body: some View {
         VStack {
@@ -26,18 +25,13 @@ struct ExerciseRowView: View {
                     
                     Text(exercise.dataFieldTextList())
                 }
+                .foregroundColor(.primary)
                 
                 Spacer()
                 
-                Button {
-                    onButtonPressed()
-                } label: {
-                    buttonLabel
-                }
-
+                trailingIcon
             }
             .padding(.horizontal)
-            .foregroundColor(.primary)
         }
     }
 }

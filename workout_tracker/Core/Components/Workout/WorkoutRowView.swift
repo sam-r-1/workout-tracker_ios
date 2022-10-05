@@ -47,8 +47,8 @@ struct WorkoutRowView: View {
                 Image(systemName: "arrow.right")
                     .foregroundColor(.gray)
             }
+            .padding(.horizontal)
         }
-        .padding(.horizontal)
     }
 }
 

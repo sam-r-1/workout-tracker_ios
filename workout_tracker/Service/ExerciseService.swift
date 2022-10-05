@@ -54,7 +54,13 @@ struct ExerciseService {
             .getDocuments { snapshot, _ in
                 guard let documents = snapshot?.documents else { return }
                 
-                let exercises = documents.compactMap({ try? $0.data(as: Exercise.self) })
+                var exercises = documents.compactMap({ try? $0.data(as: Exercise.self) })
+                
+                // add the id's
+                for i in 0...(exercises.count - 1) {
+                    exercises[i].id = documents[i].documentID
+                }
+                
                 completion(exercises.sorted(by: { $0.name < $1.name }))
             }
     }

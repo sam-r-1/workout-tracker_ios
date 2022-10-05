@@ -26,12 +26,8 @@ struct ExercisesView: View {
                     ForEach(viewModel.searchableExercises) {exercise in
                         ExerciseRowView(
                             exercise: exercise,
-                            buttonLabel: AnyView(Image(systemName: "ellipsis")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 20, height: 20))) {
-                                    print("DEBUG: open exercise options")
-                                }
+                            trailingIcon: AnyView(Image(systemName: "arrow.right").foregroundColor(.gray))
+                        )
                     }
                 }
             }

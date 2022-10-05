@@ -58,18 +58,19 @@ struct ExerciseInstanceService {
             }
     }
     
-    // fetch a single exercise instances by its id
+    // fetch a list of exercise instances using their id's
     func fetchInstances(byInstanceIdList instanceIdList: [String], completion: @escaping([ExerciseInstance]) -> Void) {
         var instances = [ExerciseInstance]()
-        
-        instanceIdList.forEach { id in
+
+        for id in instanceIdList {
             
             Firestore.firestore().collection("exercise-instances").document(id)
                 .getDocument { snapshot, _ in
-                    guard let instance = try? snapshot?.data(as: ExerciseInstance.self) else { return }
+                    guard var instance = try? snapshot?.data(as: ExerciseInstance.self) else { return }
+                    instance.id = id
+
                     instances.append(instance)
-                    
-                    completion(instances)
+                    completion(instances.sorted(by: { $0.timestamp.dateValue() < $1.timestamp.dateValue() }))
                 }
         }
     }

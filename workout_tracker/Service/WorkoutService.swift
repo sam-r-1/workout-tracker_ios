@@ -43,8 +43,10 @@ struct WorkoutService {
                 var workouts = documents.compactMap({ try? $0.data(as: Workout.self) })
                 
                 // add the id's
-                for i in 0...(workouts.count - 1) {
-                    workouts[i].id = documents[i].documentID
+                if workouts.count >= 1 {
+                    for i in 0...(workouts.count - 1) {
+                        workouts[i].id = documents[i].documentID
+                    }
                 }
                 
                 completion(workouts)

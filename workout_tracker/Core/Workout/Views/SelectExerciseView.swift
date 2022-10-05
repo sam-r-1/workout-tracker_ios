@@ -26,10 +26,17 @@ struct SelectExerciseView: View {
                     ForEach(viewModel.searchableExercises) {exercise in
                         ExerciseRowView(
                             exercise: exercise,
-                            buttonLabel: AnyView(Text("Add").foregroundColor(Color(.systemBlue)))) {
-                                viewModel.addItem(exercise.id!)
-                                presentationMode.wrappedValue.dismiss()
-                            }
+                            trailingIcon: AnyView(
+                                Button("Add") {
+                                    viewModel.addItem(exercise.id!)
+                                    presentationMode.wrappedValue.dismiss()
+                                }
+                            )
+                        )
+//                            buttonLabel: AnyView(Text("Add").foregroundColor(Color(.systemBlue)))) {
+//                                viewModel.addItem(exercise.id!)
+//                                presentationMode.wrappedValue.dismiss()
+//                            }
                     }
                 }
             }
