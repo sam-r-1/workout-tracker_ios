@@ -6,11 +6,7 @@
 * Note: The app's Firebase configuration is not include in this repository. Set up your own Firebase project if you want to run the app on your machine.
 
 ### App Screenshots
-<img
-  src="https://github.com/sam-r-1/workout-tracker_ios/blob/main/app-screen-captures/edit-exercise-screen.png"
-  alt="Alt text"
-  title="Optional title"
-  style="display: inline-block; margin: 0 auto; max-width: 300px">
+* See [here](https://github.com/sam-r-1/workout-tracker_ios/tree/main/app-screen-captures) for some app screenshots
 
 ### Future Improvements
 * Implement workout templates to allow users to easily record exercises in the same order repeatedly
