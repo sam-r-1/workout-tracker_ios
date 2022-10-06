@@ -25,12 +25,12 @@ enum TabBarViewModel: Int, CaseIterable {
         }
     }
     
-    var imageName: String {
+    var image: Image {
         switch self {
-        case .exercises: return "bell"
-        case .templates: return "globe"
-        case .history: return "clock"
-        case .settings: return "gear"
+        case .exercises: return Image("dumbell")
+        case .templates: return Image("checklist")
+        case .history: return Image(systemName: "clock")
+        case .settings: return Image(systemName: "gear")
         }
     }
     

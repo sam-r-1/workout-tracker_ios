@@ -22,7 +22,8 @@ struct TabIconView: View {
             }
         } label: {
             VStack {
-                Image(systemName: viewModel.imageName)
+                Image("")
+                viewModel.image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 20, height: 20)
