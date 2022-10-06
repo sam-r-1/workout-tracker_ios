@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HistoryViewModel: ObservableObject {
+class WorkoutHistoryViewModel: ObservableObject {
     @Published var workouts = [Workout]()
     @Published var loadingState = LoadingState.loading
     private let service = WorkoutService()

@@ -9,60 +9,31 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct HistoryView: View {
-    @StateObject var viewModel = HistoryViewModel()
+    @State private var historyMode = HistoryMode.workout
+
+    
+    enum HistoryMode {
+        case workout, exercise
+    }
     
     var body: some View {
         VStack {
             
-            HeaderView("Workout History")
+            HeaderView("My History")
             
-            switch viewModel.loadingState {
-                case .data: dataView
-
-                case .loading: LoadingView()
-                    
-                case .error: Text("--") // placeholder for error message; should never be used currently
+            Picker("History Mode", selection: $historyMode) {
+                Text("by Workout").tag(HistoryMode.workout)
+                Text("by Exercise").tag(HistoryMode.exercise)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .frame(maxWidth: min(UIScreen.main.bounds.width * 0.8, 400))
+            
+            switch historyMode {
+                case .workout: HistoryByWorkoutView()
+                case .exercise: HistoryByExerciseView()
             }
         }
         .navigationBarHidden(true)
-    }
-}
-
-extension HistoryView {
-    
-    // display when the user has workout data
-    var dataView: some View {
-        VStack {
-            if viewModel.workouts.isEmpty {
-                noDataView
-            } else {
-                ScrollView {
-                    LazyVStack {
-                       
-                        ForEach(viewModel.workouts, id: \.timestamp) { workout in
-                            NavigationLink {
-                                NavigationLazyView(WorkoutDetailsView(workout, viewModel: viewModel))
-                            } label: {
-                                WorkoutRowView(workout: workout)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    // Display when the user does not have any workouts
-    var noDataView: some View {
-        VStack {
-            Spacer()
-            
-            Text("Data from completed workouts\n will appear here.")
-                .multilineTextAlignment(.center)
-                .foregroundColor(Color(.systemGray))
-            
-            Spacer()
-        }
     }
 }
 

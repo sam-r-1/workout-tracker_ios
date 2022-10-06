@@ -8,8 +8,58 @@
 import SwiftUI
 
 struct HistoryByExerciseView: View {
+    @State private var selectedExercise: Exercise? = nil
+    @StateObject var viewModel = ExerciseHistoryViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        switch viewModel.loadingState {
+            case .data: dataView
+
+            case .loading: LoadingView()
+                
+            case .error: Text("--") // placeholder for error message; should never be used currently
+        }
+    }
+}
+
+extension HistoryByExerciseView {
+    // display when the user has workout data
+    var dataView: some View {
+        VStack {
+            if viewModel.exercises.isEmpty {
+                noDataView
+            } else {
+                ScrollView {
+                    LazyVStack {
+                       
+                        ForEach(viewModel.exercises) { exercise in
+                            NavigationLink {
+                                NavigationLazyView(ExerciseHistoryView(exercise))
+                            } label: {
+                                ExerciseRowView(
+                                    exercise: exercise,
+                                    trailingIcon: AnyView(Image(systemName: "arrow.right").foregroundColor(.gray))
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            Spacer()
+        }
+    }
+    
+    // Display when the user does not have any workouts
+    var noDataView: some View {
+        VStack {
+            Spacer()
+            
+            Text("Data from completed workouts\n will appear here.")
+                .multilineTextAlignment(.center)
+                .foregroundColor(Color(.systemGray))
+            
+            Spacer()
+        }
     }
 }
 

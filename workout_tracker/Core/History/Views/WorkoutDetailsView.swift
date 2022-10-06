@@ -10,7 +10,7 @@ import SwiftUI
 struct WorkoutDetailsView: View {
     let workout: Workout
     @State private var showDeleteDialog = false
-    @ObservedObject var viewModel: HistoryViewModel
+    @ObservedObject var viewModel: WorkoutHistoryViewModel
     @Environment(\.presentationMode) var presentationMode
     
     @State private var dateFormatter: DateFormatter = {
@@ -20,7 +20,7 @@ struct WorkoutDetailsView: View {
         return dateFormatter
     }()
     
-    init(_ workout: Workout, viewModel: HistoryViewModel) {
+    init(_ workout: Workout, viewModel: WorkoutHistoryViewModel) {
         self.workout = workout
         self.viewModel = viewModel
     }

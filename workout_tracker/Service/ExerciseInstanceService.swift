@@ -75,6 +75,25 @@ struct ExerciseInstanceService {
         }
     }
     
+    func fetchInstances(byExerciseId id: String, completion: @escaping([ExerciseInstance]) -> Void) {
+        Firestore.firestore().collection("exercise-instances")
+            .whereField("exerciseId", isEqualTo: id)
+            .getDocuments { snapshot, _ in
+                guard let documents = snapshot?.documents else { return }
+                
+                var instances = documents.compactMap({ try? $0.data(as: ExerciseInstance.self) })
+                
+                // add the id's
+                if instances.count >= 1 {
+                    for i in 0...(instances.count - 1) {
+                        instances[i].id = documents[i].documentID
+                    }
+                }
+                
+                completion(instances.sorted(by: { $0.timestamp.dateValue() > $1.timestamp.dateValue() }))
+            }
+    }
+    
     // Delete instances of an exercise from the database based on a list of instances
     // to be used for deleting all data associated with a workout
     func deleteInstances(fromInstanceIdList idList: [String]) {

@@ -6,3 +6,18 @@
 //
 
 import Foundation
+
+class ExerciseResultsViewModel: ObservableObject {
+    @Published var exerciseInstances = [ExerciseInstance]()
+    private let service = ExerciseInstanceService()
+    
+    init(_ exercise: Exercise) {
+        fetchInstancesFromIdList(exercise.id!)
+    }
+    
+    func fetchInstancesFromIdList(_ exerciseId: String) {
+        service.fetchInstances(byExerciseId: exerciseId) { instances in
+            self.exerciseInstances = instances
+        }
+    }
+}
