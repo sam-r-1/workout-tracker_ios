@@ -17,7 +17,7 @@ struct AuthCardView: View {
     var body: some View {
         VStack {
             // header view
-            AuthHeaderView(logoImage: "bell", line1Text: authMode.headerText)
+            AuthHeaderView(logoImage: "lock.shield", line1Text: authMode.headerText)
                 .padding(.top)
             
             // email and password fields
@@ -28,7 +28,7 @@ struct AuthCardView: View {
                                  placeholderText: "Password", isSecureField: true, text: $password)
             }
             .padding(.horizontal, 32)
-            .padding(.top, 44)
+            .padding(.top, 40)
             
             HStack {
                 Spacer()
@@ -96,7 +96,7 @@ struct AuthCardView: View {
             
         }
         .background(Color(.systemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 50))
+        .clipShape(RoundedRectangle(cornerRadius: 44))
     }
 }
 

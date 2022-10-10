@@ -18,7 +18,7 @@ struct LoginView: View {
             
             Spacer()
         }
-        .padding(.horizontal, 30)
+        .padding(.horizontal, 24)
         .background(Color(.systemGray2))
         .navigationBarHidden(true)
     }

@@ -21,15 +21,15 @@ struct AuthHeaderView: View {
                 .frame(width: 120)
             
             Text(line1Text)
-                .font(.largeTitle)
+                .font(.title)
                 .fontWeight(.semibold)
+                .fixedSize(horizontal: false, vertical: true)
             
         }
-        .frame(height: 160)
+        //.frame(minHeight: 160)
         .padding(.leading)
         .background(.clear)
         .foregroundColor(.primary)
-        // .clipShape(RoundedShape(corners: [.bottomRight]))
     }
 }
 
