@@ -2,6 +2,7 @@
 
 ### About
 * An iOS app I made as a personal project for tracking workouts at the gym or at home. Features fully customizable exercises, the ability to view historical performance by workout or by exercise, in-app stopwatch for exercises that require it, and more.
+* Requires iOS 15.0 or newer
 * Built using Swift, SwiftUI, Firebase, Firebase Cloud Firestore
 * Note: The app's Firebase configuration is not include in this repository. Set up your own Firebase project if you want to run the app on your machine.
 

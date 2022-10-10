@@ -21,7 +21,9 @@ struct WorkoutView: View {
             ScrollView {
                 LazyVStack {
                     ForEach(viewModel.items) {item in
-                        ExerciseDisclosureGroupView(item: item)
+                        ExerciseDisclosureGroupView(item: item, onDelete: {
+                            viewModel.deleteItem(at: viewModel.items.firstIndex(where: { $0.id == item.id })!)
+                        })
                             .padding(.horizontal)
                     }
                 }

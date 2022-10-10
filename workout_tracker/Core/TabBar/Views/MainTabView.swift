@@ -38,7 +38,6 @@ struct MainTabView: View {
                 TabMenuIconView(showMenu: $showMenu, router: router, offset: tabBarHeight * 0.3)
                     .onTapGesture {
                         withAnimation {
-                            print("DEBUG: \(tabBarHeight)")
                             showMenu.toggle()
                         }
                     }

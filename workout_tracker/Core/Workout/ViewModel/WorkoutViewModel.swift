@@ -54,6 +54,10 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
+    func deleteItem(at index: Int) {
+        items.remove(at: index)
+    }
+    
     init() {
         fetchExercises()
     }
