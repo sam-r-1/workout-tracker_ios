@@ -115,6 +115,13 @@ struct ExerciseDisclosureGroupView: View {
             print("DEBUG: timer dismissed")
         } content: {
             TimerView(item, title: item.exercise.name)
+                .onAppear {
+                    // prevent auto-lock while timing an exercise
+                    UIApplication.shared.isIdleTimerDisabled = true
+                }
+                .onDisappear {
+                    UIApplication.shared.isIdleTimerDisabled = false
+                }
         }
     }
 }
