@@ -11,13 +11,14 @@ struct MainTabView: View {
     @State private var showMenu = false
     @State private var showNoExercisesMessage = false
     @State private var isActiveWorkout = false
+    @StateObject var router = ViewRouter()
     
-    let tabBarHeight: CGFloat = UIScreen.main.bounds.height / 14
+    let tabBarHeight: CGFloat = fmax(UIScreen.main.bounds.height / 14, 58.0)
     
     var body: some View {
          NavigationView {
             ZStack(alignment: .bottom) {
-                MainTabViewBodyView(tabBarHeight: tabBarHeight)
+                MainTabViewBodyView(router: router, tabBarHeight: tabBarHeight)
                 
                 if showMenu {
                     // dim the rest of the screen
@@ -34,9 +35,10 @@ struct MainTabView: View {
                         .padding(.bottom, 100)
                 }
                 
-                TabMenuIconView(showMenu: $showMenu)
+                TabMenuIconView(showMenu: $showMenu, router: router, offset: tabBarHeight * 0.3)
                     .onTapGesture {
                         withAnimation {
+                            print("DEBUG: \(tabBarHeight)")
                             showMenu.toggle()
                         }
                     }

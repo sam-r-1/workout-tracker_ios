@@ -115,7 +115,7 @@
 		7F43D9E728AEAED300069817 /* SelectExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectExerciseView.swift; sourceTree = "<group>"; };
 		7F63BAC528E5E732005B6235 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		7F63BAC728E75764005B6235 /* ExerciseInstanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseInstanceViewModel.swift; sourceTree = "<group>"; };
-		7FA3208D28A3F8F30071D835 /* workout_tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = workout_tracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7FA3208D28A3F8F30071D835 /* Workout Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Workout Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = workout_trackerApp.swift; sourceTree = "<group>"; };
 		7FA3209228A3F8F30071D835 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7FA3209428A3F8F30071D835 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -348,7 +348,7 @@
 		7FA3208E28A3F8F30071D835 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7FA3208D28A3F8F30071D835 /* workout_tracker.app */,
+				7FA3208D28A3F8F30071D835 /* Workout Tracker.app */,
 				7FA3209D28A3F8F40071D835 /* workout_trackerTests.xctest */,
 				7FA320A728A3F8F40071D835 /* workout_trackerUITests.xctest */,
 			);
@@ -607,7 +607,7 @@
 				7FA56C0C28ECBB3500E977AC /* SwiftfulLoadingIndicators */,
 			);
 			productName = workout_tracker;
-			productReference = 7FA3208D28A3F8F30071D835 /* workout_tracker.app */;
+			productReference = 7FA3208D28A3F8F30071D835 /* Workout Tracker.app */;
 			productType = "com.apple.product-type.application";
 		};
 		7FA3209C28A3F8F40071D835 /* workout_trackerTests */ = {
@@ -957,7 +957,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rsam.workout-tracker";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Workout Tracker";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -986,7 +986,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rsam.workout-tracker";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Workout Tracker";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

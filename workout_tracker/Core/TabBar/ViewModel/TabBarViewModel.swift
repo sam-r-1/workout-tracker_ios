@@ -11,6 +11,11 @@ class ViewRouter: ObservableObject {
     @Published var currentItem: TabBarViewModel = .exercises
     
     var view: some View { return currentItem.view }
+    
+    // Prevent the text on the tab bar from scaling too high due to Dynamic Type
+    public func tabBarTextSize() -> CGFloat {
+        return fmin(UIFont.preferredFont(forTextStyle: .caption1).pointSize, 12.0)
+    }
 }
 
 enum TabBarViewModel: Int, CaseIterable {

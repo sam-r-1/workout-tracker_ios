@@ -30,7 +30,7 @@ struct TabIconView: View {
                     .frame(maxWidth: .infinity)
                 
                 Text(viewModel.title)
-                    .font(.caption)
+                    .font(.system(size: router.tabBarTextSize()))
                     .fontWeight(isSelected ? .bold : .regular)
             }
         }

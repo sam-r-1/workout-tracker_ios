@@ -9,6 +9,8 @@ import SwiftUI
 
 struct TabMenuIconView: View {
     @Binding var showMenu: Bool
+    @ObservedObject var router: ViewRouter
+    let offset: CGFloat
     
     var body: some View {
         VStack {
@@ -28,9 +30,9 @@ struct TabMenuIconView: View {
             
             
             Text("Workout")
-                .font(.caption)
+                .font(.system(size: router.tabBarTextSize()))
         }
-        .offset(y: -20)
+        .offset(y: -offset)
     }
 }
 

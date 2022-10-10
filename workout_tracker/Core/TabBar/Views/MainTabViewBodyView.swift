@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainTabViewBodyView: View {
-    @StateObject var router = ViewRouter()
+    @ObservedObject var router: ViewRouter
     let tabBarHeight: CGFloat
     
     var body: some View {
@@ -16,7 +16,7 @@ struct MainTabViewBodyView: View {
             
             router.view
             
-            HStack {
+            HStack(alignment: .center) {
                 Spacer()
                 TabIconView(viewModel: .exercises, router: router)
                 TabIconView(viewModel: .templates, router: router)
@@ -40,6 +40,6 @@ struct MainTabViewBodyView: View {
 
 struct MainTabViewBodyView_Previews: PreviewProvider {
     static var previews: some View {
-        MainTabViewBodyView(tabBarHeight: 50)
+        MainTabViewBodyView(router: ViewRouter(), tabBarHeight: 50)
     }
 }
