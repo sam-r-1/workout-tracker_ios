@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ExerciseDisclosureGroupView: View {
     @State private var showTimer = false
+    @State private var showInfo = false
     @State private var isExpanded: Bool = true
     @State var item: ExerciseDataFields
+    let onDelete: () -> Void
     
     // Formatters
     @State private var intFormatter: NumberFormatter = {
@@ -34,48 +36,78 @@ struct ExerciseDisclosureGroupView: View {
         return timeFormatter
     }()
     
-    init(item: ExerciseDataFields) {
+    init(item: ExerciseDataFields, onDelete: @escaping () -> Void) {
         self.item = item
+        self.onDelete = onDelete
     }
     
     // View body
     var body: some View {
-               
         DisclosureGroup(isExpanded: $isExpanded) {
             Divider()
             
-            HStack(alignment: .top) {
-                //Today stack
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("Today")
-                        .bold()
-                    
-                    if item.exercise.includeWeight {
-                        weightFieldView
+            VStack(spacing: 16) {
+                HStack(alignment: .top) {
+                    //Today stack
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Today")
+                            .bold()
+                        
+                        if item.exercise.includeWeight {
+                            weightFieldView
+                        }
+                        
+                        if item.exercise.includeReps {
+                            repsFieldView
+                        }
+                        
+                        if item.exercise.includeTime {
+                            timeFieldView
+                        }
                     }
                     
-                    if item.exercise.includeReps {
-                        repsFieldView
-                    }
-                    
-                    if item.exercise.includeTime {
-                        timeFieldView
-                    }
+                    // previous instance stack
+                        PreviousInstanceDataView(exercise: item.exercise)
+                            .equatable()
                 }
                 
-                // previous instance stack
-                    PreviousInstanceDataView(exercise: item.exercise)
-                        .equatable()
+                // Remove instance from workout
+                HStack {
+                    Spacer()
+                    Button(role: .destructive) {
+                        onDelete()
+                    } label: {
+                        Image(systemName: "trash")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 25, height: 25)
+                    }
+                }
             }
         } label: {
             HStack {
                 Text(item.exercise.name)
                     .bold()
                 
+                Button {
+                    showInfo.toggle()
+                } label: {
+                    Image(systemName: "info.circle")
+                }
+                Spacer()
+                
                 // Text("(set 1 of 3)") *Placeholder for potential set count text
             }
             .font(.title2)
         }
+        .alert(item.exercise.name,
+               isPresented: $showInfo,
+                actions: {
+                    Button("Close", action: {})
+                },
+                message: {
+                    Text("Notes: \(item.exercise.details)")
+        })
         .padding()
         .background(Color(.systemGray5))
         .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -89,7 +121,9 @@ struct ExerciseDisclosureGroupView: View {
 
 struct ExerciseDisclosureGroupView_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true)))
+        ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true))) {
+            print("DEBUG: deleting")
+        }
     }
 }
 
