@@ -20,16 +20,6 @@ struct WorkoutView: View {
             
             ScrollView {
                 LazyVStack {
-//                    ForEach(viewModel.items) {item in
-//                        ExerciseDisclosureGroupView(item: item, onDelete: {
-//                            viewModel.deleteItem(at: viewModel.items.firstIndex(where: { $0.id == item.id })!)
-//                        })
-//                            .padding(.horizontal)
-//                            .onDrag {
-//                                return NSItemProvider()
-//                            }
-//                    }
-//                    .onMove(perform: viewModel.moveItem)
                     ReorderableForEach(items: viewModel.items) { item in
                         ExerciseDisclosureGroupView(item: item) {
                             viewModel.deleteItem(at: viewModel.items.firstIndex(where: { $0.id == item.id })!)
