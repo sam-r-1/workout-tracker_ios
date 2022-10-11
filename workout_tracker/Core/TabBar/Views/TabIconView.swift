@@ -22,12 +22,13 @@ struct TabIconView: View {
             }
         } label: {
             VStack {
-                Image("")
                 viewModel.image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 20, height: 20)
                     .frame(maxWidth: .infinity)
+                    // fix for dark mode with custom icons for Exercises and Templates
+                    .invertOnDarkTheme(viewModel == .exercises || viewModel == .templates)
                 
                 Text(viewModel.title)
                     .font(.system(size: router.tabBarTextSize()))
