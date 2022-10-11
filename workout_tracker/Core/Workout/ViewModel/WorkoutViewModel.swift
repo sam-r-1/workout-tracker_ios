@@ -8,7 +8,11 @@
 import Foundation
 import Firebase
 
-class ExerciseDataFields: Identifiable {
+class ExerciseDataFields: Identifiable, Equatable {
+    static func == (lhs: ExerciseDataFields, rhs: ExerciseDataFields) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     init(parent: WorkoutViewModel, exercise: Exercise) {
         self.parent = parent
         self.exercise = exercise
@@ -56,6 +60,10 @@ class WorkoutViewModel: ObservableObject {
     
     func deleteItem(at index: Int) {
         items.remove(at: index)
+    }
+    
+    func moveItem(from source: IndexSet, to destination: Int) {
+        self.items.move(fromOffsets: source, toOffset: destination)
     }
     
     init() {
