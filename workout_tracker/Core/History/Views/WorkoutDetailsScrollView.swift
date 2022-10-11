@@ -24,7 +24,9 @@ struct WorkoutDetailsScrollView: View, Equatable {
         ScrollView {
             LazyVStack {
                 ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
-                    InstanceHistoryRowView(instance)
+                    InstanceHistoryRowView(instance, onDelete: { id in
+                        viewModel.deleteInstance(by: id)
+                    })
                         .padding(.horizontal, 14)
                         .padding(.vertical, 4)
                 }

@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ExerciseResultRowView: View {
+    @State private var showDeleteDialog = false
     let exercise: Exercise
     let instance: ExerciseInstance
+    let onDelete: (String) -> Void
     
     // Formatters
     @State private var doubleFormatter: NumberFormatter = {
@@ -38,38 +40,59 @@ struct ExerciseResultRowView: View {
         VStack(alignment: .leading, spacing: 8) {
             Divider()
             
-            Text(dateFormatter.string(from: instance.timestamp.dateValue()))
-                .bold()
-                .font(.title2)
-            
-            VStack(alignment: .leading, spacing: 5) {
-                if exercise.includeWeight {
-                    HStack {
-                        Text("Weight: ")
-                        Text("\(doubleFormatter.string(from: instance.weight as NSNumber) ?? "0")lbs")
+            HStack {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(dateFormatter.string(from: instance.timestamp.dateValue()))
+                        .bold()
+                        .font(.title2)
+                    
+                    VStack(alignment: .leading, spacing: 5) {
+                        if exercise.includeWeight {
+                            HStack {
+                                Text("Weight: ")
+                                Text("\(doubleFormatter.string(from: instance.weight as NSNumber) ?? "0")lbs")
+                            }
+                        }
+                        
+                        if exercise.includeReps {
+                            HStack {
+                                Text("Reps:     ")
+                                Text("\(instance.reps)")
+                            }
+                        }
+                        
+                        if exercise.includeTime {
+                            HStack {
+                                Text("Time:     ")
+                                Text(timeFormatter.string(from: instance.time) ?? "Error loading")
+                            }
+                        }
                     }
+                    .font(.title3)
+                    .padding(.leading)
                 }
                 
-                if exercise.includeReps {
-                    HStack {
-                        Text("Reps:     ")
-                        Text("\(instance.reps)")
-                    }
-                }
+                Spacer()
                 
-                if exercise.includeTime {
-                    HStack {
-                        Text("Time:     ")
-                        Text(timeFormatter.string(from: instance.time) ?? "Error loading")
-                    }
+                Button(role: .destructive) {
+                    showDeleteDialog.toggle()
+                } label: {
+                    Image(systemName: "trash")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 25, height: 25)
                 }
+
             }
-            .font(.title3)
-            .padding(.leading)
             
             Divider()
         }
         .padding(.horizontal)
+        .alert("Delete \(exercise.name) data from \(dateFormatter.string(from: instance.timestamp.dateValue()))?", isPresented: $showDeleteDialog) {
+            Button("Delete", role: .destructive) {
+                onDelete(instance.id!)
+            }
+        }
     }
 }
 

@@ -24,7 +24,9 @@ struct ExerciseHistoryView: View {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
-                            ExerciseResultRowView(exercise: self.exercise, instance: instance)
+                            ExerciseResultRowView(exercise: self.exercise, instance: instance) { id in
+                                viewModel.deleteInstance(by: id)
+                            }
                         }
                     }
                 }

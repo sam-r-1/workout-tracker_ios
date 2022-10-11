@@ -20,4 +20,11 @@ class WorkoutDetailsViewModel: ObservableObject {
             self.exerciseInstances = instances
         }
     }
+    
+    // delete an instance from both the local and backend
+    func deleteInstance(by id: String) {
+        service.deleteInstances(fromInstanceIdList: [id]) // delete from Firebase
+        
+        self.exerciseInstances.remove(at: self.exerciseInstances.firstIndex(where: { $0.id == id })!) // delete from local
+    }
 }
