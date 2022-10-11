@@ -97,9 +97,13 @@ struct ExerciseInstanceService {
     // Delete instances of an exercise from the database based on a list of instances
     // to be used for deleting all data associated with a workout
     func deleteInstances(fromInstanceIdList idList: [String]) {
+        let workoutService = WorkoutService()
+        
         idList.forEach { id in
             Firestore.firestore().collection("exercise-instances").document(id)
                 .delete()
+            
+            workoutService.deleteInstanceRef(id)
         }
     }
     
