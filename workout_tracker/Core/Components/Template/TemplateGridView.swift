@@ -9,24 +9,29 @@ import SwiftUI
 
 struct TemplateGridView: View {
     let columnCount: Int = 2
+    let template: Template
+    
+    init(_ template: Template) {
+        self.template = template
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text("Leg Day")
+                Text(template.name)
                     .bold()
                 .font(.title3)
                 
                 Spacer()
                 
-                Button {
-                    print("DEBUG: open template options")
-                } label: {
-                    Image(systemName: "ellipsis")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 20, height: 20)
-                }
+//                Button {
+//                    print("DEBUG: open template options")
+//                } label: {
+//                    Image(systemName: "ellipsis")
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fit)
+//                        .frame(width: 20, height: 20)
+//                }
             }
             .foregroundColor(.primary)
             .padding(.trailing, 8)
@@ -55,8 +60,8 @@ struct TemplateGridView: View {
     }
 }
 
-struct TemplateGridView_Previews: PreviewProvider {
-    static var previews: some View {
-        TemplateGridView()
-    }
-}
+//struct TemplateGridView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TemplateGridView()
+//    }
+//}

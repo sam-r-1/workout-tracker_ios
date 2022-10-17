@@ -76,7 +76,9 @@ struct WorkoutView: View {
         }
         .navigationBarHidden(true)
         .fullScreenCover(isPresented: $showAddExercise) {
-            SelectExerciseView(viewModel: viewModel)
+            SelectExerciseView { exerciseId in
+                viewModel.addItem(exerciseId)
+            }
         }
         // dismiss view if workout created successfully
         .onReceive(viewModel.$didUploadWorkout) { success in

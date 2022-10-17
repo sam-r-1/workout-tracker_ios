@@ -8,7 +8,11 @@
 import FirebaseFirestoreSwift
 import Firebase
 
-struct Exercise: Identifiable, Decodable {
+struct Exercise: Identifiable, Decodable, Equatable {
+    static func == (lhs: Exercise, rhs: Exercise) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
     @DocumentID var id: String?
     let uid: String
     let name: String

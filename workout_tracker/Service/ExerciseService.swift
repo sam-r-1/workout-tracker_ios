@@ -54,6 +54,23 @@ struct ExerciseService {
             }
     }
     
+    // fetch a list of exercises using their id's
+    func fetchExercises(byExerciseIdList exerciseIdList: [String], completion: @escaping([Exercise]) -> Void) {
+        var exercises = [Exercise]()
+
+        for id in exerciseIdList {
+            
+            Firestore.firestore().collection("exercises").document(id)
+                .getDocument { snapshot, _ in
+                    guard var exercise = try? snapshot?.data(as: Exercise.self) else { return }
+                    exercise.id = id
+
+                    exercises.append(exercise)
+                    completion(exercises)
+                }
+        }
+    }
+    
     // fetch all of the user's exercises from the backend
     func fetchExercises(completion: @escaping([Exercise]) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }

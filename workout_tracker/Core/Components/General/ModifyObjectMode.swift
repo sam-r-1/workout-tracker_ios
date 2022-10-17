@@ -1,5 +1,5 @@
 //
-//  ModifyExerciseType.swift
+//  ModifyObjectMode.swift
 //  workout_tracker
 //
 //  Created by Sam Rankin on 10/4/22.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ModifyExerciseType {
+enum ModifyObjectMode {
     case add, edit
     
     var submitText: String {
