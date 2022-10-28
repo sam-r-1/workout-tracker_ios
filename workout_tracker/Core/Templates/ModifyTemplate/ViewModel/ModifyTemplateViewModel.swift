@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 class ModifyTemplateViewModel: ObservableObject {
-    private var template: Template?
+    private var template: TemplateData?
     @Published var name: String
     @Published var exercises = [Exercise]()
     @Published var didCreateTemplate = false
@@ -17,13 +17,13 @@ class ModifyTemplateViewModel: ObservableObject {
     let service = TemplateService()
     let exerciseService = ExerciseService()
     
-    init(template: Template? = nil) {
+    init(template: TemplateData? = nil) {
         self.template = template
         
         if template == nil {
             self.name = ""
         } else {
-            self.name = template!.name
+            self.name = template!.template.name
         }
     }
     
@@ -38,7 +38,7 @@ class ModifyTemplateViewModel: ObservableObject {
     }
     
     func modifyTemplate() {
-        service.setTemplate(id: self.template?.id, name: self.name, exerciseList: exercises.map { $0.id! }) { success in
+        service.setTemplate(id: self.template?.template.id, name: self.name, exerciseList: exercises.map { $0.id! }) { success in
             if success {
                 // dismiss the screen
                 self.didCreateTemplate = true
@@ -48,15 +48,15 @@ class ModifyTemplateViewModel: ObservableObject {
         }
     }
     
-    func fetchExercisesForTemplate() {
-        exerciseService.fetchExercises(byExerciseIdList: self.template?.exerciseList ?? []) { exercises in
-            self.exercises = exercises
-        }
-    }
+//    func fetchExercisesForTemplate() {
+//        exerciseService.fetchExercises(byExerciseIdList: self.template?.template.exerciseList ?? []) { exercises in
+//            self.exercises = exercises
+//        }
+//    }
     
     // delete a template
     func deleteTemplate() {
-        let id = self.template?.id ?? ""
+        let id = self.template?.template.id ?? ""
         
         service.deleteTemplate(id: id) { success in
             if success {

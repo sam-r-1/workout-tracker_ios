@@ -9,47 +9,30 @@ import SwiftUI
 
 struct TemplateGridView: View {
     let columnCount: Int = 2
-    let template: Template
+    let templateData: TemplateData
     
-    init(_ template: Template) {
-        self.template = template
+    init(_ templateData: TemplateData) {
+        self.templateData = templateData
+        print("DEBUG: \(templateData.exercises.count)")
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text(template.name)
+                Text(templateData.template.name)
                     .bold()
                 .font(.title3)
                 
                 Spacer()
                 
-//                Button {
-//                    print("DEBUG: open template options")
-//                } label: {
-//                    Image(systemName: "ellipsis")
-//                        .resizable()
-//                        .aspectRatio(contentMode: .fit)
-//                        .frame(width: 20, height: 20)
-//                }
             }
             .foregroundColor(.primary)
             .padding(.trailing, 8)
             
             Divider()
             
-            VStack(alignment: .leading) {
-                ForEach(1...4, id: \.self) {_ in
-                    Text("3 x Leg Press")
-                        .font(.body)
-                        .padding(.leading, 8)
-                }
-                
-                Text("+ 2 more")
-                    .font(.subheadline)
-                    .padding(.leading, 16)
-            }
-            .foregroundColor(.secondary)
+            exerciseList
+                .foregroundColor(.secondary)
             
             
         }
@@ -57,6 +40,31 @@ struct TemplateGridView: View {
         .background(Color(.systemGray5))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         
+    }
+}
+
+extension TemplateGridView {
+    var exerciseList: some View {
+        VStack(alignment: .leading) {
+            ForEach(templateData.exercises.prefix(4)) { exercise in
+                Text(exercise.name)
+                    .font(.body)
+                    .padding(.leading, 8)
+            }
+            
+            if templateData.exercises.count == 5 {
+                
+                Text(templateData.exercises[4].name)
+                    .font(.body)
+                    .padding(.leading, 8)
+                
+            } else if templateData.exercises.count > 5 {
+                
+                Text("+ \(templateData.exercises.count - 4) more")
+                    .font(.subheadline)
+                    .padding(.leading, 16)
+            }
+        }
     }
 }
 

@@ -41,7 +41,7 @@ struct TemplatesView: View {
 extension TemplatesView {
     var dataView: some View {
         Group {
-            if viewModel.templates.isEmpty {
+            if viewModel.templateData.isEmpty {
                 noDataView
             } else {
                 SearchBar(text: $viewModel.searchText)
@@ -49,11 +49,11 @@ extension TemplatesView {
 
                 ScrollView {
                     LazyVGrid(columns: gridLayout, spacing: 12) {
-                        ForEach(viewModel.templates) {template in
+                        ForEach(viewModel.searchableTemplates) {item in
                             NavigationLink {
-                                ModifyTemplateView(template: template)
+                                ModifyTemplateView(template: item)
                             } label: {
-                                TemplateGridView(template)
+                                TemplateGridView(item)
                             }
                         }
                     }
