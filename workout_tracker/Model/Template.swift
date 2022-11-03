@@ -13,10 +13,11 @@ struct Template: Identifiable, Decodable {
     let uid: String
     let name: String
     let timestamp: Timestamp
-    var exerciseList: [String]
+    var exerciseIdList: [String]
+    var exerciseNameList: [String]
     
     enum CodingKeys: String, CodingKey {
-        case uid, name, timestamp, exerciseList
+        case uid, name, timestamp, exerciseIdList, exerciseNameList
     }
     
     // initialize from Firebase
@@ -25,14 +26,16 @@ struct Template: Identifiable, Decodable {
         uid = try container.decode(String.self, forKey: .uid)
         name = try container.decode(String.self, forKey: .name)
         timestamp = try container.decode(Timestamp.self, forKey: .timestamp)
-        exerciseList = try container.decode([String].self, forKey: .exerciseList)
+        exerciseIdList = try container.decode([String].self, forKey: .exerciseIdList)
+        exerciseNameList = try container.decode([String].self, forKey: .exerciseNameList)
     }
     
     // initialize from code
-    init(uid: String, name: String, timestamp: Timestamp, exerciseList: [String]) {
+    init(uid: String, name: String, timestamp: Timestamp, exerciseIdList: [String], exerciseNameList: [String]) {
         self.uid = uid
         self.name = name
         self.timestamp = timestamp
-        self.exerciseList = exerciseList
+        self.exerciseIdList = exerciseIdList
+        self.exerciseNameList = exerciseNameList
     }
 }

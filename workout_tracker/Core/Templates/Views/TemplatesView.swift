@@ -40,7 +40,7 @@ struct TemplatesView: View {
 extension TemplatesView {
     var dataView: some View {
         Group {
-            if viewModel.templateData.isEmpty {
+            if viewModel.templates.isEmpty {
                 noDataView
             } else {
                 SearchBar(text: $viewModel.searchText)

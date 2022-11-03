@@ -14,7 +14,7 @@ struct ModifyTemplateView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: ModifyTemplateViewModel
     
-    init(template: TemplateData? = nil) {
+    init(template: Template? = nil) {
         if template == nil {
             self.modifyMode = .add
             self.viewModel = ModifyTemplateViewModel()

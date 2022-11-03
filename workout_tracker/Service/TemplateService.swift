@@ -11,13 +11,14 @@ import Firebase
 struct TemplateService {
     
     // create/edit a template and post it to the database
-    func setTemplate(id: String? = nil, name: String, exerciseList: [String], completion: @escaping(Bool) -> Void) {
+    func setTemplate(id: String? = nil, name: String, exerciseIdList: [String], exerciseNameList: [String], completion: @escaping(Bool) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         let data = ["uid": uid,
                     "name": name,
                     "timestamp": Timestamp(),
-                    "exerciseList": exerciseList] as [String: Any]
+                    "exerciseIdList": exerciseIdList,
+                    "exerciseNameList": exerciseNameList] as [String: Any]
         
         let collectionRef = Firestore.firestore().collection("templates")
         

@@ -10,19 +10,19 @@ import Foundation
 class TemplatesViewModel: ObservableObject {
     @Published var loadingState = LoadingState.loading
     @Published var searchText = ""
-    @Published var templateData = [TemplateData]()
+    @Published var templates = [Template]()
     private let service = TemplateService()
     private let exerciseService = ExerciseService()
     
     // Allow the user to filter their templates by title or type
-    var searchableTemplates: [TemplateData] {
+    var searchableTemplates: [Template] {
         if searchText.isEmpty {
-            return templateData
+            return templates
         } else {
             let lowercasedQuery = searchText.lowercased()
 
-            return templateData.filter({
-                $0.template.name.lowercased().contains(lowercasedQuery)
+            return templates.filter({
+                $0.name.lowercased().contains(lowercasedQuery)
             })
         }
     }
@@ -33,20 +33,9 @@ class TemplatesViewModel: ObservableObject {
     
     func fetchTemplates() {
         service.fetchTemplates { templates in
-            
-            for template in templates {
-                print("DEBUG: fetching \(template.exerciseList.count) exercises.")
-                self.fetchExercises(template)
-            }
+            self.templates = templates
             
             self.loadingState = .data
-        }
-    }
-    
-    func fetchExercises(_ template: Template) {
-        exerciseService.fetchExercises(byExerciseIdList: template.exerciseList) { exercises in
-            print("DEBUG: adding template with \(exercises.count) exercises.")
-            self.templateData.append(TemplateData(template, exercises))
         }
     }
 }

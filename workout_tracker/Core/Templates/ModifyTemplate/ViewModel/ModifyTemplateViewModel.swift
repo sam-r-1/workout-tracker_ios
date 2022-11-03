@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 class ModifyTemplateViewModel: ObservableObject {
-    private var template: TemplateData?
+    private var template: Template?
     @Published var name: String
     @Published var exercises = [Exercise]()
     @Published var didCreateTemplate = false
@@ -17,13 +17,13 @@ class ModifyTemplateViewModel: ObservableObject {
     let service = TemplateService()
     let exerciseService = ExerciseService()
     
-    init(template: TemplateData? = nil) {
+    init(template: Template? = nil) {
         self.template = template
         
         if template == nil {
             self.name = ""
         } else {
-            self.name = template!.template.name
+            self.name = template!.name
         }
     }
     
@@ -38,7 +38,7 @@ class ModifyTemplateViewModel: ObservableObject {
     }
     
     func modifyTemplate() {
-        service.setTemplate(id: self.template?.template.id, name: self.name, exerciseList: exercises.map { $0.id! }) { success in
+        service.setTemplate(id: self.template?.id, name: self.name, exerciseIdList: exercises.map { $0.id! }, exerciseNameList: exercises.map { $0.name }) { success in
             if success {
                 // dismiss the screen
                 self.didCreateTemplate = true
@@ -56,7 +56,7 @@ class ModifyTemplateViewModel: ObservableObject {
     
     // delete a template
     func deleteTemplate() {
-        let id = self.template?.template.id ?? ""
+        let id = self.template?.id ?? ""
         
         service.deleteTemplate(id: id) { success in
             if success {

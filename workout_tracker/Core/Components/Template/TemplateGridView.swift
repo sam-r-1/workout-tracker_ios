@@ -9,16 +9,16 @@ import SwiftUI
 
 struct TemplateGridView: View {
     let columnCount: Int = 2
-    let templateData: TemplateData
+    let template: Template
     
-    init(_ templateData: TemplateData) {
-        self.templateData = templateData
+    init(_ template: Template) {
+        self.template = template
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text(templateData.template.name)
+                Text(template.name)
                     .bold()
                 .font(.title3)
                 
@@ -44,24 +44,34 @@ struct TemplateGridView: View {
 
 extension TemplateGridView {
     var exerciseList: some View {
-        VStack(alignment: .leading) {
-            ForEach(templateData.exercises.prefix(4)) { exercise in
-                Text(exercise.name)
-                    .font(.body)
-                    .padding(.leading, 8)
+        HStack(alignment: .top) {
+            VStack(alignment: .leading) {
+                ForEach(template.exerciseNameList.prefix(4), id: \.self) { name in
+                    Text(name)
+                        .font(.body)
+                        .padding(.leading, 8)
+                }
+                
+                if template.exerciseNameList.count == 5 {
+                    
+                    Text(template.exerciseNameList[4])
+                        .font(.body)
+                        .padding(.leading, 8)
+                    
+                } else if template.exerciseNameList.count > 5 {
+                    
+                    Text("+ \(template.exerciseNameList.count - 4) more")
+                        .font(.subheadline)
+                        .padding(.leading, 16)
+                }
             }
             
-            if templateData.exercises.count == 5 {
-                
-                Text(templateData.exercises[4].name)
-                    .font(.body)
-                    .padding(.leading, 8)
-                
-            } else if templateData.exercises.count > 5 {
-                
-                Text("+ \(templateData.exercises.count - 4) more")
-                    .font(.subheadline)
-                    .padding(.leading, 16)
+            // Blank text to provide constant height
+            VStack {
+                ForEach(1...5, id: \.self) { _ in
+                    Text(" ")
+                        .font(.body)
+                }
             }
         }
     }
