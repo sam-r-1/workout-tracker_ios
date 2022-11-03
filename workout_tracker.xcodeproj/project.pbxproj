@@ -34,6 +34,7 @@
 		7F53D20E28F5E19000FFB09D /* InvertAppIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53D20D28F5E19000FFB09D /* InvertAppIcons.swift */; };
 		7F53D21028F5E88700FFB09D /* ReorderableForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53D20F28F5E88700FFB09D /* ReorderableForEach.swift */; };
 		7F53D21328F5E91000FFB09D /* DragRelocateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53D21228F5E91000FFB09D /* DragRelocateDelegate.swift */; };
+		7F5E23962911B3D000FF30B7 /* TemplateExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5E23952911B3D000FF30B7 /* TemplateExercise.swift */; };
 		7F63BAC628E5E732005B6235 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F63BAC528E5E732005B6235 /* HistoryView.swift */; };
 		7F63BAC828E75764005B6235 /* ExerciseInstanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F63BAC728E75764005B6235 /* ExerciseInstanceViewModel.swift */; };
 		7FA3209128A3F8F30071D835 /* workout_trackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */; };
@@ -129,6 +130,7 @@
 		7F53D20D28F5E19000FFB09D /* InvertAppIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvertAppIcons.swift; sourceTree = "<group>"; };
 		7F53D20F28F5E88700FFB09D /* ReorderableForEach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderableForEach.swift; sourceTree = "<group>"; };
 		7F53D21228F5E91000FFB09D /* DragRelocateDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragRelocateDelegate.swift; sourceTree = "<group>"; };
+		7F5E23952911B3D000FF30B7 /* TemplateExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateExercise.swift; sourceTree = "<group>"; };
 		7F63BAC528E5E732005B6235 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		7F63BAC728E75764005B6235 /* ExerciseInstanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseInstanceViewModel.swift; sourceTree = "<group>"; };
 		7FA3208D28A3F8F30071D835 /* Workout Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Workout Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -478,6 +480,7 @@
 				7F0E8F6E28A7439900824BED /* User.swift */,
 				7FDED69828DB8249001BF503 /* Workout.swift */,
 				7F2C7D4D28FDD2170039DEB5 /* Template.swift */,
+				7F5E23952911B3D000FF30B7 /* TemplateExercise.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -823,6 +826,7 @@
 				7FC0002A28AD5D7800D484C6 /* ExerciseDisclosureGroupView.swift in Sources */,
 				7F02753828A5A42E009536CF /* AddNewHeaderView.swift in Sources */,
 				7FA3209128A3F8F30071D835 /* workout_trackerApp.swift in Sources */,
+				7F5E23962911B3D000FF30B7 /* TemplateExercise.swift in Sources */,
 				7FA56BFE28EB7C7E00E977AC /* WorkoutHistoryViewModel.swift in Sources */,
 				7F0E8F6228A6F7A600824BED /* AuthViewModel.swift in Sources */,
 				7FA56C0228EB85CC00E977AC /* WorkoutDetailsViewModel.swift in Sources */,

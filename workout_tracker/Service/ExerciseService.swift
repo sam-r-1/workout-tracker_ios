@@ -54,21 +54,37 @@ struct ExerciseService {
             }
     }
     
+    // TODO: improve this function to make it more robust if all exercises cannot be fetched
     // fetch a list of exercises using their id's
     func fetchExercises(byExerciseIdList exerciseIdList: [String], completion: @escaping([Exercise]) -> Void) {
         var exercises = [Exercise]()
+        
+        let group = DispatchGroup()
+        group.enter()
 
-        for id in exerciseIdList {
-            Firestore.firestore().collection("exercises").document(id)
-                .getDocument { snapshot, _ in
-                    guard var exercise = try? snapshot?.data(as: Exercise.self) else { return }
-                    exercise.id = id
+        DispatchQueue.main.async {
+            for i in 0..<exerciseIdList.count {
+                let id = exerciseIdList[i]
+                
+                Firestore.firestore().collection("exercises").document(id)
+                    .getDocument { snapshot, _ in
+                        guard var exercise = try? snapshot?.data(as: Exercise.self) else { return }
+                        exercise.id = id //+ String(i)
 
-                    exercises.append(exercise)
-                }
+                        exercises.append(exercise)
+                        
+                        // after the last iteration, leave the group
+                        if exercises.count == exerciseIdList.count {
+                            print("DEBUG: leaving")
+                            group.leave()
+                        }
+                    }
+            }
         }
         
-        completion(exercises)
+        group.notify(queue: .main) {
+            print("DEBUG: returning \(exercises.count) exercises.")
+        }
     }
     
     // fetch all of the user's exercises from the backend
@@ -84,7 +100,7 @@ struct ExerciseService {
                 
                 // add the id's
                 if exercises.count >= 1 {
-                    for i in 0...(exercises.count - 1) {
+                    for i in 0..<exercises.count {
                         exercises[i].id = documents[i].documentID
                     }
                 }

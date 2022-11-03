@@ -32,7 +32,6 @@ struct TemplatesView: View {
                     
                 case .error: Text("--") // placeholder for error message; should never be used currently
             }
-            
         }
         .navigationBarHidden(true)
     }

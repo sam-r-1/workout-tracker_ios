@@ -33,17 +33,20 @@ class TemplatesViewModel: ObservableObject {
     
     func fetchTemplates() {
         service.fetchTemplates { templates in
-            self.fetchExercises(templates)
+            
+            for template in templates {
+                print("DEBUG: fetching \(template.exerciseList.count) exercises.")
+                self.fetchExercises(template)
+            }
             
             self.loadingState = .data
         }
     }
     
-    func fetchExercises(_ templateList: [Template]) {
-        for template in templateList {
-            exerciseService.fetchExercises(byExerciseIdList: template.exerciseList) { exercises in
-                self.templateData.append(TemplateData(template, exercises))
-            }
+    func fetchExercises(_ template: Template) {
+        exerciseService.fetchExercises(byExerciseIdList: template.exerciseList) { exercises in
+            print("DEBUG: adding template with \(exercises.count) exercises.")
+            self.templateData.append(TemplateData(template, exercises))
         }
     }
 }

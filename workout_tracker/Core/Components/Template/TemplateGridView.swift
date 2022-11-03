@@ -13,7 +13,6 @@ struct TemplateGridView: View {
     
     init(_ templateData: TemplateData) {
         self.templateData = templateData
-        print("DEBUG: \(templateData.exercises.count)")
     }
     
     var body: some View {
