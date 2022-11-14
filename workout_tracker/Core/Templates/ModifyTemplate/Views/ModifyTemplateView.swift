@@ -26,7 +26,7 @@ struct ModifyTemplateView: View {
     
     // validate the form and enable the submit button
     var formValidated: Bool {
-        !viewModel.name.isEmpty && !viewModel.exerciseIdList.isEmpty
+        !viewModel.name.isEmpty && !viewModel.exerciseList.isEmpty
     }
     
     var body: some View {
@@ -36,15 +36,15 @@ struct ModifyTemplateView: View {
             }
 
             Section(header: Text("Exercises (add at least one)")) {
-                ForEach(viewModel.exerciseNameList, id: \.self) { name in
+                ForEach(viewModel.exerciseList, id: \.self) { item in
                     HStack {
-                        Text(name)
+                        Text(item.name)
                         Spacer()
-//                        Button(role: .destructive) {
-//                            viewModel.exercises.remove(at: viewModel.exercises.firstIndex(where: { $0.id == exercise.id })!)
-//                        } label: {
-//                            Image(systemName: "delete.left.fill")
-//                        }
+                        Button(role: .destructive) {
+                            viewModel.exerciseList.remove(at: viewModel.exerciseList.firstIndex(where: { $0.id == item.id })!)
+                        } label: {
+                            Image(systemName: "delete.left.fill")
+                        }
 
                     }
                 }
