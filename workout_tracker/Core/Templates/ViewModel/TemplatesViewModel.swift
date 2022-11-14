@@ -40,13 +40,13 @@ class TemplatesViewModel: ObservableObject {
     }
 }
 
-class TemplateData: Identifiable {
-    let uuid = UUID()
-    let template: Template
-    let exercises: [Exercise]
-    
-    init(_ template: Template, _ exercises: [Exercise]) {
-        self.template = template
-        self.exercises = exercises
-    }
-}
+//class TemplateData: Identifiable {
+//    let uuid = UUID()
+//    let template: Template
+//    let exercises: [Exercise]
+//
+//    init(_ template: Template, _ exercises: [Exercise]) {
+//        self.template = template
+//        self.exercises = exercises
+//    }
+//}

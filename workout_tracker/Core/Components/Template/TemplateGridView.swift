@@ -46,8 +46,8 @@ extension TemplateGridView {
     var exerciseList: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
-                ForEach(template.exerciseNameList.prefix(4), id: \.self) { name in
-                    Text(name)
+                ForEach(1...min(template.exerciseNameList.count, 4), id: \.self) {
+                    Text(template.exerciseNameList[$0 - 1])
                         .font(.body)
                         .padding(.leading, 8)
                 }
