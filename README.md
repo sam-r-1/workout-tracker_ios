@@ -13,7 +13,7 @@
 * ~~Implement workout templates to allow users to easily record exercises in the same order repeatedly~~ added 16 Nov 2022
 * Add data visualization (charts/graphs)
 * Improve functionality around doing multiple sets of the same exercise (currently possible, but has some undesired effects)
-* UI fixes/overhaul
+* UI improvements/overhaul
 
 ### External icons used:
 * <a href="https://www.flaticon.com/free-icons/barbell" title="barbell icons">Barbell icons created by DinosoftLabs - Flaticon</a>
