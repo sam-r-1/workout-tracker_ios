@@ -11,6 +11,7 @@ struct PopUpMenuView: View {
     @Binding var showMenu: Bool
     @Binding var showNoExercisesMessage: Bool
     @Binding var isActiveWorkout: Bool
+    @ObservedObject var router: ViewRouter
     @StateObject var viewModel = PopUpMenuViewModel()
     
     var body: some View {
@@ -18,7 +19,7 @@ struct PopUpMenuView: View {
             Spacer()
             
             ForEach(PopUpMenuOption.allCases, id: \.self) { item in
-                MenuItem(viewModel: viewModel, option: item, showMenu: $showMenu, showNoExercisesMessage: $showNoExercisesMessage, isActiveWorkout: $isActiveWorkout)
+                MenuItem(router: router, viewModel: viewModel, option: item, showMenu: $showMenu, showNoExercisesMessage: $showNoExercisesMessage, isActiveWorkout: $isActiveWorkout)
             }
             
             Spacer()
@@ -28,8 +29,9 @@ struct PopUpMenuView: View {
 }
 
 struct MenuItem: View {
+    let router: ViewRouter
     let viewModel: PopUpMenuViewModel
-    let option: PopUpMenuOption;
+    let option: PopUpMenuOption
     let size: CGFloat = 48
     @Binding var showMenu: Bool
     @Binding var showNoExercisesMessage: Bool
@@ -38,8 +40,11 @@ struct MenuItem: View {
     var body: some View {
         Button {
             $showMenu.wrappedValue = false
-            viewModel.userHasExercises(option) { yes in
-                if yes { $isActiveWorkout.wrappedValue.toggle() }
+            viewModel.canStartWorkout(option) { yes in
+                if yes {
+                    router.startWorkoutOption = option
+                    $isActiveWorkout.wrappedValue.toggle()
+                }
                 else { $showNoExercisesMessage.wrappedValue.toggle() }
             }
         }
@@ -61,6 +66,6 @@ struct MenuItem: View {
 
 struct PopUpMenuView_Previews: PreviewProvider {
     static var previews: some View {
-        PopUpMenuView(showMenu: .constant(false), showNoExercisesMessage: .constant(false), isActiveWorkout: .constant(false))
+        PopUpMenuView(showMenu: .constant(false), showNoExercisesMessage: .constant(false), isActiveWorkout: .constant(false), router: ViewRouter())
     }
 }

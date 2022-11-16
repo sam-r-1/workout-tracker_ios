@@ -9,42 +9,29 @@ import SwiftUI
 
 struct TemplateGridView: View {
     let columnCount: Int = 2
+    let template: Template
+    
+    init(_ template: Template) {
+        self.template = template
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text("Leg Day")
+                Text(template.name)
                     .bold()
                 .font(.title3)
                 
                 Spacer()
                 
-                Button {
-                    print("DEBUG: open template options")
-                } label: {
-                    Image(systemName: "ellipsis")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 20, height: 20)
-                }
             }
             .foregroundColor(.primary)
             .padding(.trailing, 8)
             
             Divider()
             
-            VStack(alignment: .leading) {
-                ForEach(1...4, id: \.self) {_ in
-                    Text("3 x Leg Press")
-                        .font(.body)
-                        .padding(.leading, 8)
-                }
-                
-                Text("+ 2 more")
-                    .font(.subheadline)
-                    .padding(.leading, 16)
-            }
-            .foregroundColor(.secondary)
+            exerciseList
+                .foregroundColor(.secondary)
             
             
         }
@@ -55,8 +42,43 @@ struct TemplateGridView: View {
     }
 }
 
-struct TemplateGridView_Previews: PreviewProvider {
-    static var previews: some View {
-        TemplateGridView()
+extension TemplateGridView {
+    var exerciseList: some View {
+        HStack(alignment: .top) {
+            VStack(alignment: .leading) {
+                ForEach(1...min(template.exerciseNameList.count, 4), id: \.self) {
+                    Text(template.exerciseNameList[$0 - 1])
+                        .font(.body)
+                        .padding(.leading, 8)
+                }
+                
+                if template.exerciseNameList.count == 5 {
+                    
+                    Text(template.exerciseNameList[4])
+                        .font(.body)
+                        .padding(.leading, 8)
+                    
+                } else if template.exerciseNameList.count > 5 {
+                    
+                    Text("+ \(template.exerciseNameList.count - 4) more")
+                        .font(.subheadline)
+                        .padding(.leading, 16)
+                }
+            }
+            
+            // Blank text to provide constant height
+            VStack {
+                ForEach(1...5, id: \.self) { _ in
+                    Text(" ")
+                        .font(.body)
+                }
+            }
+        }
     }
 }
+
+//struct TemplateGridView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TemplateGridView()
+//    }
+//}

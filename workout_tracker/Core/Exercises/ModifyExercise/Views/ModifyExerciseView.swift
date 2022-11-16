@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ModifyExerciseView: View {
-    let modifyType: ModifyExerciseType
+    let modifyType: ModifyObjectMode
     @State private var showDeleteDialog = false
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: ModifyExerciseViewModel

@@ -35,9 +35,8 @@ class ExerciseDataFields: Identifiable, Equatable {
     }
 }
 
+@MainActor
 class WorkoutViewModel: ObservableObject {
-    @Published var searchText = ""
-    @Published var userExercises = [Exercise]()
     @Published var exerciseInstances = [ExerciseInstance]()
     
     @Published var didUploadWorkout = false
@@ -47,8 +46,9 @@ class WorkoutViewModel: ObservableObject {
     private let instanceService = ExerciseInstanceService()
     
     @Published var items = [ExerciseDataFields]()
+
     
-    func update() {
+    nonisolated func update() {
         self.objectWillChange.send()
     }
     
@@ -66,29 +66,14 @@ class WorkoutViewModel: ObservableObject {
         self.items.move(fromOffsets: source, toOffset: destination)
     }
     
-    init() {
-        fetchExercises()
-    }
-    
-    
-    // Allow the user to filter their exercises by title or type
-    var searchableExercises: [Exercise] {
-        if searchText.isEmpty {
-            return userExercises
-        } else {
-            let lowercasedQuery = searchText.lowercased()
+    func addExercisesFromTemplate(_ template: Template) async {
+        do {
+            let exercises = try await exerciseService.fetchExercises(byIdList: template.exerciseIdList)
             
-            return userExercises.filter({
-                $0.name.lowercased().contains(lowercasedQuery) || $0.type.lowercased().contains(lowercasedQuery)
-            })
-        }
-    }
-    
-    // Fetch the list of the user's exercises for selection
-    private func fetchExercises() {
-        exerciseService.fetchExercises { exercises in
-        self.userExercises = exercises
-        }
+            for exercise in exercises {
+                self.items.append(ExerciseDataFields(parent: self, exercise: exercise))
+            }
+        } catch _ {}
     }
     
     private func fetchAndSetExerciseById(_ id: String, completion: @escaping (Exercise) -> Void) {

@@ -19,6 +19,7 @@ class ModifyExerciseViewModel: ObservableObject {
     
     let service = ExerciseService()
     let instanceService = ExerciseInstanceService()
+    let templateService = TemplateService()
     
     init(exercise: Exercise? = nil) {
         self.exercise = exercise
@@ -59,6 +60,9 @@ class ModifyExerciseViewModel: ObservableObject {
             if success {
                 // delete associated instances
                 self.instanceService.deleteInstances(ofExercise: id)
+                
+                // delete this exercise from templates
+                self.templateService.deleteExerciseRef(id)
             }
         }
     }

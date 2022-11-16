@@ -8,34 +8,67 @@
 import SwiftUI
 
 struct TemplatesView: View {
-    @State private var showAddTemplateView = false
+    @State private var showModifyTemplateView = false
     @ObservedObject var viewModel = TemplatesViewModel()
     
     private var gridLayout = [ GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)]
     
     var body: some View {
-//        VStack(alignment: .leading) {
-//            AddNewHeaderView(title: "My Templates",
-//                             showView: $showAddTemplateView, view: AnyView(Text("Add a template here")))
-//
-//            SearchBar(text: $viewModel.searchText)
-//                .padding([.horizontal])
-//
-//            ScrollView {
-//                LazyVGrid(columns: gridLayout, spacing: 12) {
-//                    ForEach(1...4, id: \.self) {_ in
-//                        TemplateGridView()
-//                    }
-//                }
-//            }
-//            .padding(.horizontal, 12)
-//        }
-//        .navigationBarHidden(true)
-        
+        VStack {
+            AddNewHeaderView(title: "My Templates",
+                             showView: $showModifyTemplateView,
+                             view: AnyView(ModifyTemplateView()
+                                .onDisappear(perform: {
+                                    viewModel.loadingState = .loading
+                                    viewModel.fetchTemplates()
+                                })
+                             )
+            )
+            
+            switch viewModel.loadingState {
+                case .data: dataView
+                    
+                case .loading: LoadingView()
+                    
+                case .error: Text("--") // placeholder for error message; should never be used currently
+            }
+        }
+        .navigationBarHidden(true)
+    }
+}
+    
+extension TemplatesView {
+    var dataView: some View {
+        Group {
+            if viewModel.templates.isEmpty {
+                noDataView
+            } else {
+                SearchBar(text: $viewModel.searchText)
+                    .padding([.horizontal])
+
+                ScrollView {
+                    LazyVGrid(columns: gridLayout, spacing: 12) {
+                        ForEach(viewModel.searchableTemplates) {item in
+                            NavigationLink {
+                                ModifyTemplateView(template: item)
+                            } label: {
+                                TemplateGridView(item)
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal, 12)
+            }
+        }
+    }
+    
+    var noDataView: some View {
         VStack {
             Spacer()
             
-            Text("Templates coming soon...")
+            Text("You don't have any templates yet.\n Add some from this screen.")
+                .multilineTextAlignment(.center)
+                .foregroundColor(Color(.systemGray))
             
             Spacer()
         }

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftfulLoadingIndicators
 
 struct ExercisesView: View {
     @State private var showModifyExerciseView = false

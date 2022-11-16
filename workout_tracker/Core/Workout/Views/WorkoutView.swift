@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct WorkoutView: View {
+    @Binding var workoutActive: Bool
     @State private var showTimer = false
     @State private var showAddExercise = false
     @State private var topExpanded: Bool = true
-    @Environment(\.presentationMode) var presentationMode
-    @StateObject var viewModel = WorkoutViewModel()
+    @ObservedObject var viewModel = WorkoutViewModel()
+    let template: Template?
+    
+    init(workoutActive: Binding<Bool>, fromTemplate: Template? = nil) {
+        self._workoutActive = workoutActive
+        self.template = fromTemplate
+
+//        if fromTemplate != nil {
+//            viewModel.addExercisesFromTemplate(fromTemplate!)
+//        }
+    }
     
     var body: some View {
         VStack {
@@ -27,6 +37,7 @@ struct WorkoutView: View {
                     } moveAction: { source, destination in
                         viewModel.moveItem(from: source, to: destination)
                     }
+                    .padding(.horizontal, 8)
 
                 }
                 
@@ -56,7 +67,6 @@ struct WorkoutView: View {
                     Task {
                         await viewModel.finishWorkout()
                     }
-                    presentationMode.wrappedValue.dismiss()
                 }, label: {
                     VStack(spacing: 4) {
                         Text("Finish Workout")
@@ -76,12 +86,19 @@ struct WorkoutView: View {
         }
         .navigationBarHidden(true)
         .fullScreenCover(isPresented: $showAddExercise) {
-            SelectExerciseView(viewModel: viewModel)
+            SelectExerciseView { exerciseId in
+                viewModel.addItem(exerciseId)
+            }
+        }
+        .task {
+            if template != nil {
+                await viewModel.addExercisesFromTemplate(self.template!)
+            }
         }
         // dismiss view if workout created successfully
         .onReceive(viewModel.$didUploadWorkout) { success in
             if success {
-                presentationMode.wrappedValue.dismiss()
+                self.workoutActive = false
             }
         }
     }
@@ -89,6 +106,6 @@ struct WorkoutView: View {
 
 struct WorkoutView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutView()
+        WorkoutView(workoutActive: Binding.constant(true))
     }
 }

@@ -18,6 +18,17 @@ struct MainTabView: View {
     var body: some View {
          NavigationView {
             ZStack(alignment: .bottom) {
+                NavigationLink(isActive: $isActiveWorkout) {
+                    switch router.startWorkoutOption {
+                        case .fromTemplate: SelectTemplateView(workoutActive: $isActiveWorkout)
+                        case .fromScratch: WorkoutView(workoutActive: $isActiveWorkout)
+                    }
+                } label: {
+                    EmptyView()
+                }
+                .hidden()
+
+                
                 MainTabViewBodyView(router: router, tabBarHeight: tabBarHeight)
                 
                 if showMenu {
@@ -31,7 +42,7 @@ struct MainTabView: View {
                         }
                     
                     // display the popup options
-                    PopUpMenuView(showMenu: $showMenu, showNoExercisesMessage: $showNoExercisesMessage, isActiveWorkout: $isActiveWorkout)
+                    PopUpMenuView(showMenu: $showMenu, showNoExercisesMessage: $showNoExercisesMessage, isActiveWorkout: $isActiveWorkout, router: router)
                         .padding(.bottom, 100)
                 }
                 
@@ -44,12 +55,9 @@ struct MainTabView: View {
                     .frame(height: tabBarHeight)
             }
          }
-            .alert("You must add at least one exercise from the Exercises tab to begin a workout.", isPresented: $showNoExercisesMessage, actions: {
+         .alert(router.startWorkoutOption.emptyErrorMessage, isPresented: $showNoExercisesMessage, actions: {
                 Button("Dismiss") { showNoExercisesMessage = false }
             })
-        .fullScreenCover(isPresented: $isActiveWorkout) {
-            WorkoutView()
-        }
     }
 }
 
