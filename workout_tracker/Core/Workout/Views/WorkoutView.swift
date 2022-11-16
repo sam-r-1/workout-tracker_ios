@@ -13,13 +13,15 @@ struct WorkoutView: View {
     @State private var showAddExercise = false
     @State private var topExpanded: Bool = true
     @ObservedObject var viewModel = WorkoutViewModel()
+    let template: Template?
     
     init(workoutActive: Binding<Bool>, fromTemplate: Template? = nil) {
         self._workoutActive = workoutActive
-        
-        if fromTemplate != nil {
-            viewModel.addExercisesFromTemplate(fromTemplate!)
-        }
+        self.template = fromTemplate
+
+//        if fromTemplate != nil {
+//            viewModel.addExercisesFromTemplate(fromTemplate!)
+//        }
     }
     
     var body: some View {
@@ -86,6 +88,11 @@ struct WorkoutView: View {
         .fullScreenCover(isPresented: $showAddExercise) {
             SelectExerciseView { exerciseId in
                 viewModel.addItem(exerciseId)
+            }
+        }
+        .task {
+            if template != nil {
+                await viewModel.addExercisesFromTemplate(self.template!)
             }
         }
         // dismiss view if workout created successfully

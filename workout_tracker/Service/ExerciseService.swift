@@ -54,6 +54,22 @@ struct ExerciseService {
             }
     }
     
+    // fetch exercises given an id list
+    func fetchExercises(byIdList idList: [String]) async throws -> [Exercise] {
+        var exercises = Array(repeating: Exercise(uid: "", name: "", type: "", details: "", includeWeight: false, includeReps: false, includeTime: false), count: idList.count)
+        
+        let collectionRef = Firestore.firestore().collection("exercises")
+        
+        for i in 0..<idList.count {
+            let exercise = try await collectionRef.document(idList[i])
+                .getDocument(as: Exercise.self)
+            
+            exercises[i] = exercise
+        }
+        
+        return(exercises)
+    }
+    
     // fetch all of the user's exercises from the backend
     func fetchExercises(completion: @escaping([Exercise]) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
