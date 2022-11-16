@@ -35,6 +35,7 @@ struct WorkoutView: View {
                     } moveAction: { source, destination in
                         viewModel.moveItem(from: source, to: destination)
                     }
+                    .padding(.horizontal, 8)
 
                 }
                 
