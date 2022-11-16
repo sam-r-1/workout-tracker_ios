@@ -9,6 +9,8 @@ import SwiftUI
 
 class ViewRouter: ObservableObject {
     @Published var currentItem: TabBarViewModel = .exercises
+    @Published var startWorkoutOption: PopUpMenuOption = .fromScratch
+    @Published var startWorkoutFromTemplate = false
     
     var view: some View { return currentItem.view }
     
@@ -45,6 +47,26 @@ enum TabBarViewModel: Int, CaseIterable {
         case .templates: return AnyView(TemplatesView())
         case .history: return AnyView(HistoryView())
         case .settings: return AnyView(SettingsView())
+        }
+    }
+}
+
+enum PopUpMenuOption: CaseIterable {
+    case fromTemplate
+    case fromScratch
+    
+    
+    var title: String {
+        switch self {
+            case .fromTemplate: return "Start from template"
+            case .fromScratch: return "Start from scratch"
+        }
+    }
+    
+    var emptyErrorMessage: String {
+        switch self {
+        case .fromTemplate: return "You don't have any templates. Add some from the Templates tab."
+        case .fromScratch: return "You must add at least one exercise from the Exercises tab to begin a workout."
         }
     }
 }

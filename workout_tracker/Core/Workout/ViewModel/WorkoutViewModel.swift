@@ -36,8 +36,6 @@ class ExerciseDataFields: Identifiable, Equatable {
 }
 
 class WorkoutViewModel: ObservableObject {
-//    @Published var searchText = ""
-//    @Published var userExercises = [Exercise]()
     @Published var exerciseInstances = [ExerciseInstance]()
     
     @Published var didUploadWorkout = false
@@ -47,7 +45,7 @@ class WorkoutViewModel: ObservableObject {
     private let instanceService = ExerciseInstanceService()
     
     @Published var items = [ExerciseDataFields]()
-    
+
     func update() {
         self.objectWillChange.send()
     }
@@ -64,6 +62,12 @@ class WorkoutViewModel: ObservableObject {
     
     func moveItem(from source: IndexSet, to destination: Int) {
         self.items.move(fromOffsets: source, toOffset: destination)
+    }
+    
+    func addExercisesFromTemplate(_ template: Template) {
+        for exerciseId in template.exerciseIdList {
+            addItem(exerciseId)
+        }
     }
     
     private func fetchAndSetExerciseById(_ id: String, completion: @escaping (Exercise) -> Void) {

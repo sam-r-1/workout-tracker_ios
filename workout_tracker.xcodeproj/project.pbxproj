@@ -16,6 +16,8 @@
 		7F02754928A6ED2B009536CF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754828A6ED2B009536CF /* FirebaseAuth */; };
 		7F02754B28A6ED2B009536CF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754A28A6ED2B009536CF /* FirebaseFirestore */; };
 		7F02754D28A6ED2B009536CF /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754C28A6ED2B009536CF /* FirebaseFirestoreSwift */; };
+		7F0E85FE2922CCD500D55272 /* SelectTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E85FD2922CCD500D55272 /* SelectTemplateView.swift */; };
+		7F0E86002922CD3000D55272 /* SelectTemplateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E85FF2922CD3000D55272 /* SelectTemplateViewModel.swift */; };
 		7F0E8F5E28A6F18100824BED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F0E8F5D28A6F18100824BED /* GoogleService-Info.plist */; };
 		7F0E8F6228A6F7A600824BED /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F6128A6F7A600824BED /* AuthViewModel.swift */; };
 		7F0E8F6428A6F98500824BED /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F6328A6F98500824BED /* LoginView.swift */; };
@@ -111,6 +113,8 @@
 		7F02753C28A5A932009536CF /* TemplateGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateGridView.swift; sourceTree = "<group>"; };
 		7F02754128A6B362009536CF /* ModifyExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyExerciseView.swift; sourceTree = "<group>"; };
 		7F02754328A6E968009536CF /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		7F0E85FD2922CCD500D55272 /* SelectTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateView.swift; sourceTree = "<group>"; };
+		7F0E85FF2922CD3000D55272 /* SelectTemplateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateViewModel.swift; sourceTree = "<group>"; };
 		7F0E8F5D28A6F18100824BED /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		7F0E8F6128A6F7A600824BED /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		7F0E8F6328A6F98500824BED /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -269,6 +273,7 @@
 		7F02753B28A5A915009536CF /* Template */ = {
 			isa = PBXGroup;
 			children = (
+				7F0E85FA2922CCA800D55272 /* SelectTemplate */,
 				7F02753C28A5A932009536CF /* TemplateGridView.swift */,
 			);
 			path = Template;
@@ -295,6 +300,31 @@
 			isa = PBXGroup;
 			children = (
 				7FC0001228ABFFC200D484C6 /* ModifyExerciseViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7F0E85FA2922CCA800D55272 /* SelectTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				7F0E85FC2922CCB800D55272 /* ViewModel */,
+				7F0E85FB2922CCB200D55272 /* View */,
+			);
+			path = SelectTemplate;
+			sourceTree = "<group>";
+		};
+		7F0E85FB2922CCB200D55272 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7F0E85FD2922CCD500D55272 /* SelectTemplateView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7F0E85FC2922CCB800D55272 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				7F0E85FF2922CD3000D55272 /* SelectTemplateViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -822,6 +852,7 @@
 				7F0E8F6D28A7434700824BED /* UserService.swift in Sources */,
 				7FC0002A28AD5D7800D484C6 /* ExerciseDisclosureGroupView.swift in Sources */,
 				7F02753828A5A42E009536CF /* AddNewHeaderView.swift in Sources */,
+				7F0E85FE2922CCD500D55272 /* SelectTemplateView.swift in Sources */,
 				7FA3209128A3F8F30071D835 /* workout_trackerApp.swift in Sources */,
 				7FA56BFE28EB7C7E00E977AC /* WorkoutHistoryViewModel.swift in Sources */,
 				7F0E8F6228A6F7A600824BED /* AuthViewModel.swift in Sources */,
@@ -836,6 +867,7 @@
 				7FA5480728EDE8E7009B1508 /* LoadingState.swift in Sources */,
 				7F02753A28A5A6B7009536CF /* TemplatesViewModel.swift in Sources */,
 				7FA320D928A5927D0071D835 /* ExerciseRowView.swift in Sources */,
+				7F0E86002922CD3000D55272 /* SelectTemplateViewModel.swift in Sources */,
 				7FA56BFC28EB792900E977AC /* WorkoutRowView.swift in Sources */,
 				7F0E8F6428A6F98500824BED /* LoginView.swift in Sources */,
 				7FC0002228AC307400D484C6 /* StopwatchManager.swift in Sources */,
