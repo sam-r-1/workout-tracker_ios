@@ -79,7 +79,7 @@ struct TemplateService {
     // Remove exercise id's from the template's exerciseList property. Use after the exercises themselves are deleted
     func deleteExerciseRef(_ id: String) {
         let query = Firestore.firestore().collection("templates")
-            .whereField("exerciseList", arrayContains: id)
+            .whereField("exerciseIdList", arrayContains: id)
         
         query.getDocuments { snapshot, error in
             guard error == nil else {
@@ -90,7 +90,7 @@ struct TemplateService {
             let documents = snapshot!.documents
             
             documents.forEach { doc in
-                doc.reference.updateData(["exerciseList": FieldValue.arrayRemove([id])]) { error in
+                doc.reference.updateData(["exerciseIdList": FieldValue.arrayRemove([id])]) { error in
                     guard error == nil else {
                         print("DEBUG: \(error!.localizedDescription)")
                         return
