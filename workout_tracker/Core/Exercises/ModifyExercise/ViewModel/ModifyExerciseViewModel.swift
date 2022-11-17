@@ -55,6 +55,7 @@ class ModifyExerciseViewModel: ObservableObject {
     // delete an exercise and its associated instances
     func deleteExercise() {
         let id = self.exercise?.id! ?? ""
+        let name = self.exercise?.name ?? ""
         
         service.deleteExercise(id: id) { success in
             if success {
@@ -62,7 +63,7 @@ class ModifyExerciseViewModel: ObservableObject {
                 self.instanceService.deleteInstances(ofExercise: id)
                 
                 // delete this exercise from templates
-                self.templateService.deleteExerciseRef(id)
+                self.templateService.deleteExerciseRef(id: id, name: name)
             }
         }
     }
