@@ -16,6 +16,7 @@
 		7F02754928A6ED2B009536CF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754828A6ED2B009536CF /* FirebaseAuth */; };
 		7F02754B28A6ED2B009536CF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754A28A6ED2B009536CF /* FirebaseFirestore */; };
 		7F02754D28A6ED2B009536CF /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754C28A6ED2B009536CF /* FirebaseFirestoreSwift */; };
+		7F05E1142927244100FF6A8E /* ModifyObjectMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F05E1132927244100FF6A8E /* ModifyObjectMode.swift */; };
 		7F0E85FE2922CCD500D55272 /* SelectTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E85FD2922CCD500D55272 /* SelectTemplateView.swift */; };
 		7F0E86002922CD3000D55272 /* SelectTemplateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E85FF2922CD3000D55272 /* SelectTemplateViewModel.swift */; };
 		7F0E8F5E28A6F18100824BED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F0E8F5D28A6F18100824BED /* GoogleService-Info.plist */; };
@@ -72,7 +73,6 @@
 		7FA56C0828EBA41400E977AC /* InstanceHistoryRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA56C0728EBA41400E977AC /* InstanceHistoryRowViewModel.swift */; };
 		7FA56C0D28ECBB3500E977AC /* SwiftfulLoadingIndicators in Frameworks */ = {isa = PBXBuildFile; productRef = 7FA56C0C28ECBB3500E977AC /* SwiftfulLoadingIndicators */; };
 		7FA56C1128ECCC4F00E977AC /* WorkoutDetailsScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA56C1028ECCC4F00E977AC /* WorkoutDetailsScrollView.swift */; };
-		7FA56C1328ED149D00E977AC /* ModifyObjectMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA56C1228ED149D00E977AC /* ModifyObjectMode.swift */; };
 		7FC0000F28ABEED900D484C6 /* TabBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0000E28ABEED900D484C6 /* TabBarViewModel.swift */; };
 		7FC0001128ABFD0400D484C6 /* ExerciseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0001028ABFD0400D484C6 /* ExerciseService.swift */; };
 		7FC0001328ABFFC200D484C6 /* ModifyExerciseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC0001228ABFFC200D484C6 /* ModifyExerciseViewModel.swift */; };
@@ -113,6 +113,7 @@
 		7F02753C28A5A932009536CF /* TemplateGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateGridView.swift; sourceTree = "<group>"; };
 		7F02754128A6B362009536CF /* ModifyExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyExerciseView.swift; sourceTree = "<group>"; };
 		7F02754328A6E968009536CF /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		7F05E1132927244100FF6A8E /* ModifyObjectMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModifyObjectMode.swift; path = ../../../../../../../../.Trash/ModifyObjectMode.swift; sourceTree = "<group>"; };
 		7F0E85FD2922CCD500D55272 /* SelectTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateView.swift; sourceTree = "<group>"; };
 		7F0E85FF2922CD3000D55272 /* SelectTemplateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateViewModel.swift; sourceTree = "<group>"; };
 		7F0E8F5D28A6F18100824BED /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -171,7 +172,6 @@
 		7FA56C0528EB9CEA00E977AC /* InstanceHistoryRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstanceHistoryRowView.swift; sourceTree = "<group>"; };
 		7FA56C0728EBA41400E977AC /* InstanceHistoryRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstanceHistoryRowViewModel.swift; sourceTree = "<group>"; };
 		7FA56C1028ECCC4F00E977AC /* WorkoutDetailsScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDetailsScrollView.swift; sourceTree = "<group>"; };
-		7FA56C1228ED149D00E977AC /* ModifyObjectMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyObjectMode.swift; sourceTree = "<group>"; };
 		7FC0000E28ABEED900D484C6 /* TabBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewModel.swift; sourceTree = "<group>"; };
 		7FC0001028ABFD0400D484C6 /* ExerciseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseService.swift; sourceTree = "<group>"; };
 		7FC0001228ABFFC200D484C6 /* ModifyExerciseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyExerciseViewModel.swift; sourceTree = "<group>"; };
@@ -636,7 +636,7 @@
 				7FA5480628EDE8E7009B1508 /* LoadingState.swift */,
 				7FA5480928EDEF9D009B1508 /* LoadingView.swift */,
 				7F53D20D28F5E19000FFB09D /* InvertAppIcons.swift */,
-				7FA56C1228ED149D00E977AC /* ModifyObjectMode.swift */,
+				7F05E1132927244100FF6A8E /* ModifyObjectMode.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -861,6 +861,7 @@
 				7FA5480C28EDF8A4009B1508 /* TabMenuIconView.swift in Sources */,
 				7FA320D028A548E70071D835 /* PopUpMenuViewModel.swift in Sources */,
 				7F2C7D5E28FDE62A0039DEB5 /* SelectExerciseViewModel.swift in Sources */,
+				7F05E1142927244100FF6A8E /* ModifyObjectMode.swift in Sources */,
 				7F53D21328F5E91000FFB09D /* DragRelocateDelegate.swift in Sources */,
 				7FA320D228A551820071D835 /* SearchBar.swift in Sources */,
 				7FDED69728DB81E0001BF503 /* WorkoutService.swift in Sources */,
@@ -886,7 +887,6 @@
 				7FA320C128A3FDA20071D835 /* MainTabView.swift in Sources */,
 				7FA5481628EE35FD009B1508 /* HistoryByWorkoutView.swift in Sources */,
 				7FA56C0828EBA41400E977AC /* InstanceHistoryRowViewModel.swift in Sources */,
-				7FA56C1328ED149D00E977AC /* ModifyObjectMode.swift in Sources */,
 				7FA56C0028EB829000E977AC /* WorkoutDetailsView.swift in Sources */,
 				7F43D9E828AEAED300069817 /* SelectExerciseView.swift in Sources */,
 				7FA5481828EE3796009B1508 /* HistoryByExerciseView.swift in Sources */,
