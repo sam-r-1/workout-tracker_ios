@@ -32,13 +32,18 @@ struct ModifyTemplateView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("NAME (Required)")
+            Text("NAME (Required)".uppercased())
+                .font(.subheadline)
+                .foregroundColor(Color(.systemGray2))
+            
             TextField("Template name", text: $viewModel.name)
             
             Spacer()
             
             HStack {
-                Text("Exercises")
+                Text("Exercises".uppercased())
+                    .font(.subheadline)
+                    .foregroundColor(Color(.systemGray2))
                 
                 Spacer()
                 
@@ -68,9 +73,14 @@ struct ModifyTemplateView: View {
             .environment(\.editMode, $editMode)
             
             if modifyMode == .edit {
-                Button("Delete Template", role: .destructive) {
+                Button(role: .destructive) {
                     showDeleteDialog = true
+                } label: {
+                    Text("Delete Template")
+                        .bold()
                 }
+                .padding(.bottom)
+                .buttonStyle(.borderedProminent)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .alert("Delete this template?", isPresented: $showDeleteDialog) {
                     Button("Delete", role: .destructive) {
@@ -119,9 +129,12 @@ struct ModifyTemplateView: View {
 }
 
 struct ModifyTemplateView_Previews: PreviewProvider {
+    static let previewTemplate = Template(uid: "username", name: "Preview Template", exerciseIdList: ["0", "1", "2", "3"], exerciseNameList: ["Chest Press", "Leg Press", "Deadlift", "Bench Press"])
+
     static var previews: some View {
         NavigationView {
-            ModifyTemplateView()
+            ModifyTemplateView(template: previewTemplate)
         }
+        
     }
 }
