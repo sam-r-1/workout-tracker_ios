@@ -44,6 +44,14 @@ class ModifyTemplateViewModel: ObservableObject {
         }
     }
     
+    func removeExercise(at offsets: IndexSet) {
+        self.exerciseList.remove(atOffsets: offsets)
+    }
+    
+    func moveExercise(from source: IndexSet, to destination: Int) {
+        self.exerciseList.move(fromOffsets: source, toOffset: destination)
+    }
+    
     // TODO: implement drag/drop to change template order
 //    func moveExercise(from source: IndexSet, to destination: Int) {
 //        self.exercises.move(fromOffsets: source, toOffset: destination)

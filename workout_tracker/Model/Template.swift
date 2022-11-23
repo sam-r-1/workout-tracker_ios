@@ -31,10 +31,10 @@ struct Template: Identifiable, Decodable {
     }
     
     // initialize from code
-    init(uid: String, name: String, timestamp: Timestamp, exerciseIdList: [String], exerciseNameList: [String]) {
+    init(uid: String, name: String, exerciseIdList: [String], exerciseNameList: [String]) {
         self.uid = uid
         self.name = name
-        self.timestamp = timestamp
+        self.timestamp = Timestamp()
         self.exerciseIdList = exerciseIdList
         self.exerciseNameList = exerciseNameList
     }
