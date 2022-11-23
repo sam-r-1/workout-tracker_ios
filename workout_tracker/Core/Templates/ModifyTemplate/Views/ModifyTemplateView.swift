@@ -32,11 +32,16 @@ struct ModifyTemplateView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("NAME (Required)".uppercased())
-                .font(.subheadline)
-                .foregroundColor(Color(.systemGray2))
-            
-            TextField("Template name", text: $viewModel.name)
+            VStack(alignment: .leading) {
+                Text("NAME (Required)".uppercased())
+                    .font(.subheadline)
+                    .foregroundColor(Color(.systemGray2))
+                
+                TextField("Template name", text: $viewModel.name)
+                    .textFieldStyle(.roundedBorder)
+            }
+            .padding(.vertical)
+            .padding(.horizontal)
             
             Spacer()
             
