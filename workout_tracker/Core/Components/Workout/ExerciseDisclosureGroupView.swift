@@ -129,7 +129,6 @@ struct ExerciseDisclosureGroupView_Previews: PreviewProvider {
         ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true))) {
             print("DEBUG: deleting")
         }
-        .environment(\.sizeCategory, .accessibilityExtraLarge)
     }
 }
 
