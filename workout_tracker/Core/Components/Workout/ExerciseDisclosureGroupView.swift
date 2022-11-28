@@ -112,9 +112,7 @@ struct ExerciseDisclosureGroupView: View {
         .background(Color(.systemGray5))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .fullScreenCover(isPresented: $showTimer) {
-            print("DEBUG: timer dismissed")
-        } content: {
-            TimerView(item, title: item.exercise.name)
+            TimerView(item)
                 .onAppear {
                     // prevent auto-lock while timing an exercise
                     UIApplication.shared.isIdleTimerDisabled = true
