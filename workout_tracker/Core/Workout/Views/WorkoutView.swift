@@ -18,10 +18,6 @@ struct WorkoutView: View {
     init(workoutActive: Binding<Bool>, fromTemplate: Template? = nil) {
         self._workoutActive = workoutActive
         self.template = fromTemplate
-
-//        if fromTemplate != nil {
-//            viewModel.addExercisesFromTemplate(fromTemplate!)
-//        }
     }
     
     var body: some View {
@@ -82,6 +78,7 @@ struct WorkoutView: View {
                 
                 Spacer()
             }
+            .padding(.bottom, 6)
             
         }
         .navigationBarHidden(true)

@@ -12,14 +12,11 @@ struct TimerView: View {
     @Environment(\.presentationMode) var presentationMode
     let formatter: DateComponentsFormatter
     
-    // @ObservedObject var viewModel: ExerciseInstanceViewModel
     let item: ExerciseDataFields
-    let title: String
     let setCount: String?
     
-    init(_ item: ExerciseDataFields, title: String, setCount: String? = nil) {
+    init(_ item: ExerciseDataFields, setCount: String? = nil) {
         self.item = item
-        self.title = title
         self.setCount = setCount
         
         formatter = DateComponentsFormatter()
@@ -29,12 +26,12 @@ struct TimerView: View {
     }
     
     var body: some View {
-        HStack {
-            Spacer()
+        ZStack {
+            Color(.systemGray5)
             
             VStack(spacing: 50) {
                 HStack {
-                    Text(title)
+                    Text(self.item.exercise.name)
                         .bold()
                         .font(.title)
                     
@@ -56,18 +53,18 @@ struct TimerView: View {
                 
                 submitTimeButton
             }
-            
-            Spacer()
         }
-        .background(Color(.systemGray5))
     }
 }
 
-//struct TimerView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TimerView(viewModel: ExerciseInstanceViewModel(), title: "Leg Press")
-//    }
-//}
+struct TimerView_Previews: PreviewProvider {
+    static let previewExercise = Exercise(uid: "", name: "Chest Press", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true)
+    
+    static var previews: some View {
+        TimerView(ExerciseDataFields(parent: WorkoutViewModel(), exercise: previewExercise))
+            .environment(\.sizeCategory, .accessibilityMedium)
+    }
+}
 
 extension TimerView {
     
