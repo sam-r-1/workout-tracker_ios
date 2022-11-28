@@ -64,7 +64,6 @@ struct TimerView_Previews: PreviewProvider {
     
     static var previews: some View {
         TimerView(ExerciseDataFields(parent: WorkoutViewModel(), exercise: previewExercise))
-            .environment(\.sizeCategory, .accessibilityMedium)
     }
 }
 
