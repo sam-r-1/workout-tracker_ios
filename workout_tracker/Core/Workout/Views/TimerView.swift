@@ -28,6 +28,7 @@ struct TimerView: View {
     var body: some View {
         ZStack {
             Color(.systemGray5)
+                .ignoresSafeArea()
             
             VStack(spacing: 50) {
                 HStack {
@@ -38,6 +39,7 @@ struct TimerView: View {
                     Text(setCount ?? "")
                         .font(.title)
                 }
+                .padding(.top)
                 
                 Spacer()
                 
@@ -45,13 +47,13 @@ struct TimerView: View {
                     .bold()
                     .font(.system(size: 80))
                     .scaledToFit()
-                    .frame(height: 180)
                 
                 timerButton
 
                 Spacer()
                 
                 submitTimeButton
+                    .padding(.bottom)
             }
         }
     }
