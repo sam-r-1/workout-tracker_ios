@@ -15,6 +15,10 @@ class ExerciseResultsViewModel: ObservableObject {
         fetchInstancesFromIdList(exercise.id!)
     }
     
+    var chronologicalInstances: [ExerciseInstance] {
+        return exerciseInstances.sorted(by: { $0.timestamp.dateValue() < $1.timestamp.dateValue() })
+    }
+    
     func fetchInstancesFromIdList(_ exerciseId: String) {
         service.fetchInstances(byExerciseId: exerciseId) { instances in
             self.exerciseInstances = instances

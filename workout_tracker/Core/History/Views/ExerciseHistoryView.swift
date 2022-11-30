@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Charts
+// import Firebase
 
 struct ExerciseHistoryView: View {
     let exercise: Exercise
@@ -17,23 +19,32 @@ struct ExerciseHistoryView: View {
     }
     
     var body: some View {
-        VStack {
-            if viewModel.exerciseInstances.isEmpty {
-                Text("No data for \(exercise.name)")
-            } else {
-                ScrollView {
-                    LazyVStack(spacing: 0) {
-                        ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
-                            ExerciseResultRowView(exercise: self.exercise, instance: instance) { id in
-                                viewModel.deleteInstance(by: id)
-                            }
-                        }
-                    }
-                }
-            }
+        Group {
+            // TODO: uncomment when finished testing charts
+//            if viewModel.exerciseInstances.isEmpty {
+//                Text("No data for \(exercise.name)")
+//            } else {
+//                ScrollView {
+//                    LazyVStack(spacing: 0) {
+//                        ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
+//                            ExerciseResultRowView(exercise: self.exercise, instance: instance) { id in
+//                                viewModel.deleteInstance(by: id)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+            PerformanceLineChartView(entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSince1970.magnitude, y: $0.weight) })
         }
         .navigationTitle(exercise.name)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            Button("Print Dates") {
+                for instance in viewModel.chronologicalInstances {
+                    print(instance.timestamp.dateValue().timeIntervalSince1970.magnitude)
+                }
+            }
+        }
     }
 }
 
