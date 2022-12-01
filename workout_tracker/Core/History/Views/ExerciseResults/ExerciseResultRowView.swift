@@ -8,10 +8,8 @@
 import SwiftUI
 
 struct ExerciseResultRowView: View {
-    @State private var showDeleteDialog = false
     let exercise: Exercise
     let instance: ExerciseInstance
-    let onDelete: (String) -> Void
     
     // Formatters
     @State private var doubleFormatter: NumberFormatter = {
@@ -38,8 +36,6 @@ struct ExerciseResultRowView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Divider()
-            
             HStack {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(dateFormatter.string(from: instance.timestamp.dateValue()))
@@ -73,31 +69,14 @@ struct ExerciseResultRowView: View {
                 }
                 
                 Spacer()
-                
-                Button(role: .destructive) {
-                    showDeleteDialog.toggle()
-                } label: {
-                    Image(systemName: "trash")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 25, height: 25)
-                }
-
             }
-            
-            Divider()
         }
         .padding(.horizontal)
-        .alert("Delete \(exercise.name) data from \(dateFormatter.string(from: instance.timestamp.dateValue()))?", isPresented: $showDeleteDialog) {
-            Button("Delete", role: .destructive) {
-                onDelete(instance.id!)
-            }
-        }
     }
 }
 
-//struct ExerciseResultRowView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ExerciseResultRowView()
-//    }
-//}
+struct ExerciseResultRowView_Previews: PreviewProvider {
+    static var previews: some View {
+        ExerciseResultRowView(exercise: MockService.sampleExercises[2], instance: MockService.sampleInstances[0])
+    }
+}
