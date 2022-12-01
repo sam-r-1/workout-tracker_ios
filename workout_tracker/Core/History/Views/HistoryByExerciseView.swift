@@ -33,9 +33,7 @@ extension HistoryByExerciseView {
                        
                         ForEach(viewModel.exercises) { exercise in
                             NavigationLink {
-                                NavigationLazyView(ExerciseHistoryView(exercise))
-                                    .onAppear {
-                                    }
+                                NavigationLazyView(ExerciseHistoryView(exercise: exercise))
                             } label: {
                                 ExerciseRowView(
                                     exercise: exercise,

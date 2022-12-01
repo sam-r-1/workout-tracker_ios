@@ -11,55 +11,52 @@ import Charts
 
 struct ExerciseHistoryView: View {
     let exercise: Exercise
-    @ObservedObject var viewModel: ExerciseResultsViewModel
-    
-    init(_ exercise: Exercise) {
-        self.exercise = exercise
-        self.viewModel = ExerciseResultsViewModel(exercise)
-    }
+    @StateObject var viewModel = ExerciseResultsViewModel()
     
     var body: some View {
-        Group {
+        VStack {
             if viewModel.exerciseInstances.isEmpty {
                 Text("No data for \(exercise.name)")
             } else {
                 VStack {
-                    PerformanceLineChartView(entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.weight) })
+                    PerformanceChartTileView(title: "Weight", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.weight) })
                         .frame(height: 300)
-                    
+                                        
                     Divider()
                     
-                    ScrollView {
-                        LazyVStack(spacing: 0) {
-                            ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
-                                ExerciseResultRowView(exercise: self.exercise, instance: instance) { id in
-                                    viewModel.deleteInstance(by: id)
-                                }
-                            }
+//                    ScrollView {
+//                        LazyVStack(spacing: 0) {
+//                            ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
+//                                ExerciseResultRowView(exercise: self.exercise, instance: instance) { id in
+//                                    viewModel.deleteInstance(by: id)
+//                                }
+//                            }
+//                        }
+//                    }
+                    List {
+                        ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
+                            ExerciseResultRowView(exercise: self.exercise, instance: instance)
                         }
+                        .onDelete(perform: viewModel.deleteInstance)
                     }
+                    .listStyle(.plain)
                 }
             }
+        }
+        .onAppear {
+            viewModel.fetchInstancesFromIdList(self.exercise.id)
         }
         .navigationTitle(exercise.name)
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            Button("Print Dates") {
-                for instance in viewModel.chronologicalInstances {
-                    print(instance.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude)
-                }
-            }
-        }
     }
 }
 
-//struct ExerciseHistoryView_Previews: PreviewProvider {
-//    static var previewInstances: [ExerciseInstance] {
-//        let range = 1...15
-//        return range.map({ ExerciseInstance(uid: "previewUser", exerciseId: "previewExercise", timestamp: Timestamp(date: Date(timeIntervalSinceReferenceDate: Double($0) * 86401.0)), reps: 5, time: 100, weight: Double.random(in: (2 * Double($0) + 80)..<(2 * Double($0) + 120))) })
-//    }
-//
-//    static var previews: some View {
-//        ExerciseHistoryView()
-//    }
-//}
+struct ExerciseHistoryView_Previews: PreviewProvider {
+    static let previewExercise = MockService.sampleExercises[2]
+
+    static var previews: some View {
+        NavigationView {
+            ExerciseHistoryView(exercise: previewExercise, viewModel: ExerciseResultsViewModel(fromPreview: true))
+        }
+    }
+}

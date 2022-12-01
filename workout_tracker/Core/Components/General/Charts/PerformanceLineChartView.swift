@@ -13,24 +13,26 @@ struct PerformanceLineChartView: UIViewRepresentable {
     var primaryColor: UIColor = .purple
     // var axisLabelColor: UIColor = .black
     
+    let title: String
     let entries: [ChartDataEntry]
     let lineChart = LineChartView()
     
     func makeUIView(context: Context) -> LineChartView {
-        print("DEBUG: charting \(self.entries.count) points")
         lineChart.delegate = context.coordinator
         return lineChart
     }
     
     func updateUIView(_ uiView: LineChartView, context: Context) {
         let dataSet = LineChartDataSet(entries: entries)
-        dataSet.label = "Test Data"
+        dataSet.label = title
         uiView.noDataText = "No Data"
         uiView.data = LineChartData(dataSet: dataSet)
         uiView.xAxis.enabled = false
         uiView.leftAxis.enabled = false
         uiView.rightAxis.enabled = false
-        uiView.legend.enabled = false
+        // uiView.legend.enabled = false
+        uiView.highlightPerTapEnabled = false
+        uiView.highlightPerDragEnabled = false
 //        if uiView.scaleX == 1.0 {
 //            uiView.zoom(scaleX: 1.5, scaleY: 1, x: 0, y: 0)
 //        }
@@ -39,7 +41,7 @@ struct PerformanceLineChartView: UIViewRepresentable {
         formatLeftAxis(leftAxis: uiView.leftAxis)
         formatXAxis(xAxis: uiView.xAxis)
         formatLegend(legend: uiView.legend)
-        animateChart(uiView: uiView)
+        // animateChart(uiView: uiView)
         uiView.notifyDataSetChanged()
     }
     
@@ -129,17 +131,11 @@ extension PerformanceLineChartView {
 }
 
 struct PerformanceLineChartView_Previews: PreviewProvider {
-    static var previewInstances: [ExerciseInstance] {
-        let range = 1...15
-        return range.map({ ExerciseInstance(uid: "previewUser", exerciseId: "previewExercise", timestamp: Timestamp(date: Date(timeIntervalSinceReferenceDate: Double($0) * 86401.0)), reps: 5, time: 100, weight: Double.random(in: (2 * Double($0) + 80)..<(2 * Double($0) + 120))) })
-    }
-    
-    static var previewEntries: [ChartDataEntry] {
-        return previewInstances.map({ ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.weight) })
-    }
+    static let x = Array<Int>(0..<10)
+    static let y: [Double] = [10, 12, 11, 15, 14, 16, 18, 22, 20, 25]
+    static let entries = x.map({ ChartDataEntry(x: Double($0), y: y[$0]) })
     
     static var previews: some View {
-        PerformanceLineChartView(entries: previewEntries)
-            
+        PerformanceLineChartView(title: "Test", entries: entries)
     }
 }

@@ -11,24 +11,28 @@ class ExerciseResultsViewModel: ObservableObject {
     @Published var exerciseInstances = [ExerciseInstance]()
     private let service = ExerciseInstanceService()
     
-    init(_ exercise: Exercise) {
-        fetchInstancesFromIdList(exercise.id!)
+    init(fromPreview: Bool = false) {
+        if fromPreview {
+            exerciseInstances = MockService.sampleInstances
+        }
     }
     
     var chronologicalInstances: [ExerciseInstance] {
         return exerciseInstances.sorted(by: { $0.timestamp.dateValue() < $1.timestamp.dateValue() })
     }
     
-    func fetchInstancesFromIdList(_ exerciseId: String) {
-        service.fetchInstances(byExerciseId: exerciseId) { instances in
+    func fetchInstancesFromIdList(_ exerciseId: String?) {
+        guard exerciseId != nil else { return }
+        service.fetchInstances(byExerciseId: exerciseId!) { instances in
             self.exerciseInstances = instances
         }
     }
     
     // delete an instance from both the local and backend
-    func deleteInstance(by id: String) {
-        service.deleteInstances(fromInstanceIdList: [id]) // delete from Firebase
+    func deleteInstance(at offsets: IndexSet) {
+        guard offsets.count == 1 else { return }
         
-        self.exerciseInstances.remove(at: self.exerciseInstances.firstIndex(where: { $0.id == id })!) // delete from local
+        service.deleteInstances(fromInstanceIdList: [exerciseInstances[offsets.first!].id!])
+        self.exerciseInstances.remove(atOffsets: offsets)
     }
 }
