@@ -451,6 +451,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7F7638A42937DB69006D7D14 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				7F7638A229368578006D7D14 /* PerformanceLineChartView.swift */,
+			);
+			path = Charts;
+			sourceTree = "<group>";
+		};
 		7FA3208428A3F8F30071D835 = {
 			isa = PBXGroup;
 			children = (
@@ -641,6 +649,7 @@
 		7FA5480828EDEF7A009B1508 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				7F7638A42937DB69006D7D14 /* Charts */,
 				7F53D21128F5E8ED00FFB09D /* DragAndDrop */,
 				7FA320D128A551820071D835 /* SearchBar.swift */,
 				7F0E8F6A28A6FA8D00824BED /* CustomInputField.swift */,
@@ -649,7 +658,6 @@
 				7FA5480928EDEF9D009B1508 /* LoadingView.swift */,
 				7F53D20D28F5E19000FFB09D /* InvertAppIcons.swift */,
 				7F05E1132927244100FF6A8E /* ModifyObjectMode.swift */,
-				7F7638A229368578006D7D14 /* PerformanceLineChartView.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";

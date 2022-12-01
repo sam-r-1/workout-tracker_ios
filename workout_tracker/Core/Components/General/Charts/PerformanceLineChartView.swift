@@ -11,12 +11,15 @@ import Firebase
 
 struct PerformanceLineChartView: UIViewRepresentable {
     var primaryColor: UIColor = .purple
-    var axisLabelColor: UIColor = .black
+    // var axisLabelColor: UIColor = .black
     
     let entries: [ChartDataEntry]
+    let lineChart = LineChartView()
     
     func makeUIView(context: Context) -> LineChartView {
-        return LineChartView()
+        print("DEBUG: charting \(self.entries.count) points")
+        lineChart.delegate = context.coordinator
+        return lineChart
     }
     
     func updateUIView(_ uiView: LineChartView, context: Context) {
@@ -36,10 +39,24 @@ struct PerformanceLineChartView: UIViewRepresentable {
         formatLeftAxis(leftAxis: uiView.leftAxis)
         formatXAxis(xAxis: uiView.xAxis)
         formatLegend(legend: uiView.legend)
+        animateChart(uiView: uiView)
         uiView.notifyDataSetChanged()
     }
     
-    func formatDataSet(dataSet: LineChartDataSet, uiView: LineChartView) {
+    class Coordinator: NSObject, ChartViewDelegate {
+        let parent: PerformanceLineChartView
+        
+        init(parent: PerformanceLineChartView) {
+            self.parent = parent
+        }
+    }
+    
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(parent: self)
+    }
+    
+    private func formatDataSet(dataSet: LineChartDataSet, uiView: LineChartView) {
+        dataSet.lineWidth = 1.5
         dataSet.drawCirclesEnabled = false
         dataSet.colors = [primaryColor]
         dataSet.drawValuesEnabled = false
@@ -55,9 +72,7 @@ struct PerformanceLineChartView: UIViewRepresentable {
         dataSet.drawFilledEnabled = true
         let colors = [primaryColor.cgColor, CGColor(red: 255, green: 255, blue: 255, alpha: 1)]
         
-        guard let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors as CFArray, locations: nil) else {
-            return
-        }
+        guard let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors as CFArray, locations: nil) else { return }
         
         dataSet.fill = Fill(linearGradient: gradient, angle: -90)
         dataSet.fillFormatter = DefaultFillFormatter { _,_ -> CGFloat in
@@ -65,44 +80,55 @@ struct PerformanceLineChartView: UIViewRepresentable {
         }
     }
     
-    func formatLeftAxis(leftAxis: YAxis) {
+    private func formatLeftAxis(leftAxis: YAxis) {
 //        leftAxis.labelTextColor = axisLabelColor
 //        let formatter = NumberFormatter()
 //        formatter.numberStyle = .none
 //        leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: formatter)
-        leftAxis.axisMinimum = 0
+        leftAxis.axisMinimum = -10
     }
     
-    func formatXAxis(xAxis: XAxis) {
+    private func formatXAxis(xAxis: XAxis) {
         xAxis.drawLabelsEnabled = false
         xAxis.drawGridLinesEnabled = false
     }
     
-    func formatLegend(legend: Legend) {
+    private func formatLegend(legend: Legend) {
 //        legend.textColor = axisLabelColor
 //        legend.horizontalAlignment = .right
 //        legend.verticalAlignment = .top
 //        legend.drawInside = true
 //        legend.yOffset = 30.0
     }
+    
+    private func animateChart(uiView: LineChartView) {
+        uiView.animate(yAxisDuration: 0.8)
+    }
+}
+
+extension PerformanceLineChartView {
+//    func removeCrowdedXValues(withinPercentage threshold: Double = 0.01) {
+//        guard let xMin = entries.first?.x else { return }
+//        guard let xMax = entries.last?.x else { return }
+//        let testIncrement = (xMax - xMin) * threshold
+//
+//        var i = 0
+//        while i < entries.count {
+//            if entries[i].x + testIncrement > entries[i + 1].x {
+//                if entries[i].y > entries[i + 1].y {
+//                    entries.remove(at: i + 1)
+//                } else {
+//                    entries.remove(at: i)
+//                    i += 1
+//                }
+//            } else {
+//                i += 1
+//            }
+//        }
+//    }
 }
 
 struct PerformanceLineChartView_Previews: PreviewProvider {
-//    static let previewEntries = [
-//        ChartDataEntry(x: 1664997398.208757, y: 10),
-//        ChartDataEntry(x: 1665002034.381341, y: 14),
-//        ChartDataEntry(x: 1665020266.946567, y: 16),
-//        ChartDataEntry(x: 1665022611.289474, y: 20),
-//        ChartDataEntry(x: 1665022903.760938, y: 21),
-//        ChartDataEntry(x: 1665512155.438155, y: 28),
-//        ChartDataEntry(x: 1668620700.555461, y: 24),
-//        ChartDataEntry(x: 1668624341.671815, y: 31),
-//        ChartDataEntry(x: 1668624991.290525, y: 33),
-//    ]
-    
-    static func createPreviewInstance(date: Date, weight: Double) -> ExerciseInstance {
-        return ExerciseInstance(uid: "preview", exerciseId: "preview", timestamp: Timestamp(date: date), reps: 5, time: 100, weight: weight)
-    }
     static var previewInstances: [ExerciseInstance] {
         let range = 1...15
         return range.map({ ExerciseInstance(uid: "previewUser", exerciseId: "previewExercise", timestamp: Timestamp(date: Date(timeIntervalSinceReferenceDate: Double($0) * 86401.0)), reps: 5, time: 100, weight: Double.random(in: (2 * Double($0) + 80)..<(2 * Double($0) + 120))) })
@@ -114,5 +140,6 @@ struct PerformanceLineChartView_Previews: PreviewProvider {
     
     static var previews: some View {
         PerformanceLineChartView(entries: previewEntries)
+            
     }
 }

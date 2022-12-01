@@ -20,28 +20,33 @@ struct ExerciseHistoryView: View {
     
     var body: some View {
         Group {
-            // TODO: uncomment when finished testing charts
-//            if viewModel.exerciseInstances.isEmpty {
-//                Text("No data for \(exercise.name)")
-//            } else {
-//                ScrollView {
-//                    LazyVStack(spacing: 0) {
-//                        ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
-//                            ExerciseResultRowView(exercise: self.exercise, instance: instance) { id in
-//                                viewModel.deleteInstance(by: id)
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-            PerformanceLineChartView(entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSince1970.magnitude, y: $0.weight) })
+            if viewModel.exerciseInstances.isEmpty {
+                Text("No data for \(exercise.name)")
+            } else {
+                VStack {
+                    PerformanceLineChartView(entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.weight) })
+                        .frame(height: 300)
+                    
+                    Divider()
+                    
+                    ScrollView {
+                        LazyVStack(spacing: 0) {
+                            ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
+                                ExerciseResultRowView(exercise: self.exercise, instance: instance) { id in
+                                    viewModel.deleteInstance(by: id)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
         .navigationTitle(exercise.name)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Button("Print Dates") {
                 for instance in viewModel.chronologicalInstances {
-                    print(instance.timestamp.dateValue().timeIntervalSince1970.magnitude)
+                    print(instance.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude)
                 }
             }
         }
@@ -49,6 +54,11 @@ struct ExerciseHistoryView: View {
 }
 
 //struct ExerciseHistoryView_Previews: PreviewProvider {
+//    static var previewInstances: [ExerciseInstance] {
+//        let range = 1...15
+//        return range.map({ ExerciseInstance(uid: "previewUser", exerciseId: "previewExercise", timestamp: Timestamp(date: Date(timeIntervalSinceReferenceDate: Double($0) * 86401.0)), reps: 5, time: 100, weight: Double.random(in: (2 * Double($0) + 80)..<(2 * Double($0) + 120))) })
+//    }
+//
 //    static var previews: some View {
 //        ExerciseHistoryView()
 //    }
