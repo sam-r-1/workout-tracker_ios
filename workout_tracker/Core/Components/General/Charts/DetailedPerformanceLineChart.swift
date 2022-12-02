@@ -1,18 +1,18 @@
 //
-//  SmallPerformanceLineChart.swift
+//  DetailedPerformanceLineChart.swift
 //  workout_tracker
 //
-//  Created by Sam Rankin on 11/29/22.
+//  Created by Sam Rankin on 12/2/22.
 //
 
 import SwiftUI
 import Charts
 import Firebase
 
-struct SmallPerformanceLineChart: UIViewRepresentable {
+struct DetailedPerformanceLineChart: UIViewRepresentable {
     @Environment(\.colorScheme) var colorScheme
     let primaryColor: UIColor = .purple
-    let axisLabelColor: UIColor = .black
+    let axisLabelColor: UIColor = UIColor(.primary)
     
     let title: String
     let entries: [ChartDataEntry]
@@ -30,14 +30,8 @@ struct SmallPerformanceLineChart: UIViewRepresentable {
         uiView.noDataText = "No Data"
         uiView.data = LineChartData(dataSet: dataSet)
         uiView.xAxis.enabled = false
-        uiView.leftAxis.enabled = false
         uiView.rightAxis.enabled = false
         uiView.legend.enabled = false
-        uiView.highlightPerTapEnabled = false
-        uiView.highlightPerDragEnabled = false
-//        if uiView.scaleX == 1.0 {
-//            uiView.zoom(scaleX: 1.5, scaleY: 1, x: 0, y: 0)
-//        }
         uiView.setScaleEnabled(false)
         formatDataSet(dataSet: dataSet, uiView: uiView)
         formatLeftAxis(leftAxis: uiView.leftAxis)
@@ -48,9 +42,9 @@ struct SmallPerformanceLineChart: UIViewRepresentable {
     }
     
     class Coordinator: NSObject, ChartViewDelegate {
-        let parent: SmallPerformanceLineChart
+        let parent: DetailedPerformanceLineChart
         
-        init(parent: SmallPerformanceLineChart) {
+        init(parent: DetailedPerformanceLineChart) {
             self.parent = parent
         }
     }
@@ -61,11 +55,14 @@ struct SmallPerformanceLineChart: UIViewRepresentable {
     
     private func formatDataSet(dataSet: LineChartDataSet, uiView: LineChartView) {
         dataSet.lineWidth = 2
-        dataSet.drawCirclesEnabled = false
+        //dataSet.drawCirclesEnabled = false
+        dataSet.circleColors = [primaryColor]
+        dataSet.drawCircleHoleEnabled = false
+        dataSet.circleRadius = 3
         dataSet.colors = [primaryColor]
         dataSet.drawValuesEnabled = false
         dataSet.mode = .cubicBezier
-        dataSet.cubicIntensity = 0.1
+        dataSet.cubicIntensity = 0.05
 //        dataSet.valueColors = [primaryColor]
 //        let formatter = NumberFormatter()
 //        formatter.numberStyle = .none
@@ -85,16 +82,15 @@ struct SmallPerformanceLineChart: UIViewRepresentable {
     }
     
     private func formatLeftAxis(leftAxis: YAxis) {
-//        leftAxis.labelTextColor = axisLabelColor
-//        let formatter = NumberFormatter()
-//        formatter.numberStyle = .none
-//        leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: formatter)
-        // leftAxis.axisMinimum = -4
+        leftAxis.labelTextColor = axisLabelColor
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .none
+        leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: formatter)
     }
     
     private func formatXAxis(xAxis: XAxis) {
         xAxis.drawLabelsEnabled = false
-        xAxis.drawGridLinesEnabled = false
+        xAxis.drawGridLinesEnabled = true
     }
     
     private func formatLegend(legend: Legend) {
@@ -110,35 +106,19 @@ struct SmallPerformanceLineChart: UIViewRepresentable {
     }
 }
 
-extension SmallPerformanceLineChart {
-//    func removeCrowdedXValues(withinPercentage threshold: Double = 0.01) {
-//        guard let xMin = entries.first?.x else { return }
-//        guard let xMax = entries.last?.x else { return }
-//        let testIncrement = (xMax - xMin) * threshold
-//
-//        var i = 0
-//        while i < entries.count {
-//            if entries[i].x + testIncrement > entries[i + 1].x {
-//                if entries[i].y > entries[i + 1].y {
-//                    entries.remove(at: i + 1)
-//                } else {
-//                    entries.remove(at: i)
-//                    i += 1
-//                }
-//            } else {
-//                i += 1
-//            }
-//        }
-//    }
-}
-
-struct SmallPerformanceLineChart_Previews: PreviewProvider {
+struct DetailedPerformanceLineChart_Previews: PreviewProvider {
     static let x = Array<Int>(0..<10)
     static let y: [Double] = [10, 12, 11, 15, 14, 16, 18, 22, 20, 25]
     static let entries = x.map({ ChartDataEntry(x: Double($0), y: y[$0]) })
     
     static var previews: some View {
+        Group {
+            DetailedPerformanceLineChart(title: "Test", entries: entries)
+                .frame(height: 275)
+                .previewInterfaceOrientation(.landscapeLeft)
+            
             SmallPerformanceLineChart(title: "Test", entries: entries)
                 .frame(height: 275)
+        }
     }
 }

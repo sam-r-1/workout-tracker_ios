@@ -11,43 +11,62 @@ import Charts
 
 struct ExerciseHistoryView: View {
     let exercise: Exercise
+    @State private var chartIsExpanded = false
     @StateObject var viewModel = ExerciseResultsViewModel()
     
     var body: some View {
-        VStack {
-            if viewModel.exerciseInstances.isEmpty {
-                Text("No data for \(exercise.name)")
-            } else {
-                VStack {
-                    PerformanceChartTileView(title: "Weight", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.weight) })
-                        .frame(height: 300)
-                                        
-                    Divider()
-                    
-//                    ScrollView {
-//                        LazyVStack(spacing: 0) {
-//                            ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
-//                                ExerciseResultRowView(exercise: self.exercise, instance: instance) { id in
-//                                    viewModel.deleteInstance(by: id)
-//                                }
-//                            }
-//                        }
-//                    }
-                    List {
-                        ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
-                            ExerciseResultRowView(exercise: self.exercise, instance: instance)
+        GeometryReader { geometry in
+            ZStack {
+                Color(.systemGray5).edgesIgnoringSafeArea(.all)
+                
+                Group {
+                    if viewModel.exerciseInstances.isEmpty {
+                        Text("No data for \(exercise.name)")
+                    } else {
+                        VStack(spacing: 0) {
+                            performanceChart
+                                .frame(height: geometry.size.height * (chartIsExpanded ? 1 : 0.35))
+                                .rotationEffect(Angle(degrees: chartIsExpanded ? 90 : 0))
+                            
+                            List {
+                                ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
+                                    ExerciseResultRowView(exercise: self.exercise, instance: instance)
+                                        .listRowInsets(EdgeInsets())
+                                }
+                                .onDelete(perform: viewModel.deleteInstance)
+                            }
+                            .listStyle(.plain)
                         }
-                        .onDelete(perform: viewModel.deleteInstance)
                     }
-                    .listStyle(.plain)
+                }
+                .onAppear {
+                    viewModel.fetchInstancesFromIdList(self.exercise.id)
                 }
             }
+            .navigationTitle(exercise.name)
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .onAppear {
-            viewModel.fetchInstancesFromIdList(self.exercise.id)
+    }
+}
+
+extension ExerciseHistoryView {
+    var performanceChart: some View {
+        TabView {
+            if self.exercise.includeWeight {
+                PerformanceChartTileView(title: "Weight", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.weight) })
+            }
+            
+            if self.exercise.includeReps {
+                PerformanceChartTileView(title: "Reps", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: Double($0.reps)) })
+            }
+            
+            if self.exercise.includeTime {
+                PerformanceChartTileView(title: "Time", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.time) })
+            }
+            
         }
-        .navigationTitle(exercise.name)
-        .navigationBarTitleDisplayMode(.inline)
+        .tabViewStyle(.page(indexDisplayMode: .automatic))
+        .indexViewStyle(.page(backgroundDisplayMode: .always))
     }
 }
 
@@ -58,5 +77,6 @@ struct ExerciseHistoryView_Previews: PreviewProvider {
         NavigationView {
             ExerciseHistoryView(exercise: previewExercise, viewModel: ExerciseResultsViewModel(fromPreview: true))
         }
+        .preferredColorScheme(.dark)
     }
 }

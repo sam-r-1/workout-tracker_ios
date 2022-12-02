@@ -28,6 +28,8 @@
 		7F0E8F6F28A7439900824BED /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F6E28A7439900824BED /* User.swift */; };
 		7F0E8F7128A74BCF00824BED /* AuthCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E8F7028A74BCF00824BED /* AuthCardView.swift */; };
 		7F1E824928EF817900D240FD /* ExerciseResultRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E824828EF817900D240FD /* ExerciseResultRowView.swift */; };
+		7F2B9A43293A908A0089BFB5 /* DateIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2B9A42293A908A0089BFB5 /* DateIcon.swift */; };
+		7F2B9A45293AB6E90089BFB5 /* DetailedPerformanceLineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2B9A44293AB6E90089BFB5 /* DetailedPerformanceLineChart.swift */; };
 		7F2C7D4E28FDD2170039DEB5 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2C7D4D28FDD2170039DEB5 /* Template.swift */; };
 		7F2C7D5028FDD35B0039DEB5 /* TemplateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2C7D4F28FDD35B0039DEB5 /* TemplateService.swift */; };
 		7F2C7D5528FDD5B50039DEB5 /* ModifyTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2C7D5428FDD5B50039DEB5 /* ModifyTemplateView.swift */; };
@@ -129,6 +131,8 @@
 		7F0E8F6E28A7439900824BED /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		7F0E8F7028A74BCF00824BED /* AuthCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCardView.swift; sourceTree = "<group>"; };
 		7F1E824828EF817900D240FD /* ExerciseResultRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseResultRowView.swift; sourceTree = "<group>"; };
+		7F2B9A42293A908A0089BFB5 /* DateIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateIcon.swift; sourceTree = "<group>"; };
+		7F2B9A44293AB6E90089BFB5 /* DetailedPerformanceLineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedPerformanceLineChart.swift; sourceTree = "<group>"; };
 		7F2C7D4D28FDD2170039DEB5 /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		7F2C7D4F28FDD35B0039DEB5 /* TemplateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateService.swift; sourceTree = "<group>"; };
 		7F2C7D5428FDD5B50039DEB5 /* ModifyTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyTemplateView.swift; sourceTree = "<group>"; };
@@ -362,6 +366,14 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
+		7F2B9A41293A906F0089BFB5 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				7F2B9A42293A908A0089BFB5 /* DateIcon.swift */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
 		7F2C7D5128FDD57C0039DEB5 /* ModifyTemplate */ = {
 			isa = PBXGroup;
 			children = (
@@ -459,6 +471,7 @@
 			isa = PBXGroup;
 			children = (
 				7F7638A229368578006D7D14 /* PerformanceLineChartView.swift */,
+				7F2B9A44293AB6E90089BFB5 /* DetailedPerformanceLineChart.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -671,6 +684,7 @@
 		7FA5480828EDEF7A009B1508 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				7F2B9A41293A906F0089BFB5 /* Icons */,
 				7F7638A42937DB69006D7D14 /* Charts */,
 				7F53D21128F5E8ED00FFB09D /* DragAndDrop */,
 				7FA320D128A551820071D835 /* SearchBar.swift */,
@@ -892,6 +906,7 @@
 				7FC0002628AD4E3900D484C6 /* WorkoutViewModel.swift in Sources */,
 				7FC0001C28AC11DA00D484C6 /* WorkoutView.swift in Sources */,
 				7FA3209328A3F8F30071D835 /* ContentView.swift in Sources */,
+				7F2B9A45293AB6E90089BFB5 /* DetailedPerformanceLineChart.swift in Sources */,
 				7F0E8F6B28A6FA8D00824BED /* CustomInputField.swift in Sources */,
 				7FA320D428A552DD0071D835 /* ExercisesViewModel.swift in Sources */,
 				7F0E8F6D28A7434700824BED /* UserService.swift in Sources */,
@@ -953,6 +968,7 @@
 				7F53D20E28F5E19000FFB09D /* InvertAppIcons.swift in Sources */,
 				7F2C7D5728FDD6B60039DEB5 /* ModifyTemplateViewModel.swift in Sources */,
 				7FC0001728AC0ADF00D484C6 /* SettingsView.swift in Sources */,
+				7F2B9A43293A908A0089BFB5 /* DateIcon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
