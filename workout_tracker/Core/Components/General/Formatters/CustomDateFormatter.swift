@@ -26,4 +26,10 @@ class CustomDateFormatter {
         dateFormatter.dateFormat = "d"
         return dateFormatter
     }()
+    
+    static var year: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "YYYY"
+        return dateFormatter
+    }()
 }
