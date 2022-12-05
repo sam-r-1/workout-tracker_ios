@@ -11,8 +11,12 @@ import Charts
 
 struct ExerciseHistoryView: View {
     let exercise: Exercise
-    @State private var chartIsExpanded = false
+//    @State private var showChartFullscreen = UIDevice.current.orientation.isLandscape
     @StateObject var viewModel = ExerciseResultsViewModel()
+    
+//    let orientationChanged = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
+//        .makeConnectable()
+//        .autoconnect()
     
     var body: some View {
         GeometryReader { geometry in
@@ -25,13 +29,13 @@ struct ExerciseHistoryView: View {
                     } else {
                         VStack(spacing: 0) {
                             performanceChart
-                                .frame(height: geometry.size.height * (chartIsExpanded ? 1 : 0.35))
-                                .rotationEffect(Angle(degrees: chartIsExpanded ? 90 : 0))
+                                .frame(height: geometry.size.height * 0.35)
                             
                             List {
                                 ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
                                     ExerciseResultRowView(exercise: self.exercise, instance: instance)
                                         .listRowInsets(EdgeInsets())
+                                        .listRowSeparator(.hidden)
                                 }
                                 .onDelete(perform: viewModel.deleteInstance)
                             }
@@ -45,6 +49,11 @@ struct ExerciseHistoryView: View {
             }
             .navigationTitle(exercise.name)
             .navigationBarTitleDisplayMode(.inline)
+//            .onReceive(orientationChanged) { _ in
+//                withAnimation {
+//                    showChartFullscreen = UIDevice.current.orientation.isLandscape
+//                }
+//            }
         }
     }
 }
@@ -74,9 +83,14 @@ struct ExerciseHistoryView_Previews: PreviewProvider {
     static let previewExercise = MockService.sampleExercises[2]
 
     static var previews: some View {
-        NavigationView {
-            ExerciseHistoryView(exercise: previewExercise, viewModel: ExerciseResultsViewModel(fromPreview: true))
+        Group {
+            NavigationView {
+                ExerciseHistoryView(exercise: previewExercise, viewModel: ExerciseResultsViewModel(fromPreview: true))
+            }
+            NavigationView {
+                ExerciseHistoryView(exercise: previewExercise, viewModel: ExerciseResultsViewModel(fromPreview: true))
+            }
+            .previewInterfaceOrientation(.landscapeLeft)
         }
-        .preferredColorScheme(.dark)
     }
 }

@@ -7,8 +7,8 @@
 
 import SwiftUI
 import Charts
-import Firebase
 
+//TODO: implement this chart
 struct DetailedPerformanceLineChart: UIViewRepresentable {
     @Environment(\.colorScheme) var colorScheme
     let primaryColor: UIColor = .purple
@@ -17,6 +17,7 @@ struct DetailedPerformanceLineChart: UIViewRepresentable {
     let title: String
     let entries: [ChartDataEntry]
     let lineChart = LineChartView()
+    @Binding var selectedItem: Int
     
     func makeUIView(context: Context) -> LineChartView {
         lineChart.delegate = context.coordinator
@@ -30,13 +31,12 @@ struct DetailedPerformanceLineChart: UIViewRepresentable {
         uiView.noDataText = "No Data"
         uiView.data = LineChartData(dataSet: dataSet)
         uiView.xAxis.enabled = false
-        uiView.rightAxis.enabled = false
         uiView.legend.enabled = false
         uiView.setScaleEnabled(false)
         formatDataSet(dataSet: dataSet, uiView: uiView)
         formatLeftAxis(leftAxis: uiView.leftAxis)
+        formatRightAxis(rightAxis: uiView.rightAxis)
         formatXAxis(xAxis: uiView.xAxis)
-        formatLegend(legend: uiView.legend)
         // animateChart(uiView: uiView)
         uiView.notifyDataSetChanged()
     }
@@ -55,18 +55,13 @@ struct DetailedPerformanceLineChart: UIViewRepresentable {
     
     private func formatDataSet(dataSet: LineChartDataSet, uiView: LineChartView) {
         dataSet.lineWidth = 2
-        //dataSet.drawCirclesEnabled = false
         dataSet.circleColors = [primaryColor]
         dataSet.drawCircleHoleEnabled = false
-        dataSet.circleRadius = 3
+        dataSet.circleRadius = 4
         dataSet.colors = [primaryColor]
         dataSet.drawValuesEnabled = false
         dataSet.mode = .cubicBezier
         dataSet.cubicIntensity = 0.05
-//        dataSet.valueColors = [primaryColor]
-//        let formatter = NumberFormatter()
-//        formatter.numberStyle = .none
-//        dataSet.valueFormatter = DefaultValueFormatter(formatter: formatter)
         
         // fill
         dataSet.fillAlpha = 1
@@ -83,22 +78,20 @@ struct DetailedPerformanceLineChart: UIViewRepresentable {
     
     private func formatLeftAxis(leftAxis: YAxis) {
         leftAxis.labelTextColor = axisLabelColor
+        leftAxis.axisLineWidth = 2
         let formatter = NumberFormatter()
         formatter.numberStyle = .none
         leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: formatter)
     }
     
+    private func formatRightAxis(rightAxis: YAxis) {
+        rightAxis.drawLabelsEnabled = false
+        rightAxis.axisLineWidth = 2
+    }
+    
     private func formatXAxis(xAxis: XAxis) {
         xAxis.drawLabelsEnabled = false
         xAxis.drawGridLinesEnabled = true
-    }
-    
-    private func formatLegend(legend: Legend) {
-//        legend.textColor = axisLabelColor
-//        legend.horizontalAlignment = .center
-//        legend.verticalAlignment = .bottom
-//        legend.drawInside = true
-//        legend.yOffset = 30.0
     }
     
     private func animateChart(uiView: LineChartView) {
@@ -113,7 +106,7 @@ struct DetailedPerformanceLineChart_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            DetailedPerformanceLineChart(title: "Test", entries: entries)
+            DetailedPerformanceLineChart(title: "Test", entries: entries, selectedItem: Binding.constant(1))
                 .frame(height: 275)
                 .previewInterfaceOrientation(.landscapeLeft)
             

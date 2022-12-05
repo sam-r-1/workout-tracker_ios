@@ -52,11 +52,6 @@ class ModifyTemplateViewModel: ObservableObject {
         self.exerciseList.move(fromOffsets: source, toOffset: destination)
     }
     
-    // TODO: implement drag/drop to change template order
-//    func moveExercise(from source: IndexSet, to destination: Int) {
-//        self.exercises.move(fromOffsets: source, toOffset: destination)
-//    }
-    
     func modifyTemplate() {
         service.setTemplate(id: self.template?.id, name: self.name, exerciseIdList: exerciseList.map {$0.exerciseId}, exerciseNameList: exerciseList.map { $0.name }) { success in
             if success {

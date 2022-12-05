@@ -11,7 +11,6 @@ import Charts
 struct PerformanceChartTileView: View {
     let title: String
     let entries: [ChartDataEntry]
-    // @Binding var isExpanded: Bool
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -27,21 +26,6 @@ struct PerformanceChartTileView: View {
                 }
                 
                 Spacer()
-                
-//                HStack {
-//                    Spacer()
-//
-//                    Button {
-//                        print("DEBUG: expanding chart")
-//
-//                    } label: {
-//                        Image(systemName: "arrow.up.left.and.arrow.down.right")
-//                            .resizable()
-//                            .scaledToFit()
-//                    }
-//                    .foregroundColor(.primary)
-//                    .frame(width: 20, height: 20)
-//                }
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 15)
@@ -49,7 +33,6 @@ struct PerformanceChartTileView: View {
         .background()
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .padding(8)
-        // .shadow(radius: 8)
     }
 }
 

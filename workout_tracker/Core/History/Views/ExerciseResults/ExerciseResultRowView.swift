@@ -85,7 +85,8 @@ struct ExerciseResultRowView: View {
             Spacer()
         }
         .padding(8)
-        .background(Color(.systemGray5))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        // .background(Color(.systemGray5))
     }
 }
 

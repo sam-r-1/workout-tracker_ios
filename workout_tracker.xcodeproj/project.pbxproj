@@ -45,6 +45,7 @@
 		7F7638A329368578006D7D14 /* PerformanceLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7638A229368578006D7D14 /* PerformanceLineChartView.swift */; };
 		7F7638A929393999006D7D14 /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7638A829393999006D7D14 /* MockService.swift */; };
 		7F7638AC293966E1006D7D14 /* PerformanceChartTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7638AB293966E1006D7D14 /* PerformanceChartTileView.swift */; };
+		7F9EFD18293C0399000FCB24 /* FullPerformanceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9EFD17293C0399000FCB24 /* FullPerformanceChartView.swift */; };
 		7FA3209128A3F8F30071D835 /* workout_trackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */; };
 		7FA3209328A3F8F30071D835 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209228A3F8F30071D835 /* ContentView.swift */; };
 		7FA3209528A3F8F30071D835 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA3209428A3F8F30071D835 /* Assets.xcassets */; };
@@ -147,6 +148,7 @@
 		7F7638A229368578006D7D14 /* PerformanceLineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceLineChartView.swift; sourceTree = "<group>"; };
 		7F7638A829393999006D7D14 /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
 		7F7638AB293966E1006D7D14 /* PerformanceChartTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceChartTileView.swift; sourceTree = "<group>"; };
+		7F9EFD17293C0399000FCB24 /* FullPerformanceChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPerformanceChartView.swift; sourceTree = "<group>"; };
 		7FA3208D28A3F8F30071D835 /* Workout Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Workout Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = workout_trackerApp.swift; sourceTree = "<group>"; };
 		7FA3209228A3F8F30071D835 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -489,6 +491,7 @@
 			children = (
 				7F1E824828EF817900D240FD /* ExerciseResultRowView.swift */,
 				7F7638AB293966E1006D7D14 /* PerformanceChartTileView.swift */,
+				7F9EFD17293C0399000FCB24 /* FullPerformanceChartView.swift */,
 			);
 			path = ExerciseResults;
 			sourceTree = "<group>";
@@ -921,6 +924,7 @@
 				7FA5481A28EE37A7009B1508 /* ExerciseHistoryViewModel.swift in Sources */,
 				7FA5480C28EDF8A4009B1508 /* TabMenuIconView.swift in Sources */,
 				7FA320D028A548E70071D835 /* PopUpMenuViewModel.swift in Sources */,
+				7F9EFD18293C0399000FCB24 /* FullPerformanceChartView.swift in Sources */,
 				7F2C7D5E28FDE62A0039DEB5 /* SelectExerciseViewModel.swift in Sources */,
 				7F05E1142927244100FF6A8E /* ModifyObjectMode.swift in Sources */,
 				7F53D21328F5E91000FFB09D /* DragRelocateDelegate.swift in Sources */,
