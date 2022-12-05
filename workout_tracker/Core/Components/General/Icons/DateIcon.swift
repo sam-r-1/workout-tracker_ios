@@ -8,13 +8,11 @@
 import SwiftUI
 
 struct DateIcon: View {
-    let month: String
-    let day: String
+    let date: Date
     let bordered: Bool
     
-    init(month: String, day: String, bordered: Bool = false) {
-        self.month = month
-        self.day = day
+    init(date: Date, bordered: Bool = false) {
+        self.date = date
         self.bordered = bordered
     }
     
@@ -29,7 +27,7 @@ struct DateIcon: View {
                             .foregroundColor(.init(red: 222/255, green: 10/255, blue: 67/255))
                             .frame(height: iconHeight / 3)
                         
-                        Text(month)
+                        Text(CustomDateFormatter.abbrMonth.string(from: date))
                             .foregroundColor(.white)
                             .font(.system(size: iconHeight * 0.275))
                     }
@@ -38,7 +36,7 @@ struct DateIcon: View {
                         Rectangle()
                             .foregroundColor(.white)
                         
-                        Text(day)
+                        Text(CustomDateFormatter.dateDay.string(from: date))
                             .foregroundColor(.black)
                             .font(.system(size: iconHeight * 0.55, weight: .bold, design: .serif))
                     }
@@ -59,7 +57,7 @@ struct DateIconView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Color(.systemGray5)
-            DateIcon(month: "Dec", day: "12", bordered: true)
+            DateIcon(date: Date.now)
                 .frame(width: 150)
         }
     }

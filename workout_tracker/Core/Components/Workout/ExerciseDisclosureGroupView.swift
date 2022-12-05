@@ -14,28 +14,6 @@ struct ExerciseDisclosureGroupView: View {
     @State var item: ExerciseDataFields
     let onDelete: () -> Void
     
-    // Formatters
-    @State private var intFormatter: NumberFormatter = {
-        let numFormatter = NumberFormatter()
-        numFormatter.numberStyle = .none
-        return numFormatter
-    }()
-    
-    @State private var doubleFormatter: NumberFormatter = {
-        let numFormatter = NumberFormatter()
-        numFormatter.numberStyle = .decimal
-        return numFormatter
-    }()
-    
-    @State private var timeFormatter: DateComponentsFormatter = {
-        let timeFormatter = DateComponentsFormatter()
-        timeFormatter.zeroFormattingBehavior = .dropLeading
-        timeFormatter.allowedUnits = [.minute, .second]
-        timeFormatter.allowsFractionalUnits = true
-        timeFormatter.unitsStyle = .abbreviated
-        return timeFormatter
-    }()
-    
     init(item: ExerciseDataFields, onDelete: @escaping () -> Void) {
         self.item = item
         self.onDelete = onDelete
@@ -124,21 +102,13 @@ struct ExerciseDisclosureGroupView: View {
     }
 }
 
-struct ExerciseDisclosureGroupView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true))) {
-            print("DEBUG: deleting")
-        }
-    }
-}
-
 extension ExerciseDisclosureGroupView {
     
     var weightFieldView: some View {
         HStack {
             Text("Weight (lbs):")
 
-            TextField("", value: $item.weight, formatter: doubleFormatter)
+            TextField("", value: $item.weight, formatter: WeightFormatter.weight)
                 .foregroundColor(Color(.systemGray))
                 .frame(maxWidth: 80)
             
@@ -151,7 +121,7 @@ extension ExerciseDisclosureGroupView {
         HStack {
             Text("# of Reps:")
             
-            TextField("reps", value: $item.reps, formatter: intFormatter)
+            TextField("reps", value: $item.reps, formatter: NumberFormatter())
                 .foregroundColor(Color(.systemGray))
                 .frame(maxWidth: 80)
             
@@ -164,7 +134,7 @@ extension ExerciseDisclosureGroupView {
         HStack {
             Text("Time:")
             
-            Text(timeFormatter.string(from: item.time) ?? "0s")
+            Text(TimeFormatter.durationResult.string(from: item.time) ?? "0s")
                 .foregroundColor(Color(.systemGray))
             
             Button {
@@ -176,5 +146,13 @@ extension ExerciseDisclosureGroupView {
             Spacer()
         }
         .font(.title3)
+    }
+}
+
+struct ExerciseDisclosureGroupView_Previews: PreviewProvider {
+    static var previews: some View {
+        ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true))) {
+            print("DEBUG: deleting")
+        }
     }
 }

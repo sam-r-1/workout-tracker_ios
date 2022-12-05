@@ -79,9 +79,6 @@ struct DetailedPerformanceLineChart: UIViewRepresentable {
     private func formatLeftAxis(leftAxis: YAxis) {
         leftAxis.labelTextColor = axisLabelColor
         leftAxis.axisLineWidth = 2
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .none
-        leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: formatter)
     }
     
     private func formatRightAxis(rightAxis: YAxis) {

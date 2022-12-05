@@ -13,28 +13,6 @@ struct InstanceHistoryRowView: View {
     let instance: ExerciseInstance
     @ObservedObject var viewModel : InstanceHistoryRowViewModel
     let onDelete: (String) -> Void
-    
-    // Formatters
-    @State private var intFormatter: NumberFormatter = {
-        let numFormatter = NumberFormatter()
-        numFormatter.numberStyle = .none
-        return numFormatter
-    }()
-    
-    @State private var doubleFormatter: NumberFormatter = {
-        let numFormatter = NumberFormatter()
-        numFormatter.numberStyle = .decimal
-        return numFormatter
-    }()
-    
-    @State private var timeFormatter: DateComponentsFormatter = {
-        let timeFormatter = DateComponentsFormatter()
-        timeFormatter.zeroFormattingBehavior = .dropLeading
-        timeFormatter.allowedUnits = [.minute, .second]
-        timeFormatter.allowsFractionalUnits = true
-        timeFormatter.unitsStyle = .abbreviated
-        return timeFormatter
-    }()
 
     init(_ instance: ExerciseInstance, onDelete: @escaping (String) -> Void) {
         self.instance = instance
@@ -68,21 +46,21 @@ struct InstanceHistoryRowView: View {
                     if exercise.includeWeight {
                         HStack {
                             Text("Weight: ")
-                            Text("\(doubleFormatter.string(from: instance.weight as NSNumber) ?? "0")lbs")
+                            Text("\(WeightFormatter.weight.string(from: instance.weight as NSNumber) ?? "0")lbs")
                         }
                     }
                     
                     if exercise.includeReps {
                         HStack {
                             Text("Reps:     ")
-                            Text(intFormatter.string(from: instance.reps as NSNumber) ?? "Error loading")
+                            Text("\(instance.reps)")
                         }
                     }
                     
                     if exercise.includeTime {
                         HStack {
                             Text("Time:     ")
-                            Text(timeFormatter.string(from: instance.time) ?? "Error loading")
+                            Text(TimeFormatter.durationResult.string(from: instance.time) ?? "Error loading")
                         }
                     }
                 }

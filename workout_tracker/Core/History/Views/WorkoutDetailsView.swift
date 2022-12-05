@@ -13,13 +13,6 @@ struct WorkoutDetailsView: View {
     @ObservedObject var viewModel: WorkoutHistoryViewModel
     @Environment(\.presentationMode) var presentationMode
     
-    @State private var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        return dateFormatter
-    }()
-    
     init(_ workout: Workout, viewModel: WorkoutHistoryViewModel) {
         self.workout = workout
         self.viewModel = viewModel
@@ -37,7 +30,7 @@ struct WorkoutDetailsView: View {
             WorkoutDetailsScrollView(workout)
                 .equatable()
         }
-        .navigationTitle(dateFormatter.string(from: workout.timestamp.dateValue()))
+        .navigationTitle(CustomDateFormatter.dateFormatter.string(from: workout.timestamp.dateValue()))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
 

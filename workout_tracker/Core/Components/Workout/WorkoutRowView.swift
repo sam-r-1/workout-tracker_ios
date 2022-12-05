@@ -10,13 +10,6 @@ import SwiftUI
 struct WorkoutRowView: View {
     let workout: Workout
     
-    @State private var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        return dateFormatter
-    }()
-    
     var body: some View {
         VStack {
             Divider()
@@ -25,7 +18,7 @@ struct WorkoutRowView: View {
                 VStack {
                     HStack {
                         VStack(alignment: .leading) {
-                            Text(dateFormatter.string(from: workout.timestamp.dateValue()))
+                            Text(CustomDateFormatter.dateFormatter.string(from: workout.timestamp.dateValue()))
                                 .font(.title2)
                                 .bold()
                             
