@@ -6,39 +6,91 @@
 //
 
 import SwiftUI
+import Charts
+// import Firebase
 
 struct ExerciseHistoryView: View {
     let exercise: Exercise
-    @ObservedObject var viewModel: ExerciseResultsViewModel
+//    @State private var showChartFullscreen = UIDevice.current.orientation.isLandscape
+    @StateObject var viewModel = ExerciseResultsViewModel()
     
-    init(_ exercise: Exercise) {
-        self.exercise = exercise
-        self.viewModel = ExerciseResultsViewModel(exercise)
-    }
+//    let orientationChanged = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
+//        .makeConnectable()
+//        .autoconnect()
     
     var body: some View {
-        VStack {
-            if viewModel.exerciseInstances.isEmpty {
-                Text("No data for \(exercise.name)")
-            } else {
-                ScrollView {
-                    LazyVStack(spacing: 0) {
-                        ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
-                            ExerciseResultRowView(exercise: self.exercise, instance: instance) { id in
-                                viewModel.deleteInstance(by: id)
+        GeometryReader { geometry in
+            ZStack {
+                Color(.systemGray5).edgesIgnoringSafeArea(.all)
+                
+                Group {
+                    if viewModel.exerciseInstances.isEmpty {
+                        Text("No data for \(exercise.name)")
+                    } else {
+                        VStack(spacing: 0) {
+                            performanceChart
+                                .frame(height: geometry.size.height * 0.35)
+                            
+                            List {
+                                ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
+                                    ExerciseResultRowView(exercise: self.exercise, instance: instance)
+                                        .listRowInsets(EdgeInsets())
+                                        .listRowSeparator(.hidden)
+                                }
+                                .onDelete(perform: viewModel.deleteInstance)
                             }
+                            .listStyle(.plain)
                         }
                     }
                 }
+                .onAppear {
+                    viewModel.fetchInstancesFromIdList(self.exercise.id)
+                }
             }
+            .navigationTitle(exercise.name)
+            .navigationBarTitleDisplayMode(.inline)
+//            .onReceive(orientationChanged) { _ in
+//                withAnimation {
+//                    showChartFullscreen = UIDevice.current.orientation.isLandscape
+//                }
+//            }
         }
-        .navigationTitle(exercise.name)
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-//struct ExerciseHistoryView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ExerciseHistoryView()
-//    }
-//}
+extension ExerciseHistoryView {
+    var performanceChart: some View {
+        TabView {
+            if self.exercise.includeWeight {
+                PerformanceChartTileView(title: "Weight", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.weight) })
+            }
+            
+            if self.exercise.includeReps {
+                PerformanceChartTileView(title: "Reps", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: Double($0.reps)) })
+            }
+            
+            if self.exercise.includeTime {
+                PerformanceChartTileView(title: "Time", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.time) })
+            }
+            
+        }
+        .tabViewStyle(.page(indexDisplayMode: .automatic))
+        .indexViewStyle(.page(backgroundDisplayMode: .always))
+    }
+}
+
+struct ExerciseHistoryView_Previews: PreviewProvider {
+    static let previewExercise = MockService.sampleExercises[2]
+
+    static var previews: some View {
+        Group {
+            NavigationView {
+                ExerciseHistoryView(exercise: previewExercise, viewModel: ExerciseResultsViewModel(fromPreview: true))
+            }
+            NavigationView {
+                ExerciseHistoryView(exercise: previewExercise, viewModel: ExerciseResultsViewModel(fromPreview: true))
+            }
+            .previewInterfaceOrientation(.landscapeLeft)
+        }
+    }
+}

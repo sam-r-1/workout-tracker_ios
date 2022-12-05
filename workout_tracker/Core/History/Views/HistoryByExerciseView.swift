@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct HistoryByExerciseView: View {
-    @State private var selectedExercise: Exercise? = nil
     @StateObject var viewModel = ExerciseHistoryViewModel()
     
     var body: some View {
@@ -34,7 +33,7 @@ extension HistoryByExerciseView {
                        
                         ForEach(viewModel.exercises) { exercise in
                             NavigationLink {
-                                NavigationLazyView(ExerciseHistoryView(exercise))
+                                NavigationLazyView(ExerciseHistoryView(exercise: exercise))
                             } label: {
                                 ExerciseRowView(
                                     exercise: exercise,
