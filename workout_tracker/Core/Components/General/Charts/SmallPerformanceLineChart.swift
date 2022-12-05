@@ -35,15 +35,9 @@ struct SmallPerformanceLineChart: UIViewRepresentable {
         uiView.legend.enabled = false
         uiView.highlightPerTapEnabled = false
         uiView.highlightPerDragEnabled = false
-//        if uiView.scaleX == 1.0 {
-//            uiView.zoom(scaleX: 1.5, scaleY: 1, x: 0, y: 0)
-//        }
         uiView.setScaleEnabled(false)
         formatDataSet(dataSet: dataSet, uiView: uiView)
-        formatLeftAxis(leftAxis: uiView.leftAxis)
         formatXAxis(xAxis: uiView.xAxis)
-        formatLegend(legend: uiView.legend)
-        // animateChart(uiView: uiView)
         uiView.notifyDataSetChanged()
     }
     
@@ -66,10 +60,6 @@ struct SmallPerformanceLineChart: UIViewRepresentable {
         dataSet.drawValuesEnabled = false
         dataSet.mode = .cubicBezier
         dataSet.cubicIntensity = 0.1
-//        dataSet.valueColors = [primaryColor]
-//        let formatter = NumberFormatter()
-//        formatter.numberStyle = .none
-//        dataSet.valueFormatter = DefaultValueFormatter(formatter: formatter)
         
         // fill
         dataSet.fillAlpha = 1
@@ -84,52 +74,14 @@ struct SmallPerformanceLineChart: UIViewRepresentable {
         }
     }
     
-    private func formatLeftAxis(leftAxis: YAxis) {
-//        leftAxis.labelTextColor = axisLabelColor
-//        let formatter = NumberFormatter()
-//        formatter.numberStyle = .none
-//        leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: formatter)
-        // leftAxis.axisMinimum = -4
-    }
-    
     private func formatXAxis(xAxis: XAxis) {
         xAxis.drawLabelsEnabled = false
         xAxis.drawGridLinesEnabled = false
     }
     
-    private func formatLegend(legend: Legend) {
-//        legend.textColor = axisLabelColor
-//        legend.horizontalAlignment = .center
-//        legend.verticalAlignment = .bottom
-//        legend.drawInside = true
-//        legend.yOffset = 30.0
-    }
-    
     private func animateChart(uiView: LineChartView) {
         uiView.animate(yAxisDuration: 0.8)
     }
-}
-
-extension SmallPerformanceLineChart {
-//    func removeCrowdedXValues(withinPercentage threshold: Double = 0.01) {
-//        guard let xMin = entries.first?.x else { return }
-//        guard let xMax = entries.last?.x else { return }
-//        let testIncrement = (xMax - xMin) * threshold
-//
-//        var i = 0
-//        while i < entries.count {
-//            if entries[i].x + testIncrement > entries[i + 1].x {
-//                if entries[i].y > entries[i + 1].y {
-//                    entries.remove(at: i + 1)
-//                } else {
-//                    entries.remove(at: i)
-//                    i += 1
-//                }
-//            } else {
-//                i += 1
-//            }
-//        }
-//    }
 }
 
 struct SmallPerformanceLineChart_Previews: PreviewProvider {

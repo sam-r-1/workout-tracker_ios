@@ -10,9 +10,9 @@
 
 ### Future Improvements
 * UI improvements/overhaul
-* Add data visualization (charts/graphs)
 * Improve functionality around doing multiple sets of the same exercise (currently possible, but has some undesired effects)
 * ~~Implement workout templates to allow users to easily record exercises in the same order repeatedly~~ added 16 Nov 2022
+* ~~Add data visualization (charts/graphs)~~ added 5 Dec 2022
 
 
 ### External icons used:
