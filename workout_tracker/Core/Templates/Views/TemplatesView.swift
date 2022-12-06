@@ -12,11 +12,7 @@ struct TemplatesView: View {
     @Environment(\.sizeCategory) var sizeCategory
     
     @State private var showModifyTemplateView = false
-    @ObservedObject var viewModel = TemplatesViewModel()
-    
-    init(viewModel: TemplatesViewModel = TemplatesViewModel()) {
-        self.viewModel = viewModel
-    }
+    @StateObject var viewModel = TemplatesViewModel()
     
     var body: some View {
         ZStack {
@@ -48,7 +44,7 @@ struct TemplatesView: View {
     
 extension TemplatesView {
     var dataView: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 45) {
             if viewModel.templates.isEmpty {
                 noDataView
             } else {

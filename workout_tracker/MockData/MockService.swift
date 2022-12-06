@@ -31,4 +31,10 @@ enum MockService {
             Template(uid: "", name: "Preview", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
         ]
     }
+    
+    static var sampleWorkouts: [Workout] {
+        [
+            Workout(uid: "", timestamp: Timestamp(date: Date.now), exerciseInstanceIdList: ["", "", "", "", ""])
+        ]
+    }
 }

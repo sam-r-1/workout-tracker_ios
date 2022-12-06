@@ -28,22 +28,17 @@ extension HistoryByExerciseView {
             if viewModel.exercises.isEmpty {
                 noDataView
             } else {
-                ScrollView {
-                    LazyVStack {
-                       
-                        ForEach(viewModel.exercises) { exercise in
-                            NavigationLink {
-                                NavigationLazyView(ExerciseHistoryView(exercise: exercise))
-                            } label: {
-                                ExerciseRowView(
-                                    exercise,
-                                    trailingIcon: AnyView(Image(systemName: "arrow.right").foregroundColor(.gray))
-                                )
-                            }
+                List {
+                    ForEach(viewModel.exercises) { exercise in
+                        NavigationLink {
+                            NavigationLazyView(ExerciseHistoryView(exercise: exercise))
+                        } label: {
+                            ExerciseRowView(exercise)
                         }
                     }
                 }
             }
+            
             Spacer()
         }
     }
@@ -64,6 +59,6 @@ extension HistoryByExerciseView {
 
 struct HistoryByExerciseView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryByExerciseView()
+        HistoryByExerciseView(viewModel: ExerciseHistoryViewModel(forPreview: true))
     }
 }

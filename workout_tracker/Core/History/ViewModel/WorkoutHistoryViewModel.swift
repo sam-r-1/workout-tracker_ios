@@ -13,8 +13,13 @@ class WorkoutHistoryViewModel: ObservableObject {
     private let service = WorkoutService()
     private let instanceService = ExerciseInstanceService()
     
-    init() {
-        fetchWorkouts()
+    init(forPreview: Bool = false) {
+        if forPreview {
+            self.loadingState = .data
+            self.workouts = MockService.sampleWorkouts
+        } else {
+            fetchWorkouts()
+        }
     }
     
     func fetchWorkouts() {

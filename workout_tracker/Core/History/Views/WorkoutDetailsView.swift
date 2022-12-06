@@ -53,8 +53,8 @@ struct WorkoutDetailsView: View {
     }
 }
 
-//struct WorkoutDetailsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        WorkoutDetailsView(workout: Workout(uid: "", timestamp: Timestamp(), exerciseInstanceIdList: ["id1", "id2", "id3"]))
-//    }
-//}
+struct WorkoutDetailsView_Previews: PreviewProvider {
+    static var previews: some View {
+        WorkoutDetailsView(workout: Workout(uid: "", timestamp: Timestamp(), exerciseInstanceIdList: ["id1", "id2", "id3"]))
+    }
+}

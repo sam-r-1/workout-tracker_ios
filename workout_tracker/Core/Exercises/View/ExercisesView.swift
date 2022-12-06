@@ -10,7 +10,7 @@ import SwiftUI
 struct ExercisesView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var showModifyExerciseView = false
-    @ObservedObject var viewModel = ExercisesViewModel()
+    @StateObject var viewModel = ExercisesViewModel()
     
     var body: some View {
         ZStack {
@@ -50,7 +50,6 @@ extension ExercisesView {
                             NavigationLazyView(ModifyExerciseView(parentViewModel: viewModel, exercise: exercise))
                         } label: {
                             ExerciseRowView(exercise)
-                                .foregroundColor(.primary)
                         }
                     }
                 }

@@ -28,16 +28,14 @@ extension HistoryByWorkoutView {
             if viewModel.workouts.isEmpty {
                 noDataView
             } else {
-                ScrollView {
-                    LazyVStack {
-                       
-                        ForEach(viewModel.workouts, id: \.timestamp) { workout in
-                            NavigationLink {
-                                NavigationLazyView(WorkoutDetailsView(workout, viewModel: viewModel))
-                            } label: {
-                                WorkoutRowView(workout: workout)
-                            }
+                List {
+                    ForEach(viewModel.workouts, id: \.timestamp) { workout in
+                        NavigationLink {
+                            NavigationLazyView(WorkoutDetailsView(workout, viewModel: viewModel))
+                        } label: {
+                            WorkoutRowView(workout: workout)
                         }
+                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 12))
                     }
                 }
             }
@@ -60,6 +58,6 @@ extension HistoryByWorkoutView {
 
 struct HistoryByWorkoutView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryByWorkoutView()
+        HistoryByWorkoutView(viewModel: WorkoutHistoryViewModel(forPreview: true))
     }
 }
