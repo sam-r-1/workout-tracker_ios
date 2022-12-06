@@ -28,9 +28,8 @@ struct ExerciseHistoryView: View {
                     if viewModel.exerciseInstances.isEmpty {
                         Text("No data for \(exercise.name)")
                     } else {
-                        VStack(spacing: 0) {
+                        VStack(spacing: 8) {
                             performanceChart
-                            //.frame(height: geometry.size.height * 0.35)
                             
                             if !showChartFullscreen {
                                 List {

@@ -64,7 +64,7 @@ struct SmallPerformanceLineChart: UIViewRepresentable {
         // fill
         dataSet.fillAlpha = 1
         dataSet.drawFilledEnabled = true
-        let colors = [primaryColor.cgColor, UIColor.systemBackground.cgColor]
+        let colors = [primaryColor.cgColor, colorScheme == .light ? Color.white.cgColor : UIColor.systemGray6.cgColor]
         
         guard let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors as CFArray, locations: nil) else { return }
         
@@ -92,5 +92,6 @@ struct SmallPerformanceLineChart_Previews: PreviewProvider {
     static var previews: some View {
             SmallPerformanceLineChart(title: "Test", entries: entries)
                 .frame(height: 275)
+                .preferredColorScheme(.dark)
     }
 }
