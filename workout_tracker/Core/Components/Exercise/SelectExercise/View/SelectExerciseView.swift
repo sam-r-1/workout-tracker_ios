@@ -26,7 +26,7 @@ struct SelectExerciseView: View {
                 LazyVStack {
                     ForEach(viewModel.searchableExercises) {exercise in
                         ExerciseRowView(
-                            exercise: exercise,
+                            exercise,
                             trailingIcon: AnyView(
                                 Button("Add") {
                                     onAdd(exercise.id!)

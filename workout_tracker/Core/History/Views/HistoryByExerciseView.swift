@@ -36,7 +36,7 @@ extension HistoryByExerciseView {
                                 NavigationLazyView(ExerciseHistoryView(exercise: exercise))
                             } label: {
                                 ExerciseRowView(
-                                    exercise: exercise,
+                                    exercise,
                                     trailingIcon: AnyView(Image(systemName: "arrow.right").foregroundColor(.gray))
                                 )
                             }

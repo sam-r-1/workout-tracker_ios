@@ -12,44 +12,44 @@ struct ExercisesView: View {
     @ObservedObject var viewModel = ExercisesViewModel()
     
     var body: some View {
-        VStack {
-
-            AddNewHeaderView(title: "My Exercises",
-                             showView: $showModifyExerciseView,
-                             view: AnyView(ModifyExerciseView(parentViewModel: viewModel)))
+        ZStack {
+            Color(.systemGray6).edgesIgnoringSafeArea(.all)
             
-            switch viewModel.loadingState {
-                case .data: dataView
-                    
-                case .loading: LoadingView()
-                    
-                case .error: Text("--") // placeholder for error message; should never be used currently
+            VStack {
+
+                AddNewHeaderView(title: "My Exercises",
+                                 showView: $showModifyExerciseView,
+                                 view: AnyView(ModifyExerciseView(parentViewModel: viewModel)))
+                
+                switch viewModel.loadingState {
+                    case .data: dataView
+                        
+                    case .loading: LoadingView()
+                        
+                    case .error: Text("--") // placeholder for error message; should never be used currently
+                }
             }
+            .navigationBarHidden(true)
         }
-        .navigationBarHidden(true)
     }
 }
 
 extension ExercisesView {
     var dataView: some View {
-        VStack {
+        VStack(spacing: 8) {
             if viewModel.exercises.isEmpty {
                 noDataView
             } else {
                 SearchBar(text: $viewModel.searchText)
-                    .padding(.horizontal)
+                    .padding(.horizontal, 20)
                 
-                ScrollView {
-                    LazyVStack {
-                        ForEach(viewModel.searchableExercises) {exercise in
-                            NavigationLink {
-                                NavigationLazyView(ModifyExerciseView(parentViewModel: viewModel, exercise: exercise))
-                            } label: {
-                                ExerciseRowView(
-                                    exercise: exercise,
-                                    trailingIcon: AnyView(Image(systemName: "arrow.right").foregroundColor(.gray))
-                                )
-                            }
+                List {
+                    ForEach(viewModel.searchableExercises) {exercise in
+                        NavigationLink {
+                            NavigationLazyView(ModifyExerciseView(parentViewModel: viewModel, exercise: exercise))
+                        } label: {
+                            ExerciseRowView(exercise)
+                                .foregroundColor(.primary)
                         }
                     }
                 }
@@ -72,6 +72,6 @@ extension ExercisesView {
 
 struct ExercisesView_Previews: PreviewProvider {
     static var previews: some View {
-        ExercisesView()
+        ExercisesView(viewModel: ExercisesViewModel(forPreview: true))
     }
 }
