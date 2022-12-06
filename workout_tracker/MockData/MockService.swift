@@ -21,4 +21,14 @@ enum MockService {
         let range = 0..<10
         return range.map({ ExerciseInstance(uid: "", exerciseId: "", timestamp: Timestamp(date: Date(timeIntervalSinceNow: -2 * 86400 * Double($0))), reps: 5, time: 100 + Double.random(in: -12...12), weight: Double.random(in: (100 - 2 * Double($0))..<(140 - 2 * Double($0)))) })
     }
+    
+    static var sampleTemplates: [Template] {
+        [
+            Template(uid: "", name: "Preview", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
+            Template(uid: "", name: "Preview", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
+            Template(uid: "", name: "Preview", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
+            Template(uid: "", name: "Preview", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
+            Template(uid: "", name: "Preview", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
+        ]
+    }
 }

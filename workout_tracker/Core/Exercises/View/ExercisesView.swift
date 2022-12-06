@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct ExercisesView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var showModifyExerciseView = false
     @ObservedObject var viewModel = ExercisesViewModel()
     
     var body: some View {
         ZStack {
-            Color(.systemGray6).edgesIgnoringSafeArea(.all)
+            Color(colorScheme == .light ? .systemGray6 : .black).edgesIgnoringSafeArea(.all)
             
             VStack {
 

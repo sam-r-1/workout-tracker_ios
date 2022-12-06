@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TemplateGridView: View {
+    @Environment(\.colorScheme) var colorScheme
     let columnCount: Int = 2
     let template: Template
     
@@ -36,8 +37,8 @@ struct TemplateGridView: View {
             
         }
         .padding(8)
-        .background(Color(.systemGray5))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .background(colorScheme == .light ? .white : Color(.systemGray5))
+        .clipShape(RoundedRectangle(cornerRadius: 8.0))
         
     }
 }
@@ -77,8 +78,12 @@ extension TemplateGridView {
     }
 }
 
-//struct TemplateGridView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TemplateGridView()
-//    }
-//}
+struct TemplateGridView_Previews: PreviewProvider {
+    static var previews: some View {
+        ZStack {
+            Color(.systemGray6).edgesIgnoringSafeArea(.all)
+            
+            TemplateGridView(MockService.sampleTemplates[0])
+        }
+    }
+}

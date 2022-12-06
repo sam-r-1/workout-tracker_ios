@@ -27,8 +27,13 @@ class TemplatesViewModel: ObservableObject {
         }
     }
     
-    init() {
-        fetchTemplates()
+    init(forPreview: Bool = false) {
+        if forPreview {
+            self.loadingState = .data
+            self.templates = MockService.sampleTemplates
+        } else {
+            fetchTemplates()
+        }
     }
     
     func fetchTemplates() {

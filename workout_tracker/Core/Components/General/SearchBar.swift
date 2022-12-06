@@ -11,19 +11,20 @@ struct SearchBar: View {
     @Binding var text: String
     
     var body: some View {
-        TextField("Search...", text: $text)
-            .padding(6.0)
-            .padding(.horizontal, 24)
-            .background(Color(.systemGray5))
-            .cornerRadius(8.0)
-            .overlay {
-                HStack {
-                    Image(systemName: "magnifyingglass")
-                        .foregroundColor(.gray)
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                        .padding(.leading, 8.0)
-                }
-            }
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.gray)
+                .aspectRatio(1.0, contentMode: .fit)
+                
+            TextField("Search...", text: $text)
+            
+            Spacer()
+                        
+        }
+        .padding(6)
+        .padding(.leading, 8.0)
+        .background(Color(.systemGray5))
+        .cornerRadius(8.0)
     }
 }
 
