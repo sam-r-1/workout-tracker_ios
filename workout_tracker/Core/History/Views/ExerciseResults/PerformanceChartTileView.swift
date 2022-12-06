@@ -32,7 +32,7 @@ struct PerformanceChartTileView: View {
         }
         .background()
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .padding(8)
+        .padding(.horizontal, 20)
     }
 }
 

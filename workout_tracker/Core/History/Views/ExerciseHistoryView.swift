@@ -10,18 +10,19 @@ import Charts
 // import Firebase
 
 struct ExerciseHistoryView: View {
+    @Environment(\.colorScheme) var colorScheme
     let exercise: Exercise
-//    @State private var showChartFullscreen = UIDevice.current.orientation.isLandscape
+    @State private var showChartFullscreen = UIDevice.current.orientation.isLandscape
     @StateObject var viewModel = ExerciseResultsViewModel()
     
-//    let orientationChanged = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
-//        .makeConnectable()
-//        .autoconnect()
+    let orientationChanged = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
+        .makeConnectable()
+        .autoconnect()
     
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                Color(.systemGray5).edgesIgnoringSafeArea(.all)
+                Color(colorScheme == .light ? .systemGray6 : .black).edgesIgnoringSafeArea(.all)
                 
                 Group {
                     if viewModel.exerciseInstances.isEmpty {
@@ -29,17 +30,18 @@ struct ExerciseHistoryView: View {
                     } else {
                         VStack(spacing: 0) {
                             performanceChart
-                                .frame(height: geometry.size.height * 0.35)
+                            //.frame(height: geometry.size.height * 0.35)
                             
-                            List {
-                                ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
-                                    ExerciseResultRowView(exercise: self.exercise, instance: instance)
-                                        .listRowInsets(EdgeInsets())
-                                        .listRowSeparator(.hidden)
+                            if !showChartFullscreen {
+                                List {
+                                    ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
+                                        ExerciseResultRowView(exercise: self.exercise, instance: instance)
+                                            .listRowInsets(EdgeInsets())
+                                    }
+                                    .onDelete(perform: viewModel.deleteInstance)
                                 }
-                                .onDelete(perform: viewModel.deleteInstance)
+                                .frame(height: geometry.size.height * 0.65)
                             }
-                            .listStyle(.plain)
                         }
                     }
                 }
@@ -49,11 +51,11 @@ struct ExerciseHistoryView: View {
             }
             .navigationTitle(exercise.name)
             .navigationBarTitleDisplayMode(.inline)
-//            .onReceive(orientationChanged) { _ in
-//                withAnimation {
-//                    showChartFullscreen = UIDevice.current.orientation.isLandscape
-//                }
-//            }
+            .onReceive(orientationChanged) { _ in
+                withAnimation {
+                    showChartFullscreen = UIDevice.current.orientation.isLandscape
+                }
+            }
         }
     }
 }
@@ -87,6 +89,8 @@ struct ExerciseHistoryView_Previews: PreviewProvider {
             NavigationView {
                 ExerciseHistoryView(exercise: previewExercise, viewModel: ExerciseResultsViewModel(fromPreview: true))
             }
+            .environment(\.sizeCategory, .extraExtraLarge)
+
             NavigationView {
                 ExerciseHistoryView(exercise: previewExercise, viewModel: ExerciseResultsViewModel(fromPreview: true))
             }

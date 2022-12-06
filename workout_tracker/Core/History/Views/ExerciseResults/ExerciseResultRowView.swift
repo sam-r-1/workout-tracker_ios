@@ -8,43 +8,54 @@
 import SwiftUI
 
 struct ExerciseResultRowView: View {
+    @Environment(\.colorScheme) var colorScheme
     let exercise: Exercise
     let instance: ExerciseInstance
+    let iconSize = 20.0
     
     var body: some View {
         HStack {
             DateIcon(date: instance.timestamp.dateValue())
-                .frame(width: 65)
+                .frame(width: 55)
             VStack(alignment: .leading, spacing: 5) {
                 if exercise.includeWeight {
                     HStack {
-                        Text("Weight: ")
-                        Text("\(WeightFormatter.weight.string(from: instance.weight as NSNumber) ?? "0")lbs")
+                        WeightIcon()
+                            .frame(width: iconSize, height: iconSize)
+                            .foregroundColor(Color(.systemGray))
+                        
+                        Text("\(WeightFormatter.weight.string(from: instance.weight as NSNumber) ?? "0") lbs")
                     }
                 }
                 
                 if exercise.includeReps {
                     HStack {
-                        Text("Reps:     ")
+                        Image(systemName: "arrow.clockwise")
+                            .resizable()
+                            .frame(width: iconSize, height: iconSize)
+                            .foregroundColor(Color(.systemGray))
+                        
                         Text("\(instance.reps)")
                     }
                 }
                 
                 if exercise.includeTime {
                     HStack {
-                        Text("Time:     ")
+                        Image(systemName: "timer")
+                            .resizable()
+                            .frame(width: iconSize, height: iconSize)
+                            .foregroundColor(Color(.systemGray))
+                        
                         Text(TimeFormatter.durationResult.string(from: instance.time) ?? "Error loading")
                     }
                 }
             }
-            .font(.title3)
+            .font(.body)
             .padding(.leading)
             
             Spacer()
         }
         .padding(8)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        // .background(Color(.systemGray5))
     }
 }
 
