@@ -21,10 +21,9 @@ struct PreviousInstanceDataView: View, Equatable {
     }
     
     var body: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 8) {
             if self.viewModel.showPrev {
                 Text(CustomDateFormatter.dateFormatter.string(from: viewModel.prevDate!))
-                   .underline()
                 
                 if exercise.includeWeight {
                     Text(WeightFormatter.weight.string(from: viewModel.prevWeight! as NSNumber) ?? "0.0")

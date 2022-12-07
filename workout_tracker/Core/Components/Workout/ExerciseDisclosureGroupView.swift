@@ -8,18 +8,15 @@
 import SwiftUI
 
 struct ExerciseDisclosureGroupView: View {
+    @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.colorScheme) var colorScheme
     @State private var showTimer = false
     @State private var showInfo = false
-    @State private var isExpanded: Bool = true
+    @State var isExpanded = false
     @State var item: ExerciseDataFields
     let onDelete: () -> Void
-    
-    init(item: ExerciseDataFields, onDelete: @escaping () -> Void) {
-        self.item = item
-        self.onDelete = onDelete
-    }
-    
-    // View body
+    let iconSize = 20.0
+
     var body: some View {
         DisclosureGroup(isExpanded: $isExpanded) {
             Divider()
@@ -49,16 +46,31 @@ struct ExerciseDisclosureGroupView: View {
                             .equatable()
                 }
                 
-                // Remove instance from workout
                 HStack {
+                    Button {
+                        showInfo.toggle()
+                    } label: {
+                        Image(systemName: "info.circle")
+                    }
+                    
                     Spacer()
+                    
+                    Group {
+                        if self.item.exercise.includeTime {
+                            Button {
+                                showTimer.toggle()
+                            } label: {
+                                Text("Stopwatch")
+                            }
+                        }
+                    }
+                    
+                    Spacer()
+                    
                     Button(role: .destructive) {
                         onDelete()
                     } label: {
-                        Image(systemName: "trash")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 25, height: 25)
+                        Image(systemName: "multiply")
                     }
                 }
             }
@@ -67,11 +79,6 @@ struct ExerciseDisclosureGroupView: View {
                 Text(item.exercise.name)
                     .bold()
                 
-                Button {
-                    showInfo.toggle()
-                } label: {
-                    Image(systemName: "info.circle")
-                }
                 Spacer()
                 
                 // Text("(set 1 of 3)") *Placeholder for potential set count text
@@ -87,8 +94,9 @@ struct ExerciseDisclosureGroupView: View {
                     Text("Notes: \(item.exercise.details)")
         })
         .padding()
-        .background(Color(.systemGray5))
+        .background(Color(colorScheme == .light ? .white : .systemGray5))
         .clipShape(RoundedRectangle(cornerRadius: 10))
+        .padding(.horizontal, 8)
         .fullScreenCover(isPresented: $showTimer) {
             TimerView(item)
                 .onAppear {
@@ -103,14 +111,17 @@ struct ExerciseDisclosureGroupView: View {
 }
 
 extension ExerciseDisclosureGroupView {
-    
     var weightFieldView: some View {
         HStack {
-            Text("Weight (lbs):")
+            DataFieldIcons.weight
+                .frame(width: iconSize, height: iconSize)
+                .foregroundColor(Color(.systemGray))
 
             TextField("", value: $item.weight, formatter: WeightFormatter.weight)
-                .foregroundColor(Color(.systemGray))
-                .frame(maxWidth: 80)
+                .frame(maxWidth: sizeCategory.isAccessibilityCategory ? 120 : 70)
+                .textFieldStyle(.roundedBorder)
+            
+            Text("lbs")
             
             Spacer()
         }
@@ -119,11 +130,13 @@ extension ExerciseDisclosureGroupView {
     
     var repsFieldView: some View {
         HStack {
-            Text("# of Reps:")
+            DataFieldIcons.reps
+                .frame(width: iconSize, height: iconSize)
+                .foregroundColor(Color(.systemGray))
             
             TextField("reps", value: $item.reps, formatter: NumberFormatter())
-                .foregroundColor(Color(.systemGray))
-                .frame(maxWidth: 80)
+                .frame(maxWidth: sizeCategory.isAccessibilityCategory ? 120 : 70)
+                .textFieldStyle(.roundedBorder)
             
             Spacer()
         }
@@ -132,16 +145,11 @@ extension ExerciseDisclosureGroupView {
     
     var timeFieldView: some View {
         HStack {
-            Text("Time:")
-            
-            Text(TimeFormatter.durationResult.string(from: item.time) ?? "0s")
+            DataFieldIcons.time
+                .frame(width: iconSize, height: iconSize)
                 .foregroundColor(Color(.systemGray))
             
-            Button {
-                showTimer.toggle()
-            } label: {
-                Image(systemName: "clock")
-            }
+            Text(TimeFormatter.durationResult.string(from: item.time) ?? "0s")
             
             Spacer()
         }
@@ -151,8 +159,15 @@ extension ExerciseDisclosureGroupView {
 
 struct ExerciseDisclosureGroupView_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true))) {
-            print("DEBUG: deleting")
+        Group {
+            ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true))) {
+                print("DEBUG: deleting")
+            }
+
+            ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true))) {
+                print("DEBUG: deleting")
+            }
+            .environment(\.sizeCategory, .accessibilityLarge)
         }
     }
 }

@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct WorkoutView: View {
+    @Environment(\.colorScheme) var colorScheme
+    
     @Binding var workoutActive: Bool
     @State private var showTimer = false
     @State private var showAddExercise = false
     @State private var topExpanded: Bool = true
-    @ObservedObject var viewModel = WorkoutViewModel()
+    @StateObject var viewModel = WorkoutViewModel()
     let template: Template?
     
     init(workoutActive: Binding<Bool>, fromTemplate: Template? = nil) {
@@ -21,65 +23,56 @@ struct WorkoutView: View {
     }
     
     var body: some View {
-        VStack {
-            HeaderView("My Workout", includeDivider: true)
+        ZStack {
+            Color(colorScheme == .light ? .systemGray6 : .black).edgesIgnoringSafeArea(.all)
             
-            ScrollView {
-                LazyVStack {
-                    ReorderableForEach(items: viewModel.items) { item in
-                        ExerciseDisclosureGroupView(item: item) {
-                            viewModel.deleteItem(at: viewModel.items.firstIndex(where: { $0.id == item.id })!)
+            VStack {
+                HeaderView("My Workout", subtitle: CustomDateFormatter.dateFormatter.string(from: Date.now))
+                
+                ScrollView {
+                    LazyVStack {
+                        ReorderableForEach(items: viewModel.items) { item in
+                            ExerciseDisclosureGroupView(item: item) {
+                                viewModel.deleteItem(at: viewModel.items.firstIndex(where: { $0.id == item.id })!)
+                            }
+                        } moveAction: { source, destination in
+                            viewModel.moveItem(from: source, to: destination)
                         }
-                    } moveAction: { source, destination in
-                        viewModel.moveItem(from: source, to: destination)
                     }
-                    .padding(.horizontal, 8)
-
+                    
+                    HStack{}.frame(height: 50)
+                    
+                    HStack(spacing: 20) {
+                        Button(action: {
+                            showAddExercise.toggle()
+                        }, label: {
+                            HStack {
+                                Image(systemName: "plus")
+                                Text("Add")
+                            }
+                        })
+                        .padding(8)
+                        .foregroundColor(Color.white)
+                        .background(Color(.systemBlue))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        
+                        Button(action: {
+                            Task {
+                                await viewModel.finishWorkout()
+                            }
+                        }, label: {
+                            HStack {
+                                Image(systemName: "flag.2.crossed")
+                                Text("Finish")
+                            }
+                        })
+                        .padding(8)
+                        .foregroundColor(.white)
+                        .background(Color(.systemGreen))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
                 }
-                
-                Spacer()
             }
-            
-            HStack {
-                Spacer()
-                
-                Button(action: {
-                    showAddExercise.toggle()
-                }, label: {
-                    VStack(spacing: 4) {
-                        Text("Add Exercise")
-                        Image(systemName: "plus")
-                    }
-                })
-                .font(.title3)
-                .frame(width: 140, height: 50)
-                .padding(8)
-                .background(Color(.systemGray5))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                
-                Spacer()
-                
-                Button(action: {
-                    Task {
-                        await viewModel.finishWorkout()
-                    }
-                }, label: {
-                    VStack(spacing: 4) {
-                        Text("Finish Workout")
-                        Image(systemName: "checkmark")
-                    }
-                })
-                .font(.title3)
-                .frame(width: 140, height: 50)
-                .padding(8)
-                .foregroundColor(.white)
-                .background(Color(.systemGreen))
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                
-                Spacer()
-            }
-            .padding(.bottom, 6)
-            
         }
         .navigationBarHidden(true)
         .fullScreenCover(isPresented: $showAddExercise) {
@@ -103,6 +96,10 @@ struct WorkoutView: View {
 
 struct WorkoutView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutView(workoutActive: Binding.constant(true))
+        Group {
+            WorkoutView(workoutActive: Binding.constant(true))
+            WorkoutView(workoutActive: Binding.constant(true))
+                .environment(\.sizeCategory, .accessibilityExtraLarge)
+        }
     }
 }
