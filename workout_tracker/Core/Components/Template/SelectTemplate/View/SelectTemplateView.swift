@@ -32,26 +32,28 @@ struct SelectTemplateView: View {
                     .font(.title)
                     .bold()
 
-                SearchBar(text: $viewModel.searchText)
-                    .padding(.horizontal, 20)
-                
-                ScrollView {
-                    LazyVGrid(
-                        columns: sizeCategory.isAccessibilityCategory
-                        ? [ GridItem(.flexible(), spacing: 12)]
-                        : [ GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)],
-                        spacing: 12
-                    ) {
-                        ForEach(viewModel.searchableTemplates) {item in
-                            NavigationLink {
-                                WorkoutView(workoutActive: $workoutActive, fromTemplate: item)
-                            } label: {
-                                TemplateGridView(item)
+                VStack(spacing: 45) {
+                    SearchBar(text: $viewModel.searchText)
+                        .padding(.horizontal, 20)
+                    
+                    ScrollView {
+                        LazyVGrid(
+                            columns: sizeCategory.isAccessibilityCategory
+                            ? [ GridItem(.flexible(), spacing: 12)]
+                            : [ GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)],
+                            spacing: 12
+                        ) {
+                            ForEach(viewModel.searchableTemplates) {item in
+                                NavigationLink {
+                                    WorkoutView(workoutActive: $workoutActive, fromTemplate: item)
+                                } label: {
+                                    TemplateGridView(item)
+                                }
                             }
                         }
                     }
+                    .padding(.horizontal, 20)
                 }
-                .padding(.horizontal, 20)
             }
             .navigationBarHidden(true)
         }
