@@ -8,47 +8,60 @@
 import SwiftUI
 
 struct SelectTemplateView: View {
+    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) var sizeCategory
+    
     @Binding var workoutActive: Bool
     @StateObject var viewModel = SelectTemplateViewModel()
-    var gridLayout = [ GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)]
     
     var body: some View {
-        VStack {
-            HStack {
-                Button("Cancel") {
-                    workoutActive = false
+        ZStack {
+            Color(colorScheme == .light ? .systemGray6 : .black).edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                HStack {
+                    Button("Cancel") {
+                        workoutActive = false
+                    }
+                    .padding(.leading, 12)
+                    
+                    Spacer()
                 }
-                .padding(.leading, 12)
                 
-                Spacer()
-            }
-            
-            Text("Select a Template")
-                .font(.title)
-                .bold()
+                Text("Select a Template")
+                    .font(.title)
+                    .bold()
 
-            SearchBar(text: $viewModel.searchText)
-                .padding(.horizontal)
-            
-            ScrollView {
-                LazyVGrid(columns: gridLayout, spacing: 12) {
-                    ForEach(viewModel.searchableTemplates) {item in
-                        NavigationLink {
-                            WorkoutView(workoutActive: $workoutActive, fromTemplate: item)
-                        } label: {
-                            TemplateGridView(item)
+                VStack(spacing: 45) {
+                    SearchBar(text: $viewModel.searchText)
+                        .padding(.horizontal, 20)
+                    
+                    ScrollView {
+                        LazyVGrid(
+                            columns: sizeCategory.isAccessibilityCategory
+                            ? [ GridItem(.flexible(), spacing: 12)]
+                            : [ GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)],
+                            spacing: 12
+                        ) {
+                            ForEach(viewModel.searchableTemplates) {item in
+                                NavigationLink {
+                                    WorkoutView(workoutActive: $workoutActive, fromTemplate: item)
+                                } label: {
+                                    TemplateGridView(item)
+                                }
+                            }
                         }
                     }
+                    .padding(.horizontal, 20)
                 }
             }
-            .padding(.horizontal, 12)
+            .navigationBarHidden(true)
         }
-        .navigationBarHidden(true)
     }
 }
 
 struct SelectTemplateView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectTemplateView(workoutActive: Binding.constant(true))
+        SelectTemplateView(workoutActive: Binding.constant(true), viewModel: SelectTemplateViewModel(forPreview: true))
     }
 }

@@ -27,8 +27,13 @@ class ExercisesViewModel: ObservableObject {
         }
     }
     
-    init() {
-        fetchExercises()
+    init(forPreview: Bool = false) {
+        if forPreview {
+            self.loadingState = .data
+            self.exercises = MockService.sampleExercises
+        } else {
+            fetchExercises()
+        }
     }
     
     func fetchExercises() {

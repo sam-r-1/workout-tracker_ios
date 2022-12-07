@@ -8,79 +8,54 @@
 import SwiftUI
 
 struct ExerciseResultRowView: View {
+    @Environment(\.colorScheme) var colorScheme
     let exercise: Exercise
     let instance: ExerciseInstance
-    
-    // Formatters
-    @State private var doubleFormatter: NumberFormatter = {
-        let numFormatter = NumberFormatter()
-        numFormatter.numberStyle = .decimal
-        return numFormatter
-    }()
-    
-    @State private var timeFormatter: DateComponentsFormatter = {
-        let timeFormatter = DateComponentsFormatter()
-        timeFormatter.zeroFormattingBehavior = .dropLeading
-        timeFormatter.allowedUnits = [.minute, .second]
-        timeFormatter.allowsFractionalUnits = true
-        timeFormatter.unitsStyle = .abbreviated
-        return timeFormatter
-    }()
-    
-    @State private var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        return dateFormatter
-    }()
-    
-    @State private var abbrMonth: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM"
-        return dateFormatter
-    }()
-    
-    @State private var dateDay: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d"
-        return dateFormatter
-    }()
+    let iconSize = 20.0
     
     var body: some View {
         HStack {
-            DateIcon(month: abbrMonth.string(from: instance.timestamp.dateValue()), day: dateDay.string(from: instance.timestamp.dateValue()))
-                .frame(width: 65)
-            
+            DateIcon(date: instance.timestamp.dateValue())
+                .frame(width: 55)
             VStack(alignment: .leading, spacing: 5) {
                 if exercise.includeWeight {
                     HStack {
-                        Text("Weight: ")
-                        Text("\(doubleFormatter.string(from: instance.weight as NSNumber) ?? "0")lbs")
+                        WeightIcon()
+                            .frame(width: iconSize, height: iconSize)
+                            .foregroundColor(Color(.systemGray))
+                        
+                        Text("\(WeightFormatter.weight.string(from: instance.weight as NSNumber) ?? "0") lbs")
                     }
                 }
                 
                 if exercise.includeReps {
                     HStack {
-                        Text("Reps:     ")
+                        Image(systemName: "arrow.clockwise")
+                            .resizable()
+                            .frame(width: iconSize, height: iconSize)
+                            .foregroundColor(Color(.systemGray))
+                        
                         Text("\(instance.reps)")
                     }
                 }
                 
                 if exercise.includeTime {
                     HStack {
-                        Text("Time:     ")
-                        Text(timeFormatter.string(from: instance.time) ?? "Error loading")
+                        Image(systemName: "timer")
+                            .resizable()
+                            .frame(width: iconSize, height: iconSize)
+                            .foregroundColor(Color(.systemGray))
+                        
+                        Text(TimeFormatter.durationResult.string(from: instance.time) ?? "Error loading")
                     }
                 }
             }
-            .font(.title3)
+            .font(.body)
             .padding(.leading)
             
             Spacer()
         }
         .padding(8)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        // .background(Color(.systemGray5))
     }
 }
 

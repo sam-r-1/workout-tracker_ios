@@ -22,7 +22,7 @@ struct DetectThemeChange: ViewModifier {
 }
 
 extension View {
-    func invertOnDarkTheme(_ condition: Bool) -> some View {
+    func invertOnDarkTheme(_ condition: Bool = true) -> some View {
         modifier(DetectThemeChange(condition: condition))
     }
 }

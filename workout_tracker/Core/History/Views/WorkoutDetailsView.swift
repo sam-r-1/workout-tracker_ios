@@ -8,60 +8,56 @@
 import SwiftUI
 
 struct WorkoutDetailsView: View {
-    let workout: Workout
-    @State private var showDeleteDialog = false
-    @ObservedObject var viewModel: WorkoutHistoryViewModel
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
+    @State private var showDeleteDialog = false
+    let workout: Workout
+    let onDelete: () -> Void
     
-    @State private var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        return dateFormatter
-    }()
-    
-    init(_ workout: Workout, viewModel: WorkoutHistoryViewModel) {
+    init(_ workout: Workout, onDelete: @escaping () -> Void = {} ) {
         self.workout = workout
-        self.viewModel = viewModel
+        self.onDelete = onDelete
     }
     
     var body: some View {
-        
-        VStack {
-            Text("Workout Data")
-                .font(.largeTitle)
-                .bold()
-            
-            Spacer(minLength: 12)
-            
-            WorkoutDetailsScrollView(workout)
-                .equatable()
-        }
-        .navigationTitle(dateFormatter.string(from: workout.timestamp.dateValue()))
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
 
-            // delete button
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    self.showDeleteDialog = true
-                } label: {
-                    Text("Delete")
-                }
-                .foregroundColor(Color(.systemRed))
-                .alert("Delete data for this workout?", isPresented: $showDeleteDialog) {
-                    Button("Delete", role: .destructive) {
-                        viewModel.deleteWorkout(workout: workout)
-                        presentationMode.wrappedValue.dismiss()
+        ZStack {
+            Color(colorScheme == .light ? .systemGray6 : .black).edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                Text(CustomDateFormatter.dateFormatter.string(from: workout.timestamp.dateValue()))
+                    .font(.largeTitle)
+                    .bold()
+                
+                Spacer(minLength: 12)
+                
+                WorkoutDetailsScrollView(workout: workout)
+                    .equatable()
+            }
+            .navigationTitle("Workout Summary")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        self.showDeleteDialog = true
+                    } label: {
+                        Text("Delete")
+                    }
+                    .foregroundColor(Color(.systemRed))
+                    .alert("Delete data for this workout?", isPresented: $showDeleteDialog) {
+                        Button("Delete", role: .destructive) {
+                            onDelete()
+                            presentationMode.wrappedValue.dismiss()
+                        }
                     }
                 }
-            }
+        }
         }
     }
 }
 
 //struct WorkoutDetailsView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        WorkoutDetailsView(workout: Workout(uid: "", timestamp: Timestamp(), exerciseInstanceIdList: ["id1", "id2", "id3"]))
+//        WorkoutDetailsView(MockService.sampleWorkouts[0])
 //    }
 //}

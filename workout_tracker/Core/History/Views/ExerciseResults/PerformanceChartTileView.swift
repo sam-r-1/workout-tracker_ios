@@ -9,6 +9,7 @@ import SwiftUI
 import Charts
 
 struct PerformanceChartTileView: View {
+    @Environment(\.colorScheme) var colorScheme
     let title: String
     let entries: [ChartDataEntry]
     
@@ -30,9 +31,9 @@ struct PerformanceChartTileView: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 15)
         }
-        .background()
+        .background(colorScheme == .light ? .white : Color(.systemGray6))
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .padding(8)
+        .padding(.horizontal, 20)
     }
 }
 
@@ -49,6 +50,7 @@ struct PerformanceChartTileView_Previews: PreviewProvider {
             NavigationView {
                 ExerciseHistoryView(exercise: MockService.sampleExercises[2], viewModel: ExerciseResultsViewModel(fromPreview: true))
             }
+            .preferredColorScheme(.dark)
         }
     }
 }

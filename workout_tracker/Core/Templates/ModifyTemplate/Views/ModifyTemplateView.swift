@@ -31,69 +31,39 @@ struct ModifyTemplateView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            VStack(alignment: .leading) {
-                Text("NAME (Required)".uppercased())
-                    .font(.subheadline)
-                    .foregroundColor(Color(.systemGray2))
-                
-                TextField("Template name", text: $viewModel.name)
-                    .textFieldStyle(.roundedBorder)
-            }
-            .padding(.vertical)
-            .padding(.horizontal)
-            
-            Spacer()
-            
-            HStack {
-                Text("Exercises".uppercased())
-                    .font(.subheadline)
-                    .foregroundColor(Color(.systemGray2))
-                
-                Spacer()
-                
-                Button {
-                    showAddExercise.toggle()
-                } label: {
-                    Text("+ Add")
-                        .bold()
-                        .padding(.vertical, 4)
-                        .padding(.horizontal, 16)
+        VStack {
+            Form {
+                Section("Name (Required)") {
+                    TextField("Template name", text: $viewModel.name)
                 }
-                .foregroundColor(.white)
-                .background(Color(.systemGreen))
-                .clipShape(Capsule())
-
-            }
-            .padding(.horizontal)
-            
-            List {
-                ForEach(viewModel.exerciseList, id: \.self) { item in
-                    Text(item.name)
+                
+                Section(header: exerciseSectionHeader) {
+                    List {
+                        ForEach(viewModel.exerciseList, id: \.self) { item in
+                            Text(item.name)
+                        }
+                        .onDelete(perform: viewModel.removeExercise)
+                        .onMove(perform: viewModel.moveExercise)
+                    }
                 }
-                .onDelete(perform: viewModel.removeExercise)
-                .onMove(perform: viewModel.moveExercise)
-            }
-            .listStyle(.plain)
-            .environment(\.editMode, $editMode)
-            
-            if modifyMode == .edit {
-                Button(role: .destructive) {
-                    showDeleteDialog = true
-                } label: {
-                    Text("Delete Template")
-                        .bold()
-                }
-                .padding(.bottom)
-                .buttonStyle(.borderedProminent)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .alert("Delete this template?", isPresented: $showDeleteDialog) {
-                    Button("Delete", role: .destructive) {
-                        viewModel.deleteTemplate()
-                        presentationMode.wrappedValue.dismiss()
+                
+                if modifyMode == .edit {
+                    Button(role: .destructive) {
+                        showDeleteDialog = true
+                    } label: {
+                        Text("Delete Template")
+                            .bold()
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .alert("Delete this template?", isPresented: $showDeleteDialog) {
+                        Button("Delete", role: .destructive) {
+                            viewModel.deleteTemplate()
+                            presentationMode.wrappedValue.dismiss()
+                        }
                     }
                 }
             }
+            .environment(\.editMode, $editMode)
         }
         .navigationTitle(viewModel.name.isEmpty ? "New Template" : viewModel.name)
         .navigationBarTitleDisplayMode(.inline)
@@ -101,13 +71,13 @@ struct ModifyTemplateView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    presentationMode.wrappedValue.dismiss() 
+                    presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("Cancel")
                         .padding(.leading, 12)
                 }
             }
-
+            
             // submit button - only enable if form is validated
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -133,9 +103,34 @@ struct ModifyTemplateView: View {
     }
 }
 
+extension ModifyTemplateView {
+    var exerciseSectionHeader: some View {
+        HStack {
+            Text("Exercises".uppercased())
+                //.font(.subheadline)
+                //.foregroundColor(Color(.systemGray2))
+            
+            Spacer()
+            
+            Button {
+                showAddExercise.toggle()
+            } label: {
+                Text("+ Add")
+                    .bold()
+                    .padding(.vertical, 4)
+                    .padding(.horizontal, 12)
+            }
+            .foregroundColor(.white)
+            .background(Color(.systemGreen))
+            .clipShape(Capsule())
+            
+        }
+    }
+}
+
 struct ModifyTemplateView_Previews: PreviewProvider {
     static let previewTemplate = Template(uid: "username", name: "Preview Template", exerciseIdList: ["0", "1", "2", "3"], exerciseNameList: ["Chest Press", "Leg Press", "Deadlift", "Bench Press"])
-
+    
     static var previews: some View {
         NavigationView {
             ModifyTemplateView(template: previewTemplate)

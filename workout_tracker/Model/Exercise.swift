@@ -7,6 +7,7 @@
 
 import FirebaseFirestoreSwift
 import Firebase
+import SwiftUI
 
 struct Exercise: Identifiable, Decodable, Equatable {
     static func == (lhs: Exercise, rhs: Exercise) -> Bool {
@@ -23,29 +24,17 @@ struct Exercise: Identifiable, Decodable, Equatable {
     let includeTime: Bool
 
     // Returns a string listing the data fields that this exercise uses. To be used in the ExerciseRowView
-    func dataFieldTextList() -> String {
-        var text = ""
-        var count = 0
-        
-        if self.includeWeight {
-            text += "Weight"
-            count += 1
-        }
-        if self.includeReps {
-            if count != 0 {
-                text += ", Reps"
-            } else {
-                text += "Reps"
+    func dataFieldIcons() -> some View {
+        return Group {
+            if self.includeWeight {
+                DataFieldIcons.weight
+            }
+            if self.includeReps {
+                DataFieldIcons.reps
+            }
+            if self.includeTime {
+                DataFieldIcons.time
             }
         }
-        if self.includeTime {
-            if count != 0 {
-                text += ", Time"
-            } else {
-                text += "Time"
-            }
-        }
-        
-        return text
     }
 }

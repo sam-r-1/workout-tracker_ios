@@ -10,7 +10,6 @@ import SwiftUI
 struct TimerView: View {
     @ObservedObject var stopwatchManager = StopwatchManager()
     @Environment(\.presentationMode) var presentationMode
-    let formatter: DateComponentsFormatter
     
     let item: ExerciseDataFields
     let setCount: String?
@@ -18,11 +17,6 @@ struct TimerView: View {
     init(_ item: ExerciseDataFields, setCount: String? = nil) {
         self.item = item
         self.setCount = setCount
-        
-        formatter = DateComponentsFormatter()
-        formatter.zeroFormattingBehavior = .pad
-        formatter.allowedUnits = [.minute, .second]
-        formatter.allowsFractionalUnits = true
     }
     
     var body: some View {
@@ -43,7 +37,7 @@ struct TimerView: View {
                 
                 Spacer()
                 
-                Text(formatter.string(from: stopwatchManager.elapsedTime)!)
+                Text(TimeFormatter.timerFormatter.string(from: stopwatchManager.elapsedTime)!)
                     .bold()
                     .font(.system(size: 80))
                     .scaledToFit()

@@ -8,47 +8,51 @@
 import SwiftUI
 
 struct DateIcon: View {
-    let month: String
-    let day: String
-    let bordered: Bool
+    let date: Date
+    let color = Color.primary
     
-    init(month: String, day: String, bordered: Bool = false) {
-        self.month = month
-        self.day = day
-        self.bordered = bordered
-    }
+
     
     var body: some View {
         GeometryReader { geometry -> AnyView? in
-            let iconHeight = geometry.size.height
+            let height = geometry.size.height
             
             return AnyView(
-                VStack(spacing: 0) {
-                    ZStack {
+                ZStack(alignment: .top) {
+                    VStack(spacing: 0) {
                         Rectangle()
                             .foregroundColor(.init(red: 222/255, green: 10/255, blue: 67/255))
-                            .frame(height: iconHeight / 3)
+                            .frame(height: height / 4)
                         
-                        Text(month)
-                            .foregroundColor(.white)
-                            .font(.system(size: iconHeight * 0.275))
+                        ZStack {
+                            Rectangle()
+                                .foregroundColor(Color(.systemGray4))
+                            
+                            VStack(spacing: 0) {
+                                Text(
+                                    CustomDateFormatter.abbrMonth.string(from: date)
+                                     + " "
+                                     + CustomDateFormatter.dateDay.string(from: date)
+                                )
+                                    .font(.system(size: height * 0.28))
+                                
+                                Text(CustomDateFormatter.year.string(from: date))
+                                    .font(.system(size: height * 0.23))
+                            }
+                        }
                     }
+                        .clipShape(RoundedRectangle(cornerRadius: height / 6))
                     
-                    ZStack {
-                        Rectangle()
-                            .foregroundColor(.white)
-                        
-                        Text(day)
-                            .foregroundColor(.black)
-                            .font(.system(size: iconHeight * 0.55, weight: .bold, design: .serif))
+                    HStack(spacing: height * 0.35) {
+                        Group {
+                            Capsule()
+                            Capsule()
+                        }
+                        .frame(width: height * 0.1)
                     }
+                    .frame(height: height * 0.2)
+                    .offset(y: -height * 0.08)
                 }
-                .clipShape(RoundedRectangle(cornerRadius: iconHeight / 6))
-                .overlay(
-                    RoundedRectangle(cornerRadius: iconHeight / 6)
-                        .stroke(.black, lineWidth: bordered ? 2 : 0)
-                        )
-                
             )
         }
         .aspectRatio(1, contentMode: .fit)
@@ -57,10 +61,16 @@ struct DateIcon: View {
 
 struct DateIconView_Previews: PreviewProvider {
     static var previews: some View {
-        ZStack {
-            Color(.systemGray5)
-            DateIcon(month: "Dec", day: "12", bordered: true)
+        Group {
+            DateIcon(date: Date.now)
                 .frame(width: 150)
+            
+            ZStack {
+                Color(.systemGray6)
+                DateIcon(date: Date.now)
+                    .frame(width: 150)
+                    .preferredColorScheme(.dark)
+            }
         }
     }
 }

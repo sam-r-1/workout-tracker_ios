@@ -15,14 +15,17 @@ struct PopUpMenuView: View {
     @StateObject var viewModel = PopUpMenuViewModel()
     
     var body: some View {
-        HStack(spacing: 36) {
-            Spacer()
+        VStack(spacing: 20) {
             
             ForEach(PopUpMenuOption.allCases, id: \.self) { item in
-                MenuItem(router: router, viewModel: viewModel, option: item, showMenu: $showMenu, showNoExercisesMessage: $showNoExercisesMessage, isActiveWorkout: $isActiveWorkout)
+                HStack {
+                    Spacer()
+                    
+                    MenuItem(router: router, viewModel: viewModel, option: item, showMenu: $showMenu, showNoExercisesMessage: $showNoExercisesMessage, isActiveWorkout: $isActiveWorkout)
+                    
+                    Spacer()
+                }
             }
-            
-            Spacer()
         }
         .transition(.scale)
     }
@@ -49,17 +52,14 @@ struct MenuItem: View {
             }
         }
         label: {
-            ZStack {
-                Capsule()
-                    .foregroundColor(Color(.systemBlue))
-                    .frame(height: size)
-                    .shadow(radius: 4)
-                
-                Text(option.title)
-                    .padding(2)
-                    .foregroundColor(.white)
-                    .font(.footnote)
-            }
+            
+            Text(option.title)
+                .padding(12)
+                .foregroundColor(.white)
+                .background(Color(.systemBlue))
+                .font(.callout)
+                .clipShape(Capsule())
+                .shadow(radius: 4)
         }
     }
 }

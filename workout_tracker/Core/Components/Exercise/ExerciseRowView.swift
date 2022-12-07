@@ -9,35 +9,34 @@ import SwiftUI
 
 struct ExerciseRowView: View {
     let exercise: Exercise
-    let trailingIcon: AnyView
+    let trailingIcon: AnyView?
+    
+    init(_ exercise: Exercise, trailingIcon: AnyView? = nil) {
+        self.exercise = exercise
+        self.trailingIcon = trailingIcon
+    }
     
     var body: some View {
-        VStack {
-            Divider()
+        HStack(spacing: 30) {
+            Text(exercise.name)
+                .font(.title3)
             
-            HStack {
-                VStack(alignment: .leading) {
-                    Text(exercise.name)
-                        .font(.title2)
-                        .bold()
-                    
-                    Text(exercise.type)
-                    
-                    Text(exercise.dataFieldTextList())
-                }
-                .foregroundColor(.primary)
-                
-                Spacer()
-                
-                trailingIcon
+            HStack(spacing: 15) {
+                exercise.dataFieldIcons()
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(Color(.systemGray))
             }
-            .padding(.horizontal)
+            
+            Spacer()
+            
+            trailingIcon
         }
+        .foregroundColor(.primary)
     }
 }
 
-//struct ExerciseRowView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ExerciseRowView()
-//    }
-//}
+struct ExerciseRowView_Previews: PreviewProvider {
+    static var previews: some View {
+        ExerciseRowView(MockService.sampleExercises[0])
+    }
+}

@@ -8,46 +8,56 @@
 import SwiftUI
 
 struct TemplatesView: View {
-    @State private var showModifyTemplateView = false
-    @ObservedObject var viewModel = TemplatesViewModel()
+    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) var sizeCategory
     
-    private var gridLayout = [ GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)]
+    @State private var showModifyTemplateView = false
+    @StateObject var viewModel = TemplatesViewModel()
     
     var body: some View {
-        VStack {
-            AddNewHeaderView(title: "My Templates",
-                             showView: $showModifyTemplateView,
-                             view: AnyView(ModifyTemplateView()
-                                .onDisappear(perform: {
-                                    viewModel.loadingState = .loading
-                                    viewModel.fetchTemplates()
-                                })
-                             )
-            )
+        ZStack {
+            Color(colorScheme == .light ? .systemGray6 : .black).edgesIgnoringSafeArea(.all)
             
-            switch viewModel.loadingState {
-                case .data: dataView
-                    
-                case .loading: LoadingView()
-                    
-                case .error: Text("--") // placeholder for error message; should never be used currently
+            VStack {
+                AddNewHeaderView(title: "My Templates",
+                                 showView: $showModifyTemplateView,
+                                 view: AnyView(ModifyTemplateView()
+                                    .onDisappear(perform: {
+                                        viewModel.loadingState = .loading
+                                        viewModel.fetchTemplates()
+                                    })
+                                 )
+                )
+                
+                switch viewModel.loadingState {
+                    case .data: dataView
+                        
+                    case .loading: LoadingView()
+                        
+                    case .error: Text("--") // placeholder for error message; should never be used currently
+                }
             }
+            .navigationBarHidden(true)
         }
-        .navigationBarHidden(true)
     }
 }
     
 extension TemplatesView {
     var dataView: some View {
-        Group {
+        VStack(spacing: 45) {
             if viewModel.templates.isEmpty {
                 noDataView
             } else {
                 SearchBar(text: $viewModel.searchText)
-                    .padding([.horizontal])
-
+                    .padding(.horizontal, 20)
+                
                 ScrollView {
-                    LazyVGrid(columns: gridLayout, spacing: 12) {
+                    LazyVGrid(
+                        columns: sizeCategory.isAccessibilityCategory
+                        ? [ GridItem(.flexible(), spacing: 12)]
+                        : [ GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)],
+                        spacing: 12
+                    ) {
                         ForEach(viewModel.searchableTemplates) {item in
                             NavigationLink {
                                 ModifyTemplateView(template: item)
@@ -57,7 +67,7 @@ extension TemplatesView {
                         }
                     }
                 }
-                .padding(.horizontal, 12)
+                .padding(.horizontal, 20)
             }
         }
     }
@@ -77,6 +87,13 @@ extension TemplatesView {
 
 struct TemplatesView_Previews: PreviewProvider {
     static var previews: some View {
-        TemplatesView()
+        Group {
+            TemplatesView(viewModel: TemplatesViewModel(forPreview: true))
+                .preferredColorScheme(.dark)
+            
+            TemplatesView(viewModel: TemplatesViewModel(forPreview: true))
+                .environment(\.sizeCategory, .extraExtraExtraLarge)
+                .previewDevice("iPhone SE (3rd generation)")
+        }
     }
 }

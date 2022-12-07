@@ -9,103 +9,71 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct InstanceHistoryRowView: View {
-    @State private var showDeleteDialog = false
+    let exercise: Exercise?
     let instance: ExerciseInstance
-    @ObservedObject var viewModel : InstanceHistoryRowViewModel
     let onDelete: (String) -> Void
-    
-    // Formatters
-    @State private var intFormatter: NumberFormatter = {
-        let numFormatter = NumberFormatter()
-        numFormatter.numberStyle = .none
-        return numFormatter
-    }()
-    
-    @State private var doubleFormatter: NumberFormatter = {
-        let numFormatter = NumberFormatter()
-        numFormatter.numberStyle = .decimal
-        return numFormatter
-    }()
-    
-    @State private var timeFormatter: DateComponentsFormatter = {
-        let timeFormatter = DateComponentsFormatter()
-        timeFormatter.zeroFormattingBehavior = .dropLeading
-        timeFormatter.allowedUnits = [.minute, .second]
-        timeFormatter.allowsFractionalUnits = true
-        timeFormatter.unitsStyle = .abbreviated
-        return timeFormatter
-    }()
-
-    init(_ instance: ExerciseInstance, onDelete: @escaping (String) -> Void) {
-        self.instance = instance
-        self.viewModel = InstanceHistoryRowViewModel(fromExerciseId: instance.exerciseId)
-        self.onDelete = onDelete
-    }
+    let iconSize = 20.0
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            if let exercise: Exercise = viewModel.exercise {
+        Group {
+            if exercise != nil {
                 HStack {
-                    Text(exercise.name)
+                    Text(exercise!.name)
                         .bold()
-                        .font(.title)
+                        .font(.title2)
                     
                     Spacer()
                     
-                    Button(role: .destructive) {
-                        showDeleteDialog.toggle()
-                    } label: {
-                        Image(systemName: "trash")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 25, height: 25)
+                    VStack(alignment: .leading, spacing: 5) {
+                        if exercise!.includeWeight {
+                            HStack {
+                                WeightIcon()
+                                    .frame(width: iconSize, height: iconSize)
+                                    .foregroundColor(Color(.systemGray))
+                                
+                                Text("\(WeightFormatter.weight.string(from: instance.weight as NSNumber) ?? "0") lbs")
+                            }
+                        }
+                        
+                        if exercise!.includeReps {
+                            HStack {
+                                Image(systemName: "arrow.clockwise")
+                                    .resizable()
+                                    .frame(width: iconSize, height: iconSize)
+                                    .foregroundColor(Color(.systemGray))
+                                
+                                Text("\(instance.reps)")
+                            }
+                        }
+                        
+                        if exercise!.includeTime {
+                            HStack {
+                                Image(systemName: "timer")
+                                    .resizable()
+                                    .frame(width: iconSize, height: iconSize)
+                                    .foregroundColor(Color(.systemGray))
+                                
+                                Text(TimeFormatter.durationResult.string(from: instance.time) ?? "Error loading")
+                            }
+                        }
                     }
+                    .font(.body)
+                    .padding(.leading, 10)
+
                 }
+                .padding(8)
                 
-                Divider()
-                
-                VStack(alignment: .leading, spacing: 5) {
-                    if exercise.includeWeight {
-                        HStack {
-                            Text("Weight: ")
-                            Text("\(doubleFormatter.string(from: instance.weight as NSNumber) ?? "0")lbs")
-                        }
-                    }
-                    
-                    if exercise.includeReps {
-                        HStack {
-                            Text("Reps:     ")
-                            Text(intFormatter.string(from: instance.reps as NSNumber) ?? "Error loading")
-                        }
-                    }
-                    
-                    if exercise.includeTime {
-                        HStack {
-                            Text("Time:     ")
-                            Text(timeFormatter.string(from: instance.time) ?? "Error loading")
-                        }
-                    }
-                }
-                .font(.title3)
-                .padding(.leading)
             } else {
                 LoadingIndicator(animation: .circleBars, speed: .fast)
-            }
-        }
-        .frame(maxWidth: .infinity)
-        .padding(8)
-        .background(Color(.systemGray5))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
-        .alert("Delete \(viewModel.exercise?.name ?? "") data from this workout?", isPresented: $showDeleteDialog) {
-            Button("Delete", role: .destructive) {
-                onDelete(instance.id!)
             }
         }
     }
 }
 
-//struct InstanceHistoryRowView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        InstanceHistoryRowView()
-//    }
-//}
+struct InstanceHistoryRowView_Previews: PreviewProvider {
+    static var previews: some View {
+        InstanceHistoryRowView(exercise: MockService.sampleExercises[0], instance: MockService.sampleInstances[1]) { _ in
+            //
+        }
+    }
+}

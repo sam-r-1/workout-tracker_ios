@@ -12,26 +12,37 @@ struct SearchBar: View {
     
     var body: some View {
         HStack {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.gray)
+                .aspectRatio(1.0, contentMode: .fit)
+                
             TextField("Search...", text: $text)
-                .padding(8.0)
-                .padding(.horizontal, 24)
-                .background(Color(.systemGray6))
-                .cornerRadius(8.0)
-                .overlay {
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.gray)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading, 8.0)
-                    }
-                }
+            
+            Spacer()
+                        
         }
+        .padding(6)
+        .padding(.leading, 8.0)
+        .background(Color(.systemGray5))
+        .cornerRadius(8.0)
     }
 }
 
 struct SearchBar_Previews: PreviewProvider {
     static var previews: some View {
-        SearchBar(text: .constant(""))
-            .previewLayout(.sizeThatFits)
+        ZStack {
+            Color(.systemGray6).edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                SearchBar(text: .constant(""))
+                    .padding(.horizontal, 20)
+                
+                List {
+                    ForEach(1...5, id: \.self) {
+                        Text("\($0)")
+                    }
+                }
+            }
+        }
     }
 }

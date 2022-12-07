@@ -19,11 +19,11 @@ class ExerciseInstanceViewModel: ObservableObject {
     private let service = ExerciseInstanceService()
     
     init(_ exerciseId: String) {
-        fetchPreviousInstanceById(exerciseId)
+        fetchPreviousInstance(byExerciseId: exerciseId)
     }
     
-    private func fetchPreviousInstanceById(_ exerciseId: String) {
-        service.fetchPreviousInstanceDataById(exerciseId) { instance in
+    private func fetchPreviousInstance(byExerciseId exerciseId: String) {
+        service.fetchMostRecentInstance(byExerciseId: exerciseId) { instance in
             self.prevWeight = instance.weight
             self.prevReps = instance.reps
             self.prevTime = instance.time

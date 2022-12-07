@@ -118,6 +118,15 @@
       }
     },
     {
+      "identity" : "swift-trapezoid-shapes",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hellojoelhuber/swift-trapezoid-shapes",
+      "state" : {
+        "revision" : "84e53c8a64ac3e01a3355cedf38715027a909745",
+        "version" : "1.3.0"
+      }
+    },
+    {
       "identity" : "swiftfulloadingindicators",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SwiftfulThinking/SwiftfulLoadingIndicators.git",

@@ -12,8 +12,13 @@ class ExerciseHistoryViewModel: ObservableObject {
     @Published var loadingState = LoadingState.loading
     private let service = ExerciseService()
     
-    init() {
-        fetchExercises()
+    init(forPreview: Bool = false) {
+        if forPreview {
+            self.loadingState = .data
+            self.exercises = MockService.sampleExercises
+        } else {
+            fetchExercises()
+        }
     }
     
     func fetchExercises() {

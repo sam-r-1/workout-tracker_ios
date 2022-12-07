@@ -9,19 +9,28 @@ import SwiftUI
 
 struct HeaderView: View {
     let headerText: String
+    let subtitle: String?
     let includeDivider: Bool
     
-    init(_ headerText: String, includeDivider: Bool = false) {
+    init(_ headerText: String, subtitle: String? = nil, includeDivider: Bool = false) {
         self.headerText = headerText
+        self.subtitle = subtitle
         self.includeDivider = includeDivider
     }
     
     var body: some View {
         VStack {
             HStack {
-                Text(headerText)
-                    .font(.largeTitle)
-                    .bold()
+                VStack(alignment: .leading) {
+                    Text(headerText)
+                        .font(.largeTitle)
+                        .bold()
+                    
+                    if subtitle != nil {
+                        Text(subtitle!)
+                            .foregroundColor(Color(.systemGray))
+                    }
+                }
                 Spacer()
             }
             
@@ -33,6 +42,6 @@ struct HeaderView: View {
 
 struct HeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        HeaderView("My Workouts")
+        HeaderView("My Workouts", subtitle: CustomDateFormatter.dateFormatter.string(from: Date.now))
     }
 }

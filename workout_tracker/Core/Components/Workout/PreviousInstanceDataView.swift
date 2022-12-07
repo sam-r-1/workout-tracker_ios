@@ -20,37 +20,13 @@ struct PreviousInstanceDataView: View, Equatable {
         self.viewModel = ExerciseInstanceViewModel(exercise.id!)
     }
     
-    // Formatters
-    @State private var doubleFormatter: NumberFormatter = {
-        let numFormatter = NumberFormatter()
-        numFormatter.numberStyle = .decimal
-        return numFormatter
-    }()
-    
-    @State private var timeFormatter: DateComponentsFormatter = {
-        let timeFormatter = DateComponentsFormatter()
-        timeFormatter.zeroFormattingBehavior = .dropLeading
-        timeFormatter.allowedUnits = [.minute, .second]
-        timeFormatter.allowsFractionalUnits = true
-        timeFormatter.unitsStyle = .abbreviated
-        return timeFormatter
-    }()
-    
-    @State private var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        return dateFormatter
-    }()
-    
     var body: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 8) {
             if self.viewModel.showPrev {
-                Text(dateFormatter.string(from: viewModel.prevDate!))
-                   .underline()
+                Text(CustomDateFormatter.dateFormatter.string(from: viewModel.prevDate!))
                 
                 if exercise.includeWeight {
-                    Text(doubleFormatter.string(from: viewModel.prevWeight! as NSNumber) ?? "0.0")
+                    Text(WeightFormatter.weight.string(from: viewModel.prevWeight! as NSNumber) ?? "0.0")
                         .font(.title3)
                 }
                 
@@ -60,7 +36,7 @@ struct PreviousInstanceDataView: View, Equatable {
                 }
                 
                 if exercise.includeTime {
-                    Text(timeFormatter.string(from: viewModel.prevTime!) ?? "0s")
+                    Text(TimeFormatter.durationResult.string(from: viewModel.prevTime!) ?? "0s")
                         .font(.title3)
                 }
             }
