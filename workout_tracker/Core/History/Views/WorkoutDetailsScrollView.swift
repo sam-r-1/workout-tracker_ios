@@ -13,26 +13,18 @@ struct WorkoutDetailsScrollView: View, Equatable {
     }
     
     let workout: Workout
-    @ObservedObject var viewModel: WorkoutDetailsViewModel
-    
-    init(_ workout: Workout) {
-        self.workout = workout
-        self.viewModel = WorkoutDetailsViewModel(workout)
-    }
+    @StateObject var viewModel = WorkoutDetailsViewModel()
     
     var body: some View {
-        ScrollView {
-            LazyVStack {
-                ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
-                    InstanceHistoryRowView(instance, onDelete: { id in
-                        viewModel.deleteInstance(by: id)
-                    })
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 4)
-                }
+        List {
+            ForEach(viewModel.items) { item in
+                InstanceHistoryRowView(exercise: item.exercise, instance: item.instance, onDelete: { id in
+                    viewModel.deleteInstance(by: id)
+                })
             }
-            
-            Spacer()
+        }
+        .task {
+            await viewModel.fetchItems(fromInstanceIdList: workout.exerciseInstanceIdList)
         }
     }
 }

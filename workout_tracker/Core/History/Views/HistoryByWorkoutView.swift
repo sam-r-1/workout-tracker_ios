@@ -31,7 +31,9 @@ extension HistoryByWorkoutView {
                 List {
                     ForEach(viewModel.workouts, id: \.timestamp) { workout in
                         NavigationLink {
-                            NavigationLazyView(WorkoutDetailsView(workout, viewModel: viewModel))
+                            NavigationLazyView(WorkoutDetailsView(workout, onDelete: {
+                                viewModel.deleteWorkout(workout: workout)
+                            }))
                         } label: {
                             WorkoutRowView(workout: workout)
                         }

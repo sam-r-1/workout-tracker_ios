@@ -7,24 +7,28 @@
 
 import Foundation
 
+@MainActor
 class WorkoutDetailsViewModel: ObservableObject {
-    @Published var exerciseInstances = [ExerciseInstance]()
+    @Published var items = [WorkoutHistoryItem]()
     private let service = ExerciseInstanceService()
     
-    init(_ workout: Workout) {
-        fetchInstancesFromIdList(workout.exerciseInstanceIdList)
+    nonisolated func update() {
+        self.objectWillChange.send()
     }
     
-    func fetchInstancesFromIdList(_ instanceIdList: [String]) {
-        service.fetchInstances(byInstanceIdList: instanceIdList) { instances in
-            self.exerciseInstances = instances
-        }
+    func fetchItems(fromInstanceIdList instanceIdList: [String]) async {
+        do {
+            let instances = try await service.fetchInstances(byInstanceIdList: instanceIdList)
+            
+            for instance in instances {
+                self.items.append(WorkoutHistoryItem(fromInstance: instance, parent: self))
+            }
+        } catch _ {}
     }
     
-    // delete an instance from both the local and backend
     func deleteInstance(by id: String) {
         service.deleteInstances(fromInstanceIdList: [id]) // delete from Firebase
         
-        self.exerciseInstances.remove(at: self.exerciseInstances.firstIndex(where: { $0.id == id })!) // delete from local
+        self.items.remove(at: self.items.firstIndex(where: { $0.instance.id == id })!) // delete from local
     }
 }

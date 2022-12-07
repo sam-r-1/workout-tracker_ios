@@ -37,7 +37,7 @@ struct ExerciseInstanceService {
     }
     
     // fetch the previous exercise instance for a given exercise, returning the weight and rep count
-    func fetchPreviousInstanceDataById(_ exerciseId: String, completion: @escaping(ExerciseInstance) -> Void) {
+    func fetchMostRecentInstance(byExerciseId exerciseId: String, completion: @escaping(ExerciseInstance) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         Firestore.firestore().collection("exercise-instances")
@@ -59,20 +59,19 @@ struct ExerciseInstanceService {
     }
     
     // fetch a list of exercise instances using their id's
-    func fetchInstances(byInstanceIdList instanceIdList: [String], completion: @escaping([ExerciseInstance]) -> Void) {
-        var instances = [ExerciseInstance]()
+    func fetchInstances(byInstanceIdList instanceIdList: [String]) async throws -> [ExerciseInstance] {
+        var instances = Array(repeating: ExerciseInstance(uid: "", exerciseId: "", timestamp: Timestamp(), reps: 0, time: 0, weight: 0), count: instanceIdList.count)
 
-        for id in instanceIdList {
+        let collectionRef = Firestore.firestore().collection("exercise-instances")
+        
+        for i in 0..<instanceIdList.count {
+            let instance = try await collectionRef.document(instanceIdList[i])
+                .getDocument(as: ExerciseInstance.self)
             
-            Firestore.firestore().collection("exercise-instances").document(id)
-                .getDocument { snapshot, _ in
-                    guard var instance = try? snapshot?.data(as: ExerciseInstance.self) else { return }
-                    instance.id = id
-
-                    instances.append(instance)
-                    completion(instances.sorted(by: { $0.timestamp.dateValue() < $1.timestamp.dateValue() }))
-                }
+            instances[i] = instance
         }
+        
+        return instances
     }
     
     func fetchInstances(byExerciseId id: String, completion: @escaping([ExerciseInstance]) -> Void) {
