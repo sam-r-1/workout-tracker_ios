@@ -10,20 +10,32 @@ import SwiftUI
 struct SelectExerciseView: View {
     @StateObject var viewModel = SelectExerciseViewModel()
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.colorScheme) var colorScheme
     let onAdd: (String) -> Void
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Button("Cancel") {
-                presentationMode.wrappedValue.dismiss()
-            }
-            .padding(.leading, 12)
-
-            SearchBar(text: $viewModel.searchText)
-                .padding(.horizontal)
+        ZStack {
+            Color(colorScheme == .light ? .systemGray6 : .black).edgesIgnoringSafeArea(.all)
             
-            ScrollView {
-                LazyVStack {
+            VStack {
+                
+                HStack {
+                    Button("Cancel") {
+                        presentationMode.wrappedValue.dismiss()
+                    }
+                    .padding(.leading, 12)
+                    
+                    Spacer()
+                }
+                
+                Text("Select an Exercise")
+                    .font(.title)
+                    .bold()
+
+                SearchBar(text: $viewModel.searchText)
+                    .padding(.horizontal, 20)
+                
+                List {
                     ForEach(viewModel.searchableExercises) {exercise in
                         ExerciseRowView(
                             exercise,
@@ -32,6 +44,7 @@ struct SelectExerciseView: View {
                                     onAdd(exercise.id!)
                                     presentationMode.wrappedValue.dismiss()
                                 }
+                                    .foregroundColor(Color(.systemBlue))
                             )
                         )
                     }
@@ -43,7 +56,7 @@ struct SelectExerciseView: View {
 
 struct SelectExerciseView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectExerciseView { _ in
+        SelectExerciseView(viewModel: SelectExerciseViewModel(forPreview: true)) { _ in
             //
         }
     }

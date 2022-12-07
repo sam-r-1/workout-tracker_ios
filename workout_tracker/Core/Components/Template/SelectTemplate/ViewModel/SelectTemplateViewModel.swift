@@ -14,8 +14,12 @@ class SelectTemplateViewModel: ObservableObject {
     @Published var userTemplates = [Template]()
     let service = TemplateService()
     
-    init() {
-        fetchTemplates()
+    init(forPreview: Bool = false) {
+        if forPreview {
+            self.userTemplates = MockService.sampleTemplates
+        } else {
+            fetchTemplates()
+        }
     }
     
     // Allow the user to filter their exercises by title or type

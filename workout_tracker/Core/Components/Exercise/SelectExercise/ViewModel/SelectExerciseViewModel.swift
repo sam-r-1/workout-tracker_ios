@@ -12,8 +12,12 @@ class SelectExerciseViewModel: ObservableObject {
     @Published var userExercises = [Exercise]()
     let service = ExerciseService()
     
-    init() {
-        fetchExercises()
+    init(forPreview: Bool = false) {
+        if forPreview {
+            self.userExercises = MockService.sampleExercises
+        } else {
+            fetchExercises()
+        }
     }
     
     // Allow the user to filter their exercises by title or type
