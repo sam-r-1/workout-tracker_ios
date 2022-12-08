@@ -45,6 +45,7 @@
 		7F7638A929393999006D7D14 /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7638A829393999006D7D14 /* MockService.swift */; };
 		7F7638AC293966E1006D7D14 /* PerformanceChartTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7638AB293966E1006D7D14 /* PerformanceChartTileView.swift */; };
 		7F8FAC4A29426CA5001D511F /* ModifyObjectMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8FAC4929426CA5001D511F /* ModifyObjectMode.swift */; };
+		7F8FAC4C294276B4001D511F /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8FAC4B294276B4001D511F /* ResetPasswordView.swift */; };
 		7F9EFD18293C0399000FCB24 /* FullPerformanceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9EFD17293C0399000FCB24 /* FullPerformanceChartView.swift */; };
 		7FA3209128A3F8F30071D835 /* workout_trackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */; };
 		7FA3209328A3F8F30071D835 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209228A3F8F30071D835 /* ContentView.swift */; };
@@ -154,6 +155,7 @@
 		7F7638A829393999006D7D14 /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
 		7F7638AB293966E1006D7D14 /* PerformanceChartTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceChartTileView.swift; sourceTree = "<group>"; };
 		7F8FAC4929426CA5001D511F /* ModifyObjectMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyObjectMode.swift; sourceTree = "<group>"; };
+		7F8FAC4B294276B4001D511F /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
 		7F9EFD17293C0399000FCB24 /* FullPerformanceChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPerformanceChartView.swift; sourceTree = "<group>"; };
 		7FA3208D28A3F8F30071D835 /* Workout Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Workout Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = workout_trackerApp.swift; sourceTree = "<group>"; };
@@ -367,6 +369,8 @@
 			isa = PBXGroup;
 			children = (
 				7F0E8F6328A6F98500824BED /* LoginView.swift */,
+				7F0E8F7028A74BCF00824BED /* AuthCardView.swift */,
+				7F8FAC4B294276B4001D511F /* ResetPasswordView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -375,7 +379,6 @@
 			isa = PBXGroup;
 			children = (
 				7F0E8F6628A6F9BF00824BED /* AuthHeaderView.swift */,
-				7F0E8F7028A74BCF00824BED /* AuthCardView.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -965,6 +968,7 @@
 				7FA320D928A5927D0071D835 /* ExerciseRowView.swift in Sources */,
 				7F0E86002922CD3000D55272 /* SelectTemplateViewModel.swift in Sources */,
 				7FA56BFC28EB792900E977AC /* WorkoutRowView.swift in Sources */,
+				7F8FAC4C294276B4001D511F /* ResetPasswordView.swift in Sources */,
 				7FDA1704294044B400FCFC04 /* WorkoutHistoryItem.swift in Sources */,
 				7F0E8F6428A6F98500824BED /* LoginView.swift in Sources */,
 				7FC0002228AC307400D484C6 /* StopwatchManager.swift in Sources */,
@@ -1161,11 +1165,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"workout_tracker/Preview Content\"";
 				DEVELOPMENT_TEAM = PCJW34NLVX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1191,11 +1196,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"workout_tracker/Preview Content\"";
 				DEVELOPMENT_TEAM = PCJW34NLVX;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 
 enum AuthMode {
     case login, signup
@@ -45,6 +46,7 @@ enum AuthMode {
     }
 }
 
+@MainActor
 class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     @Published var didAuthenticateUser = false
@@ -93,6 +95,14 @@ class AuthViewModel: ObservableObject {
                 }
         }
         
+    }
+    
+    func resetPassword(withEmail email: String) {
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                print("DEBUG: Failed to send password reset link with error \(error.localizedDescription)")
+            }
+        }
     }
     
     // Sign the user out locally and on the backend

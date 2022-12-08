@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct AuthCardView: View {
+    @State private var showResetPasswordView = false
+    @State private var showResetRequestedAlert = false
     @State private var authMode = AuthMode.login
     @State private var email = ""
     @State private var password = ""
@@ -35,17 +37,18 @@ struct AuthCardView: View {
                 
                 // Reset password link (show only in "login" auth mode)
                 switch authMode {
-                case .login: NavigationLink {
-                    Text("Reset Password View")
-                } label: {
-                    Text("Forgot Password?")
-                        .font(.caption)
-                        .fontWeight(.semibold)
-                        .foregroundColor(Color(.systemBlue))
-                        .padding(.top)
-                        .padding(.trailing, 24)
-                }
-                .frame(height: 30)
+                case .login: Button {
+                        showResetPasswordView.toggle()
+                    } label: {
+                        Text("Forgot Password?")
+                            .font(.caption)
+                            .foregroundColor(Color(.systemBlue))
+                            .fontWeight(.semibold)
+                            .padding(.top)
+                            .padding(.trailing, 24)
+                            .frame(height: 30)
+                    }
+                        
                 // Empty rectangle if auth mode == Sign In
                 case .signup: Rectangle()
                         .foregroundColor(.clear)
@@ -95,8 +98,16 @@ struct AuthCardView: View {
             .foregroundColor(Color(.systemBlue))
             
         }
-        .background(Color(.systemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 44))
+        .fullScreenCover(isPresented: $showResetPasswordView, onDismiss: {
+            showResetRequestedAlert = true
+        }) {
+            ResetPasswordView { email in
+                viewModel.resetPassword(withEmail: email)
+            }
+        }
+        .alert("An email has been sent with a link to reset your password. Check your spam folder if you cannot find the email at first.", isPresented: $showResetRequestedAlert) {
+            Button("Close") { }
+        }
     }
 }
 
