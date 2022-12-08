@@ -2,8 +2,10 @@
 //  ModifyObjectMode.swift
 //  workout_tracker
 //
-//  Created by Sam Rankin on 10/4/22.
+//  Created by Sam Rankin on 12/8/22.
 //
+
+import Foundation
 
 import Foundation
 

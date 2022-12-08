@@ -16,7 +16,6 @@
 		7F02754928A6ED2B009536CF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754828A6ED2B009536CF /* FirebaseAuth */; };
 		7F02754B28A6ED2B009536CF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754A28A6ED2B009536CF /* FirebaseFirestore */; };
 		7F02754D28A6ED2B009536CF /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754C28A6ED2B009536CF /* FirebaseFirestoreSwift */; };
-		7F05E1142927244100FF6A8E /* ModifyObjectMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F05E1132927244100FF6A8E /* ModifyObjectMode.swift */; };
 		7F0E85FE2922CCD500D55272 /* SelectTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E85FD2922CCD500D55272 /* SelectTemplateView.swift */; };
 		7F0E86002922CD3000D55272 /* SelectTemplateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E85FF2922CD3000D55272 /* SelectTemplateViewModel.swift */; };
 		7F0E8F5E28A6F18100824BED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F0E8F5D28A6F18100824BED /* GoogleService-Info.plist */; };
@@ -45,6 +44,7 @@
 		7F7638A329368578006D7D14 /* SmallPerformanceLineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7638A229368578006D7D14 /* SmallPerformanceLineChart.swift */; };
 		7F7638A929393999006D7D14 /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7638A829393999006D7D14 /* MockService.swift */; };
 		7F7638AC293966E1006D7D14 /* PerformanceChartTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7638AB293966E1006D7D14 /* PerformanceChartTileView.swift */; };
+		7F8FAC4A29426CA5001D511F /* ModifyObjectMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8FAC4929426CA5001D511F /* ModifyObjectMode.swift */; };
 		7F9EFD18293C0399000FCB24 /* FullPerformanceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9EFD17293C0399000FCB24 /* FullPerformanceChartView.swift */; };
 		7FA3209128A3F8F30071D835 /* workout_trackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */; };
 		7FA3209328A3F8F30071D835 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209228A3F8F30071D835 /* ContentView.swift */; };
@@ -126,7 +126,6 @@
 		7F02753C28A5A932009536CF /* TemplateGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateGridView.swift; sourceTree = "<group>"; };
 		7F02754128A6B362009536CF /* ModifyExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyExerciseView.swift; sourceTree = "<group>"; };
 		7F02754328A6E968009536CF /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
-		7F05E1132927244100FF6A8E /* ModifyObjectMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModifyObjectMode.swift; path = ../../../../../../../../.Trash/ModifyObjectMode.swift; sourceTree = "<group>"; };
 		7F0E85FD2922CCD500D55272 /* SelectTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateView.swift; sourceTree = "<group>"; };
 		7F0E85FF2922CD3000D55272 /* SelectTemplateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateViewModel.swift; sourceTree = "<group>"; };
 		7F0E8F5D28A6F18100824BED /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -154,6 +153,7 @@
 		7F7638A229368578006D7D14 /* SmallPerformanceLineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallPerformanceLineChart.swift; sourceTree = "<group>"; };
 		7F7638A829393999006D7D14 /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
 		7F7638AB293966E1006D7D14 /* PerformanceChartTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceChartTileView.swift; sourceTree = "<group>"; };
+		7F8FAC4929426CA5001D511F /* ModifyObjectMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyObjectMode.swift; sourceTree = "<group>"; };
 		7F9EFD17293C0399000FCB24 /* FullPerformanceChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullPerformanceChartView.swift; sourceTree = "<group>"; };
 		7FA3208D28A3F8F30071D835 /* Workout Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Workout Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA3209028A3F8F30071D835 /* workout_trackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = workout_trackerApp.swift; sourceTree = "<group>"; };
@@ -711,7 +711,7 @@
 				7FA5480628EDE8E7009B1508 /* LoadingState.swift */,
 				7FA5480928EDEF9D009B1508 /* LoadingView.swift */,
 				7F53D20D28F5E19000FFB09D /* InvertAppIcons.swift */,
-				7F05E1132927244100FF6A8E /* ModifyObjectMode.swift */,
+				7F8FAC4929426CA5001D511F /* ModifyObjectMode.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -925,6 +925,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FA56C1128ECCC4F00E977AC /* WorkoutDetailsScrollView.swift in Sources */,
+				7F8FAC4A29426CA5001D511F /* ModifyObjectMode.swift in Sources */,
 				7F02754428A6E968009536CF /* Exercise.swift in Sources */,
 				7FC0001128ABFD0400D484C6 /* ExerciseService.swift in Sources */,
 				7FA5480E28EDF916009B1508 /* TabIconView.swift in Sources */,
@@ -955,7 +956,6 @@
 				7FDA16FA293E939F00FCFC04 /* WeightIcon.swift in Sources */,
 				7F9EFD18293C0399000FCB24 /* FullPerformanceChartView.swift in Sources */,
 				7F2C7D5E28FDE62A0039DEB5 /* SelectExerciseViewModel.swift in Sources */,
-				7F05E1142927244100FF6A8E /* ModifyObjectMode.swift in Sources */,
 				7F53D21328F5E91000FFB09D /* DragRelocateDelegate.swift in Sources */,
 				7FA320D228A551820071D835 /* SearchBar.swift in Sources */,
 				7F7638AC293966E1006D7D14 /* PerformanceChartTileView.swift in Sources */,
@@ -1346,7 +1346,7 @@
 			repositoryURL = "https://github.com/danielgindi/Charts.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 4.0.0;
 			};
 		};
 		7FA56C0B28ECBB3500E977AC /* XCRemoteSwiftPackageReference "SwiftfulLoadingIndicators" */ = {

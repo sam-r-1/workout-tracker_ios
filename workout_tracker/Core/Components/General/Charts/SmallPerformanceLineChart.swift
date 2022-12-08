@@ -68,7 +68,7 @@ struct SmallPerformanceLineChart: UIViewRepresentable {
         
         guard let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors as CFArray, locations: nil) else { return }
         
-        dataSet.fill = Fill(linearGradient: gradient, angle: -90)
+        dataSet.fill = LinearGradientFill(gradient: gradient, angle: -90)
         dataSet.fillFormatter = DefaultFillFormatter { _,_ -> CGFloat in
             return CGFloat(uiView.leftAxis.axisMinimum)
         }
