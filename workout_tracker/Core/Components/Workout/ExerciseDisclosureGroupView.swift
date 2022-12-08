@@ -43,7 +43,6 @@ struct ExerciseDisclosureGroupView: View {
                     
                     // previous instance stack
                         PreviousInstanceDataView(exercise: item.exercise)
-                            .equatable()
                 }
                 
                 HStack {

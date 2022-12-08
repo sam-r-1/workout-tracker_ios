@@ -7,13 +7,9 @@
 
 import SwiftUI
 
-struct PreviousInstanceDataView: View, Equatable {
+struct PreviousInstanceDataView: View {
     let exercise: Exercise
     @ObservedObject var viewModel: ExerciseInstanceViewModel
-    
-    static func == (lhs: PreviousInstanceDataView, rhs: PreviousInstanceDataView) -> Bool {
-        return lhs.exercise.id == rhs.exercise.id
-    }
     
     init(exercise: Exercise) {
         self.exercise = exercise

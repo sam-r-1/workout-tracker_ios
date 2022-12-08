@@ -7,10 +7,7 @@
 
 import SwiftUI
 
-struct WorkoutDetailsScrollView: View, Equatable {
-    static func == (lhs: WorkoutDetailsScrollView, rhs: WorkoutDetailsScrollView) -> Bool {
-        return lhs.workout.timestamp == rhs.workout.timestamp
-    }
+struct WorkoutDetailsScrollView: View {
     
     let workout: Workout
     @StateObject var viewModel = WorkoutDetailsViewModel()

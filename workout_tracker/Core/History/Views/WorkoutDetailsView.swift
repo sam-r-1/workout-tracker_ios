@@ -32,7 +32,6 @@ struct WorkoutDetailsView: View {
                 Spacer(minLength: 12)
                 
                 WorkoutDetailsScrollView(workout: workout)
-                    .equatable()
             }
             .navigationTitle("Workout Summary")
             .navigationBarTitleDisplayMode(.inline)
