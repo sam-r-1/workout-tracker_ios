@@ -6,7 +6,10 @@
 * Built using Swift, SwiftUI, Firebase, Firebase Cloud Firestore
 
 ### App Screenshots
+* See [here](https://github.com/sam-r-1/workout-tracker_ios/tree/main/app-screen-captures) for more screenshots
+
 ![in a workout](https://github.com/sam-r-1/workout-tracker_ios/blob/main/app-screen-captures/in-workout.png)
+![exercise history](https://github.com/sam-r-1/workout-tracker_ios/blob/main/app-screen-captures/exercise-results.png)
 
 ### Future Improvements
 * UI improvements/overhaul
