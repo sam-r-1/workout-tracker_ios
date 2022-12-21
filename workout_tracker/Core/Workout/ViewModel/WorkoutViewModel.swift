@@ -22,15 +22,15 @@ class ExerciseDataFields: Identifiable, Equatable {
     private let parent: WorkoutViewModel
     let exercise: Exercise
     
-    var weight = 0.0 {
+    var weight: Double? = nil {
         didSet { self.parent.update() }
     }
     
-    var reps = 0 {
+    var reps: Int? = nil {
         didSet { self.parent.update() }
     }
     
-    var time = 0.0 {
+    var time: Double? = nil {
         didSet { self.parent.update() }
     }
 }
@@ -84,7 +84,7 @@ class WorkoutViewModel: ObservableObject {
     
     // Add the items the user has added to the workout to a list as [ExerciseInstance] for upload
     private func addExerciseToWorkout(_ item: ExerciseDataFields, uid: String) {
-        exerciseInstances.append(ExerciseInstance(uid: uid, exerciseId: item.exercise.id!, timestamp: Timestamp(), reps: item.reps, time: item.time, weight: item.weight))
+        exerciseInstances.append(ExerciseInstance(uid: uid, exerciseId: item.exercise.id!, timestamp: Timestamp(), reps: item.reps ?? 0, time: item.time ?? 0.0, weight: item.weight ?? 0.0))
     }
     
     // upload the exercise instances to the database, returning a list of their id's in a closure
