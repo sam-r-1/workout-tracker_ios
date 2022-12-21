@@ -9,32 +9,25 @@ import SwiftUI
 
 struct PreviousInstanceDataView: View {
     let exercise: Exercise
-    @ObservedObject var viewModel: ExerciseInstanceViewModel
-    
-    init(exercise: Exercise) {
-        self.exercise = exercise
-        self.viewModel = ExerciseInstanceViewModel(exercise.id!)
-    }
+    let previousInstance: ExerciseInstance
     
     var body: some View {
         VStack(spacing: 8) {
-            if self.viewModel.showPrev {
-                Text(CustomDateFormatter.dateFormatter.string(from: viewModel.prevDate!))
-                
-                if exercise.includeWeight {
-                    Text(WeightFormatter.weight.string(from: viewModel.prevWeight! as NSNumber) ?? "0.0")
-                        .font(.title3)
-                }
-                
-                if exercise.includeReps {
-                    Text("\(viewModel.prevReps!)")
-                        .font(.title3)
-                }
-                
-                if exercise.includeTime {
-                    Text(TimeFormatter.durationResult.string(from: viewModel.prevTime!) ?? "0s")
-                        .font(.title3)
-                }
+            Text(CustomDateFormatter.dateFormatter.string(from: previousInstance.timestamp.dateValue()))
+            
+            if exercise.includeWeight {
+                Text(WeightFormatter.weight.string(from: previousInstance.weight as NSNumber) ?? "0.0")
+                    .font(.title3)
+            }
+            
+            if exercise.includeReps {
+                Text("\(previousInstance.reps)")
+                    .font(.title3)
+            }
+            
+            if exercise.includeTime {
+                Text(TimeFormatter.durationResult.string(from: previousInstance.time) ?? "0s")
+                    .font(.title3)
             }
         }
         .foregroundColor(Color(.systemGray))

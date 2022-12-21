@@ -42,7 +42,9 @@ struct ExerciseDisclosureGroupView: View {
                     }
                     
                     // previous instance stack
-                        PreviousInstanceDataView(exercise: item.exercise)
+                    if item.previousInstance != nil {
+                        PreviousInstanceDataView(exercise: item.exercise, previousInstance: item.previousInstance!)
+                    }
                 }
                 
                 HStack {
@@ -107,6 +109,7 @@ struct ExerciseDisclosureGroupView: View {
                     UIApplication.shared.isIdleTimerDisabled = false
                 }
         }
+        .onAppear(perform: item.fetchPreviousInstance)
     }
 }
 
