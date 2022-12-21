@@ -11,18 +11,39 @@ struct MainTabView: View {
     @State private var showMenu = false
     @State private var showNoExercisesMessage = false
     @State private var isActiveWorkout = false
+    @State private var isSelectingTemplate = false
+    @State private var selectedTemplate: Template? = nil
     @StateObject var router = ViewRouter()
     
     let tabBarHeight: CGFloat = fmax(UIScreen.main.bounds.height / 14, 58.0)
-    
+
     var body: some View {
          NavigationView {
             ZStack(alignment: .bottom) {
-                NavigationLink(isActive: $isActiveWorkout) {
-                    switch router.startWorkoutOption {
-                        case .fromTemplate: SelectTemplateView(workoutActive: $isActiveWorkout)
-                        case .fromScratch: WorkoutView(workoutActive: $isActiveWorkout)
+//                NavigationLink(isActive: $isActiveWorkout) {
+//                    switch router.startWorkoutOption {
+//                        case .fromTemplate: SelectTemplateView(workoutActive: $isActiveWorkout)
+//                        case .fromScratch: WorkoutView(workoutActive: $isActiveWorkout)
+//                    }
+//                } label: {
+//                    EmptyView()
+//                }
+//                .hidden()
+                
+                NavigationLink(isActive: $isSelectingTemplate) {
+                    SelectTemplateView { template in
+                        if template != nil {
+                            self.selectedTemplate = template
+                            self.isActiveWorkout = true
+                        }
                     }
+                } label: {
+                    EmptyView()
+                }
+                .hidden()
+                
+                NavigationLink(isActive: $isActiveWorkout) {
+                    WorkoutView(workoutActive: $isActiveWorkout, fromTemplate: selectedTemplate)
                 } label: {
                     EmptyView()
                 }
@@ -42,7 +63,7 @@ struct MainTabView: View {
                         }
                     
                     // display the popup options
-                    PopUpMenuView(showMenu: $showMenu, showNoExercisesMessage: $showNoExercisesMessage, isActiveWorkout: $isActiveWorkout, router: router)
+                    PopUpMenuView(showMenu: $showMenu, showNoExercisesMessage: $showNoExercisesMessage, isActiveWorkout: $isActiveWorkout, isSelectingTemplate: $isSelectingTemplate, router: router)
                         .padding(.bottom, 100)
                 }
                 

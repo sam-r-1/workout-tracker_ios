@@ -12,6 +12,7 @@ import Foundation
 class SelectTemplateViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var userTemplates = [Template]()
+    @Published var selectedTemplate: Template? = nil
     let service = TemplateService()
     
     init(forPreview: Bool = false) {

@@ -12,7 +12,7 @@ struct ExerciseDisclosureGroupView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var showTimer = false
     @State private var showInfo = false
-    @State var isExpanded = true
+    @State var isExpanded = false
     @State var item: ExerciseDataFields
     let onDelete: () -> Void
     let iconSize = 20.0
