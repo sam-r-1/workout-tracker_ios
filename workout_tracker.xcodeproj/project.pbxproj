@@ -39,7 +39,6 @@
 		7F53D21028F5E88700FFB09D /* ReorderableForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53D20F28F5E88700FFB09D /* ReorderableForEach.swift */; };
 		7F53D21328F5E91000FFB09D /* DragRelocateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53D21228F5E91000FFB09D /* DragRelocateDelegate.swift */; };
 		7F63BAC628E5E732005B6235 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F63BAC528E5E732005B6235 /* HistoryView.swift */; };
-		7F63BAC828E75764005B6235 /* ExerciseInstanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F63BAC728E75764005B6235 /* ExerciseInstanceViewModel.swift */; };
 		7F7638A029367FBC006D7D14 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 7F76389F29367FBC006D7D14 /* Charts */; };
 		7F7638A329368578006D7D14 /* SmallPerformanceLineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7638A229368578006D7D14 /* SmallPerformanceLineChart.swift */; };
 		7F7638A929393999006D7D14 /* MockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7638A829393999006D7D14 /* MockService.swift */; };
@@ -150,7 +149,6 @@
 		7F53D20F28F5E88700FFB09D /* ReorderableForEach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderableForEach.swift; sourceTree = "<group>"; };
 		7F53D21228F5E91000FFB09D /* DragRelocateDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragRelocateDelegate.swift; sourceTree = "<group>"; };
 		7F63BAC528E5E732005B6235 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
-		7F63BAC728E75764005B6235 /* ExerciseInstanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseInstanceViewModel.swift; sourceTree = "<group>"; };
 		7F7638A229368578006D7D14 /* SmallPerformanceLineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallPerformanceLineChart.swift; sourceTree = "<group>"; };
 		7F7638A829393999006D7D14 /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
 		7F7638AB293966E1006D7D14 /* PerformanceChartTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceChartTileView.swift; sourceTree = "<group>"; };
@@ -756,7 +754,6 @@
 			isa = PBXGroup;
 			children = (
 				7FC0002528AD4E3900D484C6 /* WorkoutViewModel.swift */,
-				7F63BAC728E75764005B6235 /* ExerciseInstanceViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -980,7 +977,6 @@
 				7FDED69928DB8249001BF503 /* Workout.swift in Sources */,
 				7FA320CE28A544120071D835 /* PopUpMenuView.swift in Sources */,
 				7F53D21028F5E88700FFB09D /* ReorderableForEach.swift in Sources */,
-				7F63BAC828E75764005B6235 /* ExerciseInstanceViewModel.swift in Sources */,
 				7F7638A929393999006D7D14 /* MockService.swift in Sources */,
 				7FDA1702293EEDCD00FCFC04 /* DataFieldIcons.swift in Sources */,
 				7FA5481C28EE4854009B1508 /* ExerciseHistoryView.swift in Sources */,
