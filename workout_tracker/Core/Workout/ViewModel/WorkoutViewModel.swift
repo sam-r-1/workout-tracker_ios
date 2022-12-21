@@ -40,7 +40,6 @@ class ExerciseDataFields: Identifiable, Equatable {
     }
     
     func fetchPreviousInstance() {
-        print("DEBUG: fetching previous instance")
         instanceService.fetchMostRecentInstance(byExerciseId: self.exercise.id!) { instance in
             self.previousInstance = instance
         }
