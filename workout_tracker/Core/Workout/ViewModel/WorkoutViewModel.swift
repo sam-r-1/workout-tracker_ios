@@ -21,6 +21,7 @@ class ExerciseDataFields: Identifiable, Equatable {
     let id = UUID()
     private let parent: WorkoutViewModel
     let exercise: Exercise
+    let instanceService = ExerciseInstanceService()
     
     var weight = 0.0 {
         didSet { self.parent.update() }
@@ -32,6 +33,17 @@ class ExerciseDataFields: Identifiable, Equatable {
     
     var time = 0.0 {
         didSet { self.parent.update() }
+    }
+    
+    var previousInstance: ExerciseInstance? = nil {
+        didSet { self.parent.update() }
+    }
+    
+    func fetchPreviousInstance() {
+        print("DEBUG: fetching previous instance")
+        instanceService.fetchMostRecentInstance(byExerciseId: self.exercise.id!) { instance in
+            self.previousInstance = instance
+        }
     }
 }
 
