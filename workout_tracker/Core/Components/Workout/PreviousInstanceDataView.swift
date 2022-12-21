@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct PreviousInstanceDataView: View {
     let exercise: Exercise
     let previousInstance: ExerciseInstance
     
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 10) {
             Text(CustomDateFormatter.dateFormatter.string(from: previousInstance.timestamp.dateValue()))
             
             if exercise.includeWeight {
@@ -34,8 +35,8 @@ struct PreviousInstanceDataView: View {
     }
 }
 
-//struct PreviousInstanceDataView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PreviousInstanceDataView()
-//    }
-//}
+struct PreviousInstanceDataView_Previews: PreviewProvider {
+    static var previews: some View {
+        PreviousInstanceDataView(exercise: Exercise(uid: "", name: "Leg Press", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true), previousInstance: ExerciseInstance(uid: "", exerciseId: "", timestamp: Timestamp(), reps: 5, time: 90, weight: 250))
+    }
+}

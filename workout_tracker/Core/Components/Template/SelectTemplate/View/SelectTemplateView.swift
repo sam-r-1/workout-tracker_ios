@@ -10,9 +10,11 @@ import SwiftUI
 struct SelectTemplateView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) var sizeCategory
+    @Environment(\.presentationMode) var presentationMode
     
-    @Binding var workoutActive: Bool
     @StateObject var viewModel = SelectTemplateViewModel()
+    
+    let onTemplateSelected: (Template?) -> Void
     
     var body: some View {
         ZStack {
@@ -21,7 +23,7 @@ struct SelectTemplateView: View {
             VStack {
                 HStack {
                     Button("Cancel") {
-                        workoutActive = false
+                        self.presentationMode.wrappedValue.dismiss()
                     }
                     .padding(.leading, 12)
                     
@@ -44,8 +46,9 @@ struct SelectTemplateView: View {
                             spacing: 12
                         ) {
                             ForEach(viewModel.searchableTemplates) {item in
-                                NavigationLink {
-                                    WorkoutView(workoutActive: $workoutActive, fromTemplate: item)
+                                Button {
+                                    viewModel.selectedTemplate = item
+                                    self.presentationMode.wrappedValue.dismiss()
                                 } label: {
                                     TemplateGridView(item)
                                 }
@@ -57,11 +60,16 @@ struct SelectTemplateView: View {
             }
             .navigationBarHidden(true)
         }
+        .onDisappear{
+            onTemplateSelected(viewModel.selectedTemplate)
+        }
     }
 }
 
 struct SelectTemplateView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectTemplateView(workoutActive: Binding.constant(true), viewModel: SelectTemplateViewModel(forPreview: true))
+        SelectTemplateView(viewModel: SelectTemplateViewModel(forPreview: true)) { template in
+            //
+        }
     }
 }

@@ -11,6 +11,7 @@ struct PopUpMenuView: View {
     @Binding var showMenu: Bool
     @Binding var showNoExercisesMessage: Bool
     @Binding var isActiveWorkout: Bool
+    @Binding var isSelectingTemplate: Bool
     @ObservedObject var router: ViewRouter
     @StateObject var viewModel = PopUpMenuViewModel()
     
@@ -21,7 +22,7 @@ struct PopUpMenuView: View {
                 HStack {
                     Spacer()
                     
-                    MenuItem(router: router, viewModel: viewModel, option: item, showMenu: $showMenu, showNoExercisesMessage: $showNoExercisesMessage, isActiveWorkout: $isActiveWorkout)
+                    MenuItem(router: router, viewModel: viewModel, option: item, showMenu: $showMenu, showNoExercisesMessage: $showNoExercisesMessage, isActiveWorkout: $isActiveWorkout, isSelectingTemplate: $isSelectingTemplate)
                     
                     Spacer()
                 }
@@ -39,14 +40,17 @@ struct MenuItem: View {
     @Binding var showMenu: Bool
     @Binding var showNoExercisesMessage: Bool
     @Binding var isActiveWorkout: Bool
+    @Binding var isSelectingTemplate: Bool
     
     var body: some View {
         Button {
             $showMenu.wrappedValue = false
             viewModel.canStartWorkout(option) { yes in
                 if yes {
-                    router.startWorkoutOption = option
-                    $isActiveWorkout.wrappedValue.toggle()
+                    switch option {
+                        case .fromScratch: isActiveWorkout = true
+                        case .fromTemplate: isSelectingTemplate = true
+                    }
                 }
                 else { $showNoExercisesMessage.wrappedValue.toggle() }
             }
@@ -66,6 +70,6 @@ struct MenuItem: View {
 
 struct PopUpMenuView_Previews: PreviewProvider {
     static var previews: some View {
-        PopUpMenuView(showMenu: .constant(false), showNoExercisesMessage: .constant(false), isActiveWorkout: .constant(false), router: ViewRouter())
+        PopUpMenuView(showMenu: .constant(false), showNoExercisesMessage: .constant(false), isActiveWorkout: .constant(false), isSelectingTemplate: .constant(false), router: ViewRouter())
     }
 }

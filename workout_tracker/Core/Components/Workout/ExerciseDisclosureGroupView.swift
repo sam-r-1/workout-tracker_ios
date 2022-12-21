@@ -74,6 +74,7 @@ struct ExerciseDisclosureGroupView: View {
                         Image(systemName: "multiply")
                     }
                 }
+                .font(.title3)
             }
         } label: {
             HStack {
@@ -119,7 +120,7 @@ extension ExerciseDisclosureGroupView {
                 .frame(width: iconSize, height: iconSize)
                 .foregroundColor(Color(.systemGray))
 
-            TextField("", value: $item.weight, formatter: WeightFormatter.weight)
+            TextField("0.0", value: $item.weight, formatter: WeightFormatter.weight)
                 .frame(maxWidth: sizeCategory.isAccessibilityCategory ? 120 : 70)
                 .textFieldStyle(.roundedBorder)
             
@@ -136,7 +137,7 @@ extension ExerciseDisclosureGroupView {
                 .frame(width: iconSize, height: iconSize)
                 .foregroundColor(Color(.systemGray))
             
-            TextField("reps", value: $item.reps, formatter: NumberFormatter())
+            TextField("0", value: $item.reps, formatter: NumberFormatter())
                 .frame(maxWidth: sizeCategory.isAccessibilityCategory ? 120 : 70)
                 .textFieldStyle(.roundedBorder)
             
@@ -151,7 +152,7 @@ extension ExerciseDisclosureGroupView {
                 .frame(width: iconSize, height: iconSize)
                 .foregroundColor(Color(.systemGray))
             
-            Text(TimeFormatter.durationResult.string(from: item.time) ?? "0s")
+            Text(TimeFormatter.durationResult.string(from: item.time ?? 0.0)!)
             
             Spacer()
         }
