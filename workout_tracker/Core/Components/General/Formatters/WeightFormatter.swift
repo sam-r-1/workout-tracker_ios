@@ -14,4 +14,12 @@ class WeightFormatter {
         numFormatter.maximumFractionDigits = 1
         return numFormatter
     }()
+    
+    static var currentExerciseWeight: NumberFormatter = {
+        let numFormatter = NumberFormatter()
+        numFormatter.numberStyle = .decimal
+        numFormatter.maximumFractionDigits = 1
+        numFormatter.zeroSymbol = ""
+        return numFormatter
+    }()
 }

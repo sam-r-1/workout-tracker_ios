@@ -120,7 +120,7 @@ extension ExerciseDisclosureGroupView {
                 .frame(width: iconSize, height: iconSize)
                 .foregroundColor(Color(.systemGray))
 
-            TextField("0.0", value: $item.weight, formatter: WeightFormatter.weight)
+            TextField("0.0", value: $item.weight, formatter: WeightFormatter.currentExerciseWeight)
                 .frame(maxWidth: sizeCategory.isAccessibilityCategory ? 120 : 70)
                 .textFieldStyle(.roundedBorder)
             
@@ -137,7 +137,7 @@ extension ExerciseDisclosureGroupView {
                 .frame(width: iconSize, height: iconSize)
                 .foregroundColor(Color(.systemGray))
             
-            TextField("0", value: $item.reps, formatter: NumberFormatter())
+            TextField("0", value: $item.reps, formatter: RepsFormatter.reps)
                 .frame(maxWidth: sizeCategory.isAccessibilityCategory ? 120 : 70)
                 .textFieldStyle(.roundedBorder)
             
@@ -152,7 +152,7 @@ extension ExerciseDisclosureGroupView {
                 .frame(width: iconSize, height: iconSize)
                 .foregroundColor(Color(.systemGray))
             
-            Text(TimeFormatter.durationResult.string(from: item.time ?? 0.0)!)
+            Text(TimeFormatter.durationResult.string(from: item.time) ?? "0.0")
             
             Spacer()
         }
