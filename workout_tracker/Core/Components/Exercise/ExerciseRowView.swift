@@ -10,6 +10,7 @@ import SwiftUI
 struct ExerciseRowView: View {
     let exercise: Exercise
     let trailingIcon: AnyView?
+    @ScaledMetric(relativeTo: .title3) var iconSize: CGFloat = 20.0
     
     init(_ exercise: Exercise, trailingIcon: AnyView? = nil) {
         self.exercise = exercise
@@ -17,14 +18,16 @@ struct ExerciseRowView: View {
     }
     
     var body: some View {
-        HStack(spacing: 30) {
-            Text(exercise.name)
-                .font(.title3)
-            
-            HStack(spacing: 15) {
-                exercise.dataFieldIcons()
-                    .frame(width: 20, height: 20)
-                    .foregroundColor(Color(.systemGray))
+        HStack {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(exercise.name)
+                    .font(.title3)
+                
+                HStack(spacing: 15) {
+                    exercise.dataFieldIcons()
+                        .frame(width: iconSize, height: iconSize)
+                        .foregroundColor(Color(.systemGray))
+                }
             }
             
             Spacer()

@@ -10,30 +10,34 @@ import SwiftUI
 
 // Creates a page header and provides a "New" button. Used for header on Exercises, Templates
 struct AddNewHeaderView: View {
+    @Environment(\.sizeCategory) var sizeCategory
+    
     let title: String
     @Binding var showView: Bool
     let view: AnyView // the view to create a new object
     
     var body: some View {
-        HStack {
+        Group {
             // page title
             Text(title)
                 .font(.largeTitle)
                 .bold()
             
-            Spacer()
+            if !sizeCategory.isAccessibilityCategory { Spacer() }
             
             //Button to add new exercise
             NavigationLink {
                 view
             } label: {
-                VStack {
+                Group {
                     Image(systemName: "plus")
                     Text("New")
                 }
+                .embedInStack(reversed: true)
             }
             .foregroundColor(Color(.systemBlue))
         }
+        .embedInStack()
         .padding([.top, .horizontal])
     }
 }

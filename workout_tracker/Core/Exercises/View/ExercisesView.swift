@@ -73,5 +73,8 @@ extension ExercisesView {
 struct ExercisesView_Previews: PreviewProvider {
     static var previews: some View {
         ExercisesView(viewModel: ExercisesViewModel(forPreview: true))
+        
+        ExercisesView(viewModel: ExercisesViewModel(forPreview: true))
+            .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
     }
 }
