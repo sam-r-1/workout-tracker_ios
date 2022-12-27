@@ -625,7 +625,6 @@
 				7FA320D528A592540071D835 /* Exercise */,
 				7F02753B28A5A915009536CF /* Template */,
 				7FC0002028AC305E00D484C6 /* Workout */,
-				7FC01A88295B5DA6002DAF24 /* AccessibilityStack.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -718,6 +717,7 @@
 				7FA5480928EDEF9D009B1508 /* LoadingView.swift */,
 				7F53D20D28F5E19000FFB09D /* InvertAppIcons.swift */,
 				7F8FAC4929426CA5001D511F /* ModifyObjectMode.swift */,
+				7FC01A88295B5DA6002DAF24 /* AccessibilityStack.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";

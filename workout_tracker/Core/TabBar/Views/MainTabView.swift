@@ -20,16 +20,6 @@ struct MainTabView: View {
     var body: some View {
          NavigationView {
             ZStack(alignment: .bottom) {
-//                NavigationLink(isActive: $isActiveWorkout) {
-//                    switch router.startWorkoutOption {
-//                        case .fromTemplate: SelectTemplateView(workoutActive: $isActiveWorkout)
-//                        case .fromScratch: WorkoutView(workoutActive: $isActiveWorkout)
-//                    }
-//                } label: {
-//                    EmptyView()
-//                }
-//                .hidden()
-                
                 NavigationLink(isActive: $isSelectingTemplate) {
                     SelectTemplateView { template in
                         if template != nil {

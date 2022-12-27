@@ -85,7 +85,6 @@ struct ModifyExerciseView: View {
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text("Cancel")
-                        .padding(.leading, 12)
                 }
             }
 
@@ -96,7 +95,6 @@ struct ModifyExerciseView: View {
                     parentViewModel.fetchExercises()
                 } label: {
                     Text(modifyType.submitText)
-                        .padding(.trailing, 12)
                 }
                 .disabled(!formValidated)
             }
@@ -112,6 +110,13 @@ struct ModifyExerciseView: View {
 
 struct ModifyExerciseView_Previews: PreviewProvider {
     static var previews: some View {
-        ModifyExerciseView(parentViewModel: ExercisesViewModel())
+        NavigationView {
+            ModifyExerciseView(parentViewModel: ExercisesViewModel())
+        }
+        
+        NavigationView {
+            ModifyExerciseView(parentViewModel: ExercisesViewModel())
+        }
+        .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
     }
 }
