@@ -23,6 +23,7 @@ struct ExercisesView: View {
                 case .error: Text("--") // placeholder for error message; should never be used currently
             }
         }
+        .background(Color(.systemGroupedBackground))
         .navigationTitle("My Exercises")
         .navigationBarTitleDisplayMode(sizeCategory > .accessibilityExtraLarge ? .inline : .automatic)
         .toolbar {
@@ -50,7 +51,6 @@ extension ExercisesView {
                         } label: {
                             ExerciseRowView(exercise)
                         }
-                        .buttonStyle(.plain)
                     }
                 }
                 .searchable(text: $viewModel.searchText)

@@ -15,59 +15,61 @@ struct TemplatesView: View {
     @StateObject var viewModel = TemplatesViewModel()
     
     var body: some View {
-        ZStack {
-            Color(colorScheme == .light ? .systemGray6 : .black).edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                AddNewHeaderView(title: "My Templates",
-                                 showView: $showModifyTemplateView,
-                                 view: AnyView(ModifyTemplateView()
-                                    .onDisappear(perform: {
-                                        viewModel.loadingState = .loading
-                                        viewModel.fetchTemplates()
-                                    })
-                                 )
-                )
-                
-                switch viewModel.loadingState {
-                    case .data: dataView
-                        
-                    case .loading: LoadingView()
-                        
-                    case .error: Text("--") // placeholder for error message; should never be used currently
+        Group {
+            switch viewModel.loadingState {
+                case .data: dataView
+                    
+                case .loading: LoadingView()
+                    
+                case .error: Text("--") // placeholder for error message; should never be used currently
+            }
+        }
+        .background(Color(.systemGroupedBackground))
+        .navigationTitle("My Templates")
+        .navigationBarTitleDisplayMode(sizeCategory > .accessibilityExtraLarge ? .inline : .automatic)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink {
+                    ModifyTemplateView()
+                        .onDisappear {
+                            viewModel.loadingState = .loading
+                            viewModel.fetchTemplates()
+                        }
+                } label: {
+                    Image(systemName: "plus.circle")
                 }
             }
-            .navigationBarHidden(true)
         }
     }
 }
     
 extension TemplatesView {
     var dataView: some View {
-        VStack(spacing: 45) {
+        Group {
             if viewModel.templates.isEmpty {
                 noDataView
             } else {
-                SearchBar(text: $viewModel.searchText)
-                    .padding(.horizontal, 20)
-                
-                ScrollView {
-                    LazyVGrid(
-                        columns: sizeCategory.isAccessibilityCategory
-                        ? [ GridItem(.flexible(), spacing: 12)]
-                        : [ GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)],
-                        spacing: 12
-                    ) {
-                        ForEach(viewModel.searchableTemplates) {item in
-                            NavigationLink {
-                                ModifyTemplateView(template: item)
-                            } label: {
-                                TemplateGridView(item)
-                            }
+                    ScrollView {
+                        VStack {
+                            LazyVGrid(
+                                columns: sizeCategory.isAccessibilityCategory
+                                ? [ GridItem(.flexible(), spacing: 12)]
+                                : [ GridItem(.flexible(), spacing: 12), GridItem(.flexible(), spacing: 12)],
+                                spacing: 12
+                            ) {
+                                ForEach(viewModel.searchableTemplates) {item in
+                                    NavigationLink {
+                                        ModifyTemplateView(template: item)
+                                    } label: {
+                                        TemplateGridView(item)
+                                    }
+                                }
                         }
+                        }
+                        .padding(.top)
                     }
-                }
-                .padding(.horizontal, 20)
+                    .padding(.horizontal, 20)
+                    .searchable(text: $viewModel.searchText)
             }
         }
     }
@@ -87,13 +89,13 @@ extension TemplatesView {
 
 struct TemplatesView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
+        NavigationView {
             TemplatesView(viewModel: TemplatesViewModel(forPreview: true))
-                .preferredColorScheme(.dark)
-            
-            TemplatesView(viewModel: TemplatesViewModel(forPreview: true))
-                .environment(\.sizeCategory, .extraExtraExtraLarge)
-                .previewDevice("iPhone SE (3rd generation)")
         }
+            
+        NavigationView {
+            TemplatesView(viewModel: TemplatesViewModel(forPreview: true))
+        }
+        .previewDevice("iPhone SE (3rd generation)")
     }
 }
