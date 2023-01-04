@@ -66,6 +66,7 @@ struct WorkoutView: View {
                                 Text("Finish")
                             }
                         })
+                        .disabled(viewModel.isUploadingWorkout)
                         .padding(8)
                         .foregroundColor(.white)
                         .background(Color(.systemGreen))

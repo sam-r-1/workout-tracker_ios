@@ -48,9 +48,10 @@ class ExerciseDataFields: Identifiable, Equatable {
 
 @MainActor
 class WorkoutViewModel: ObservableObject {
-    @Published var exerciseInstances = [ExerciseInstance]()
-    
+
     @Published var didUploadWorkout = false
+    @Published var isUploadingWorkout = false
+    private var exerciseInstances = [ExerciseInstance]()
     
     private let exerciseService = ExerciseService()
     private let workoutService = WorkoutService()
@@ -93,7 +94,6 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
-    // Add the items the user has added to the workout to a list as [ExerciseInstance] for upload
     private func addExerciseToWorkout(_ item: ExerciseDataFields, uid: String) {
         exerciseInstances.append(ExerciseInstance(uid: uid, exerciseId: item.exercise.id!, timestamp: Timestamp(), reps: item.reps, time: item.time, weight: item.weight))
     }
@@ -104,6 +104,8 @@ class WorkoutViewModel: ObservableObject {
         
         var idList: [String] = []
         var id: String
+        
+        self.exerciseInstances = []
         
         // create exercise instances from the workout items
         for item in self.items {
@@ -123,9 +125,13 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func finishWorkout() async {
+        self.isUploadingWorkout = true
+        
         await uploadInstances { idList in
             
             self.workoutService.uploadWorkout(exerciseInstanceIdList: idList) { success in
+                self.isUploadingWorkout = false
+                
                 if success {
                     // dismiss workout screen
                     self.didUploadWorkout = true
