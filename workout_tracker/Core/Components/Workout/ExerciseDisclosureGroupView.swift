@@ -12,8 +12,8 @@ struct ExerciseDisclosureGroupView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var showTimer = false
     @State private var showInfo = false
-    @State var isExpanded = false
     @State var item: ExerciseDataFields
+    @Binding var isExpanded: Bool
     let onDelete: () -> Void
     let iconSize = 20.0
 
@@ -53,6 +53,7 @@ struct ExerciseDisclosureGroupView: View {
                     } label: {
                         Image(systemName: "info.circle")
                     }
+                    .foregroundColor(Color(.systemBlue))
                     
                     Spacer()
                     
@@ -63,6 +64,7 @@ struct ExerciseDisclosureGroupView: View {
                             } label: {
                                 Text("Stopwatch")
                             }
+                            .foregroundColor(Color(.systemBlue))
                         }
                     }
                     
@@ -87,6 +89,7 @@ struct ExerciseDisclosureGroupView: View {
             }
             .font(.title2)
         }
+        .tint(.primary)
         .alert(item.exercise.name,
                isPresented: $showInfo,
                 actions: {
@@ -163,14 +166,22 @@ extension ExerciseDisclosureGroupView {
 struct ExerciseDisclosureGroupView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true))) {
+            ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true)), isExpanded: Binding.constant(true)) {
                 print("DEBUG: deleting")
             }
 
-            ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true))) {
-                print("DEBUG: deleting")
+            NavigationView {
+                ScrollView {
+                    LazyVStack {
+                        ForEach(1...6, id: \.self) { num in
+                            ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true)), isExpanded: Binding.constant(num == 2 ? true : false)) {
+                                print("DEBUG: deleting")
+                            }
+                        }
+                    }
+                }
+                .navigationTitle("My Workout")
             }
-            .environment(\.sizeCategory, .accessibilityLarge)
         }
     }
 }

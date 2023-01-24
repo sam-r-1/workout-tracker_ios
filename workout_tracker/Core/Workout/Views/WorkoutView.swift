@@ -15,6 +15,7 @@ struct WorkoutView: View {
     @State private var showAddExercise = false
     @State private var showFinishWorkoutDialog = false
     @StateObject var viewModel = WorkoutViewModel()
+    @StateObject private var expansionHandler = ExpansionHandler<ExerciseDataFields>()
     let template: Template?
     
     init(workoutActive: Binding<Bool>, fromTemplate: Template? = nil) {
@@ -30,7 +31,7 @@ struct WorkoutView: View {
                 ScrollView {
                     LazyVStack {
                         ReorderableForEach(items: viewModel.items) { item in
-                            ExerciseDisclosureGroupView(item: item) {
+                            ExerciseDisclosureGroupView(item: item, isExpanded: expansionHandler.isExpanded(item)) {
                                 viewModel.deleteItem(at: viewModel.items.firstIndex(where: { $0.id == item.id })!)
                             }
                         } moveAction: { source, destination in
