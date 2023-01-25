@@ -65,7 +65,6 @@
 		7FA5480C28EDF8A4009B1508 /* TabMenuIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA5480B28EDF8A4009B1508 /* TabMenuIconView.swift */; };
 		7FA5480E28EDF916009B1508 /* TabIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA5480D28EDF916009B1508 /* TabIconView.swift */; };
 		7FA5481028EDFE68009B1508 /* MainTabViewBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA5480F28EDFE68009B1508 /* MainTabViewBodyView.swift */; };
-		7FA5481428EE21F7009B1508 /* PreviousInstanceDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA5481328EE21F7009B1508 /* PreviousInstanceDataView.swift */; };
 		7FA5481628EE35FD009B1508 /* HistoryByWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA5481528EE35FD009B1508 /* HistoryByWorkoutView.swift */; };
 		7FA5481828EE3796009B1508 /* HistoryByExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA5481728EE3796009B1508 /* HistoryByExerciseView.swift */; };
 		7FA5481A28EE37A7009B1508 /* ExerciseHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA5481928EE37A7009B1508 /* ExerciseHistoryViewModel.swift */; };
@@ -181,7 +180,6 @@
 		7FA5480B28EDF8A4009B1508 /* TabMenuIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabMenuIconView.swift; sourceTree = "<group>"; };
 		7FA5480D28EDF916009B1508 /* TabIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabIconView.swift; sourceTree = "<group>"; };
 		7FA5480F28EDFE68009B1508 /* MainTabViewBodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewBodyView.swift; sourceTree = "<group>"; };
-		7FA5481328EE21F7009B1508 /* PreviousInstanceDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousInstanceDataView.swift; sourceTree = "<group>"; };
 		7FA5481528EE35FD009B1508 /* HistoryByWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryByWorkoutView.swift; sourceTree = "<group>"; };
 		7FA5481728EE3796009B1508 /* HistoryByExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryByExerciseView.swift; sourceTree = "<group>"; };
 		7FA5481928EE37A7009B1508 /* ExerciseHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHistoryViewModel.swift; sourceTree = "<group>"; };
@@ -775,7 +773,6 @@
 				7FC0002128AC307400D484C6 /* StopwatchManager.swift */,
 				7FC0002928AD5D7800D484C6 /* ExerciseDisclosureGroupView.swift */,
 				7FA56BFB28EB792900E977AC /* WorkoutRowView.swift */,
-				7FA5481328EE21F7009B1508 /* PreviousInstanceDataView.swift */,
 			);
 			path = Workout;
 			sourceTree = "<group>";
@@ -996,7 +993,6 @@
 				7F7638A929393999006D7D14 /* MockService.swift in Sources */,
 				7FDA1702293EEDCD00FCFC04 /* DataFieldIcons.swift in Sources */,
 				7FA5481C28EE4854009B1508 /* ExerciseHistoryView.swift in Sources */,
-				7FA5481428EE21F7009B1508 /* PreviousInstanceDataView.swift in Sources */,
 				7FC0000F28ABEED900D484C6 /* TabBarViewModel.swift in Sources */,
 				7FA320C128A3FDA20071D835 /* MainTabView.swift in Sources */,
 				7FA5481628EE35FD009B1508 /* HistoryByWorkoutView.swift in Sources */,
