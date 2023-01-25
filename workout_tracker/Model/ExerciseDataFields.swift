@@ -20,14 +20,21 @@ class ExerciseDataFields: Identifiable {
     let instanceService = ExerciseInstanceService()
     
     var weight: Double = 0.0 {
-        didSet { self.parent.update() }
+        // didSet { self.parent.update() }
+        didSet { self.checkForExerciseCompleted() }
     }
     
     var reps: Int = 0 {
-        didSet { self.parent.update() }
+        // didSet { self.parent.update() }
+        didSet { self.checkForExerciseCompleted() }
     }
     
     var time: Double = 0.0 {
+        // didSet { self.parent.update() }
+        didSet { self.checkForExerciseCompleted() }
+    }
+    
+    var exerciseCompleted = false {
         didSet { self.parent.update() }
     }
     
@@ -39,6 +46,22 @@ class ExerciseDataFields: Identifiable {
         instanceService.fetchMostRecentInstance(byExerciseId: self.exercise.id!) { instance in
             self.previousInstance = instance
         }
+    }
+    
+    private func checkForExerciseCompleted() {
+        if self.exercise.includeWeight {
+            guard self.weight > 0.0 else { self.exerciseCompleted = false; return }
+        }
+        
+        if self.exercise.includeReps {
+            guard self.reps > 0 else { self.exerciseCompleted = false; return }
+        }
+        
+        if self.exercise.includeTime {
+            guard self.time > 0.0 else { self.exerciseCompleted = false; return }
+        }
+        
+        self.exerciseCompleted = true
     }
 }
 

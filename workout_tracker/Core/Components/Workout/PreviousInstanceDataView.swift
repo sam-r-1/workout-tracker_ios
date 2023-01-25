@@ -14,7 +14,7 @@ struct PreviousInstanceDataView: View {
     
     var body: some View {
         VStack(spacing: 10) {
-            Text(CustomDateFormatter.dateFormatter.string(from: previousInstance.timestamp.dateValue()))
+            Text(CustomDateFormatter.mediumDateFormatter.string(from: previousInstance.timestamp.dateValue()))
             
             if exercise.includeWeight {
                 Text(WeightFormatter.weight.string(from: previousInstance.weight as NSNumber) ?? "0.0")

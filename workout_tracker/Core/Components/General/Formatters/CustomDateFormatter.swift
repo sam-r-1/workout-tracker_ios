@@ -8,9 +8,16 @@
 import Foundation
 
 class CustomDateFormatter {
-    static var dateFormatter: DateFormatter = {
+    static var mediumDateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        return dateFormatter
+    }()
+    
+    static var shortDateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .none
         return dateFormatter
     }()

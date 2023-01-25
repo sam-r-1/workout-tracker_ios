@@ -25,7 +25,7 @@ struct WorkoutDetailsView: View {
             Color(colorScheme == .light ? .systemGray6 : .black).edgesIgnoringSafeArea(.all)
             
             VStack {
-                Text(CustomDateFormatter.dateFormatter.string(from: workout.timestamp.dateValue()))
+                Text(CustomDateFormatter.mediumDateFormatter.string(from: workout.timestamp.dateValue()))
                     .font(.largeTitle)
                     .bold()
                 

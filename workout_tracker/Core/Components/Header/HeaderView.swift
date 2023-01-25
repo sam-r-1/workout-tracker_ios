@@ -42,6 +42,6 @@ struct HeaderView: View {
 
 struct HeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        HeaderView("My Workouts", subtitle: CustomDateFormatter.dateFormatter.string(from: Date.now))
+        HeaderView("My Workouts", subtitle: CustomDateFormatter.mediumDateFormatter.string(from: Date.now))
     }
 }
