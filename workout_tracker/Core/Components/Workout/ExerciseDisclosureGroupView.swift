@@ -17,6 +17,7 @@ struct ExerciseDisclosureGroupView: View {
     @Binding var isExpanded: Bool
     let onDelete: () -> Void
     @ScaledMetric(relativeTo: .title3) var iconSize: CGFloat = 20.0
+    let accessibilityThreshold = ContentSizeCategory.accessibilityLarge
 
     var body: some View {
         DisclosureGroup(isExpanded: $isExpanded) {
@@ -25,7 +26,7 @@ struct ExerciseDisclosureGroupView: View {
             VStack(spacing: 20) {
                 HStack(alignment: .top) {
                     //Today stack
-                    VStack(alignment: .leading, spacing: sizeCategory > .extraExtraExtraLarge ? 35 : 6) {
+                    VStack(alignment: .leading, spacing: sizeCategory > accessibilityThreshold ? 35 : 6) {
                         Group {
                             Text("Today")
                                 .bold()
@@ -38,7 +39,7 @@ struct ExerciseDisclosureGroupView: View {
                                     .foregroundColor(Color(.systemGray))
                             }
                         }
-                        .embedInStack(spacing: 0)
+                        .embedInStack(verticalIfLargerThan: accessibilityThreshold, spacing: 0)
                         
                         if item.exercise.includeWeight {
                             weightFieldView
@@ -94,7 +95,6 @@ struct ExerciseDisclosureGroupView: View {
                 Text(item.exercise.name)
                     .bold()
                     .foregroundColor(.primary)
-                    .strikethrough(item.exerciseCompleted)
                 
                 if item.exerciseCompleted {
                     Image(systemName: "checkmark")
@@ -143,7 +143,7 @@ extension ExerciseDisclosureGroupView {
                     .foregroundColor(Color(.systemGray))
                 
                 TextField("0.0", value: $item.weight, formatter: WeightFormatter.currentExerciseWeight)
-                    .frame(maxWidth: sizeCategory.isAccessibilityCategory ? 120 : 70)
+                    .frame(maxWidth: sizeCategory.isAccessibilityCategory ? 125 : 70)
                     .textFieldStyle(.roundedBorder)
                 
                 Text("lbs")
@@ -154,7 +154,7 @@ extension ExerciseDisclosureGroupView {
                     .foregroundColor(Color(.systemGray))
             }
         }
-        .embedInStack(spacing: 0)
+        .embedInStack(verticalIfLargerThan: accessibilityThreshold, spacing: 0)
         .font(.title3)
     }
     

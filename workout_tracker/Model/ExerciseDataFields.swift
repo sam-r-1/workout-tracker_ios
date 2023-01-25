@@ -58,7 +58,7 @@ class ExerciseDataFields: Identifiable {
         }
         
         if self.exercise.includeTime {
-            guard self.time > 0.0 else { self.exerciseCompleted = false; return }
+            guard self.time > 0.5 else { self.exerciseCompleted = false; return }
         }
         
         self.exerciseCompleted = true
