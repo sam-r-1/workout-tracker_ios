@@ -33,6 +33,7 @@ struct PopUpMenuView: View {
 }
 
 struct MenuItem: View {
+    @Environment(\.sizeCategory) var sizeCategory
     let router: ViewRouter
     let viewModel: PopUpMenuViewModel
     let option: PopUpMenuOption
@@ -58,7 +59,8 @@ struct MenuItem: View {
         label: {
             
             Text(option.title)
-                .padding(12)
+                .padding(.vertical, 12)
+                .padding(.horizontal, sizeCategory.isAccessibilityCategory ? 40 : 12)
                 .foregroundColor(.white)
                 .background(Color(.systemBlue))
                 .font(.callout)

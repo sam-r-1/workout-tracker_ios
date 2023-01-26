@@ -10,9 +10,11 @@ import SwiftUI
 struct WorkoutDetailsView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) var sizeCategory
     @State private var showDeleteDialog = false
     let workout: Workout
     let onDelete: () -> Void
+    let accessibilityThreshold = ContentSizeCategory.accessibilityLarge
     
     init(_ workout: Workout, onDelete: @escaping () -> Void = {} ) {
         self.workout = workout
@@ -25,9 +27,14 @@ struct WorkoutDetailsView: View {
             Color(colorScheme == .light ? .systemGray6 : .black).edgesIgnoringSafeArea(.all)
             
             VStack {
-                Text(CustomDateFormatter.mediumDateFormatter.string(from: workout.timestamp.dateValue()))
-                    .font(.largeTitle)
-                    .bold()
+                Group {
+                    sizeCategory > accessibilityThreshold
+                        ? Text(CustomDateFormatter.shortDateFormatter.string(from: workout.timestamp.dateValue()))
+                            .bold()
+                        : Text(CustomDateFormatter.mediumDateFormatter.string(from: workout.timestamp.dateValue()))
+                            .bold()
+                }
+                .font(.largeTitle)
                 
                 Spacer(minLength: 12)
                 
@@ -40,7 +47,7 @@ struct WorkoutDetailsView: View {
                     Button {
                         self.showDeleteDialog = true
                     } label: {
-                        Text("Delete")
+                        Image(systemName: "trash.circle")
                     }
                     .foregroundColor(Color(.systemRed))
                     .alert("Delete data for this workout?", isPresented: $showDeleteDialog) {

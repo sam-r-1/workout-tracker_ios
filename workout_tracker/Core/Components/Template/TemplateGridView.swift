@@ -49,6 +49,7 @@ extension TemplateGridView {
             VStack(alignment: .leading) {
                 ForEach(1...min(template.exerciseNameList.count, 4), id: \.self) {
                     Text(template.exerciseNameList[$0 - 1])
+                        .lineLimit(1)
                         .font(.body)
                         .padding(.leading, 8)
                 }
@@ -56,12 +57,14 @@ extension TemplateGridView {
                 if template.exerciseNameList.count == 5 {
                     
                     Text(template.exerciseNameList[4])
+                        .lineLimit(1)
                         .font(.body)
                         .padding(.leading, 8)
                     
                 } else if template.exerciseNameList.count > 5 {
                     
                     Text("+ \(template.exerciseNameList.count - 4) more")
+                        .lineLimit(1)
                         .font(.subheadline)
                         .padding(.leading, 16)
                 }

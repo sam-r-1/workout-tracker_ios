@@ -18,8 +18,10 @@ struct WorkoutRowView: View {
             Group {
                 if workout.exerciseInstanceIdList.count == 1 {
                     Text("1 Exercise")
+                        .lineLimit(1)
                 } else {
                     Text("\(workout.exerciseInstanceIdList.count) Exercises")
+                        .lineLimit(1)
                 }
             }
             .font(.system(.headline))

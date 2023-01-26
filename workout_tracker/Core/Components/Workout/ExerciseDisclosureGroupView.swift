@@ -85,7 +85,7 @@ struct ExerciseDisclosureGroupView: View {
                     Button(role: .destructive) {
                         onDelete()
                     } label: {
-                        Image(systemName: "multiply")
+                        Image(systemName: "trash.circle")
                     }
                 }
                 .font(.title3)
