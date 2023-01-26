@@ -12,7 +12,8 @@
 ![exercise history](https://github.com/sam-r-1/workout-tracker_ios/blob/main/app-screen-captures/exercise-results.png)
 
 ### Future Improvements
-* UI improvements/overhaul
+* Bug fixes and accessibility improvements
+* Improve UI on iPad
 * Improve functionality around doing multiple sets of the same exercise (currently possible, but has some undesired effects)
 * ~~Implement workout templates to allow users to easily record exercises in the same order repeatedly~~ added 16 Nov 2022
 * ~~Add data visualization (charts/graphs)~~ added 5 Dec 2022
