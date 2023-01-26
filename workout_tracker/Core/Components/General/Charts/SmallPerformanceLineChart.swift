@@ -22,7 +22,6 @@ struct SmallPerformanceLineChart: UIViewRepresentable {
         self.title = title
         self.entries = entries
         self.primaryColor = primaryColor
-        print("DEBUG: " + primaryColor.cgColor.colorSpace.debugDescription)
     }
     
     func makeUIView(context: Context) -> LineChartView {
