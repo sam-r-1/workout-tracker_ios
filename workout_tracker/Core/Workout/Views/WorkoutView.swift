@@ -56,6 +56,7 @@ struct WorkoutView: View {
                 } label: {
                     Image(systemName: "checkmark.circle")
                 }
+                .disabled(viewModel.isUploadingWorkout)
                 .foregroundColor(Color(.systemGreen))
 
             }
