@@ -12,12 +12,7 @@ import Charts
 struct ExerciseHistoryView: View {
     @Environment(\.colorScheme) var colorScheme
     let exercise: Exercise
-    @State private var showChartFullscreen = UIDevice.current.orientation.isLandscape
     @StateObject var viewModel = ExerciseResultsViewModel()
-    
-    let orientationChanged = NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)
-        .makeConnectable()
-        .autoconnect()
     
     var body: some View {
         GeometryReader { geometry in
@@ -28,19 +23,17 @@ struct ExerciseHistoryView: View {
                     if viewModel.exerciseInstances.isEmpty {
                         Text("No data for \(exercise.name)")
                     } else {
-                        VStack(spacing: 8) {
+                        VStack(spacing: 4) {
                             performanceChart
                             
-                            if !showChartFullscreen {
-                                List {
-                                    ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
-                                        ExerciseResultRowView(exercise: self.exercise, instance: instance)
-                                            .listRowInsets(EdgeInsets())
-                                    }
-                                    .onDelete(perform: viewModel.deleteInstance)
+                            List {
+                                ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
+                                    ExerciseResultRowView(exercise: self.exercise, instance: instance)
+                                        .listRowInsets(EdgeInsets())
                                 }
-                                .frame(height: geometry.size.height * 0.65)
+                                .onDelete(perform: viewModel.deleteInstance)
                             }
+                            .frame(height: geometry.size.height * 0.65)
                         }
                     }
                 }
@@ -50,11 +43,6 @@ struct ExerciseHistoryView: View {
             }
             .navigationTitle(exercise.name)
             .navigationBarTitleDisplayMode(.inline)
-            .onReceive(orientationChanged) { _ in
-                withAnimation {
-                    showChartFullscreen = UIDevice.current.orientation.isLandscape
-                }
-            }
         }
     }
 }
@@ -63,15 +51,15 @@ extension ExerciseHistoryView {
     var performanceChart: some View {
         TabView {
             if self.exercise.includeWeight {
-                PerformanceChartTileView(title: "Weight", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.weight) })
+                PerformanceChartTileView(title: "Weight", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.weight) }, chartFillColor: .purple)
             }
             
             if self.exercise.includeReps {
-                PerformanceChartTileView(title: "Reps", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: Double($0.reps)) })
+                PerformanceChartTileView(title: "Reps", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: Double($0.reps)) }, chartFillColor: UIColor(red: 46/255, green: 204/255, blue: 113/255, alpha: 1))
             }
             
             if self.exercise.includeTime {
-                PerformanceChartTileView(title: "Time", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.time) })
+                PerformanceChartTileView(title: "Time", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.time) }, chartFillColor: .blue)
             }
             
         }

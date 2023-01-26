@@ -8,44 +8,6 @@
 import Foundation
 import Firebase
 
-class ExerciseDataFields: Identifiable, Equatable {
-    static func == (lhs: ExerciseDataFields, rhs: ExerciseDataFields) -> Bool {
-        return lhs.id == rhs.id
-    }
-    
-    init(parent: WorkoutViewModel, exercise: Exercise) {
-        self.parent = parent
-        self.exercise = exercise
-    }
-    
-    let id = UUID()
-    private let parent: WorkoutViewModel
-    let exercise: Exercise
-    let instanceService = ExerciseInstanceService()
-    
-    var weight: Double = 0.0 {
-        didSet { self.parent.update() }
-    }
-    
-    var reps: Int = 0 {
-        didSet { self.parent.update() }
-    }
-    
-    var time: Double = 0.0 {
-        didSet { self.parent.update() }
-    }
-    
-    var previousInstance: ExerciseInstance? = nil {
-        didSet { self.parent.update() }
-    }
-    
-    func fetchPreviousInstance() {
-        instanceService.fetchMostRecentInstance(byExerciseId: self.exercise.id!) { instance in
-            self.previousInstance = instance
-        }
-    }
-}
-
 @MainActor
 class WorkoutViewModel: ObservableObject {
 

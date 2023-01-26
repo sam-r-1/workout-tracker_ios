@@ -12,16 +12,26 @@ struct PerformanceChartTileView: View {
     @Environment(\.colorScheme) var colorScheme
     let title: String
     let entries: [ChartDataEntry]
+    let chartFillColor: UIColor
+    @ScaledMetric(relativeTo: .title2) var titleFontSize = 20.0
+    let maxTitleFontSize: CGFloat = 38.0
+    
+    init(title: String, entries: [ChartDataEntry], chartFillColor: UIColor = .purple) {
+        self.title = title
+        self.entries = entries
+        self.chartFillColor = chartFillColor
+        print("DEBUG: " + chartFillColor.debugDescription)
+    }
     
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
-            SmallPerformanceLineChart(title: title, entries: entries)
+            SmallPerformanceLineChart(title: title, entries: entries, withColor: chartFillColor)
             
             VStack {
                 HStack {
                     Text(title)
                         .bold()
-                        .font(.title2)
+                        .font(.system(size: min(maxTitleFontSize, titleFontSize)))
                     
                     Spacer()
                 }

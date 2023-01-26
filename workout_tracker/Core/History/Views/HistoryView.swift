@@ -21,31 +21,28 @@ struct HistoryView: View {
         ZStack {
             Color(colorScheme == .light ? .systemGray6 : .black).edgesIgnoringSafeArea(.all)
             
-            VStack {
+            VStack(spacing: 8) {
+                Picker("History Mode", selection: $historyMode) {
+                    Text("by Workout").tag(HistoryMode.workout)
+                    Text("by Exercise").tag(HistoryMode.exercise)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .frame(maxWidth: min(UIScreen.main.bounds.width * 0.8, 400))
                 
-                HeaderView("My History")
-                
-                VStack(spacing: 8) {
-                    Picker("History Mode", selection: $historyMode) {
-                        Text("by Workout").tag(HistoryMode.workout)
-                        Text("by Exercise").tag(HistoryMode.exercise)
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .frame(maxWidth: min(UIScreen.main.bounds.width * 0.8, 400))
-                    
-                    switch historyMode {
-                        case .workout: HistoryByWorkoutView()
-                        case .exercise: HistoryByExerciseView()
-                    }
+                switch historyMode {
+                    case .workout: HistoryByWorkoutView()
+                    case .exercise: HistoryByExerciseView()
                 }
             }
-            .navigationBarHidden(true)
+            .navigationTitle("My History")
         }
     }
 }
 
 struct HistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryView()
+        NavigationView {
+            HistoryView()
+        }
     }
 }

@@ -10,11 +10,18 @@ import SwiftfulLoadingIndicators
 
 struct LoadingView: View {
     var body: some View {
-        VStack {
+        HStack {
             Spacer()
-            LoadingIndicator(animation: .circleBars, speed: .fast)
+            
+            VStack {
+                Spacer()
+                LoadingIndicator(animation: .circleBars, speed: .fast)
+                Spacer()
+            }
+           
             Spacer()
         }
+        .background(Color.clear)
     }
 }
 

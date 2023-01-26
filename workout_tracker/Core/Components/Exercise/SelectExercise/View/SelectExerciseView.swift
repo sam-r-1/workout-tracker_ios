@@ -11,6 +11,7 @@ struct SelectExerciseView: View {
     @StateObject var viewModel = SelectExerciseViewModel()
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) var sizeCategory
     let onAdd: (String) -> Void
     
     var body: some View {
@@ -40,9 +41,15 @@ struct SelectExerciseView: View {
                         ExerciseRowView(
                             exercise,
                             trailingIcon: AnyView(
-                                Button("Add") {
+                                Button {
                                     onAdd(exercise.id!)
                                     presentationMode.wrappedValue.dismiss()
+                                } label: {
+                                    if self.sizeCategory.isAccessibilityCategory {
+                                        Image(systemName: "plus")
+                                    } else {
+                                        Text("Add")
+                                    }
                                 }
                                     .foregroundColor(Color(.systemBlue))
                             )

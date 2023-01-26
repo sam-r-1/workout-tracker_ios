@@ -24,11 +24,11 @@ enum MockService {
     
     static var sampleTemplates: [Template] {
         [
-            Template(uid: "", name: "Preview", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
-            Template(uid: "", name: "Preview", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
-            Template(uid: "", name: "Preview", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
-            Template(uid: "", name: "Preview", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
-            Template(uid: "", name: "Preview", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
+            Template(uid: "", name: "Preview 1", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
+            Template(uid: "", name: "Preview 2", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
+            Template(uid: "", name: "Preview 3", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
+            Template(uid: "", name: "Preview 4", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
+            Template(uid: "", name: "Preview 5", exerciseIdList: ["", "", "", "", "", ""], exerciseNameList: ["Push-ups", "Pull-ups", "Chest Press", "Leg Press", "Squats", "Plank"]),
         ]
     }
     

@@ -11,12 +11,18 @@ import Firebase
 
 struct SmallPerformanceLineChart: UIViewRepresentable {
     @Environment(\.colorScheme) var colorScheme
-    let primaryColor: UIColor = .purple
+    let primaryColor: UIColor
     let axisLabelColor: UIColor = .black
     
     let title: String
     let entries: [ChartDataEntry]
     let lineChart = LineChartView()
+    
+    init(title: String, entries: [ChartDataEntry], withColor primaryColor: UIColor = .purple) {
+        self.title = title
+        self.entries = entries
+        self.primaryColor = primaryColor
+    }
     
     func makeUIView(context: Context) -> LineChartView {
         lineChart.delegate = context.coordinator

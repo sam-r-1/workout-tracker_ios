@@ -9,20 +9,24 @@ import SwiftUI
 import SwiftfulLoadingIndicators
 
 struct InstanceHistoryRowView: View {
+    @Environment(\.sizeCategory) var sizeCategory
     let exercise: Exercise?
     let instance: ExerciseInstance
     let onDelete: (String) -> Void
     let iconSize = 20.0
+    let accessibilityThreshold = ContentSizeCategory.accessibilityLarge
     
     var body: some View {
         Group {
             if exercise != nil {
-                HStack {
+                Group {
                     Text(exercise!.name)
                         .bold()
                         .font(.title2)
                     
-                    Spacer()
+                    if sizeCategory <= accessibilityThreshold {
+                        Spacer()
+                    }
                     
                     VStack(alignment: .leading, spacing: 5) {
                         if exercise!.includeWeight {
@@ -61,6 +65,7 @@ struct InstanceHistoryRowView: View {
                     .padding(.leading, 10)
 
                 }
+                .embedInStack(verticalIfLargerThan: accessibilityThreshold)
                 .padding(8)
                 
             } else {

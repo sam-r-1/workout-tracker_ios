@@ -9,41 +9,41 @@ import SwiftUI
 
 struct ExercisesView: View {
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.sizeCategory) var sizeCategory
     @State private var showModifyExerciseView = false
     @StateObject var viewModel = ExercisesViewModel()
     
     var body: some View {
-        ZStack {
-            Color(colorScheme == .light ? .systemGray6 : .black).edgesIgnoringSafeArea(.all)
-            
-            VStack {
-
-                AddNewHeaderView(title: "My Exercises",
-                                 showView: $showModifyExerciseView,
-                                 view: AnyView(ModifyExerciseView(parentViewModel: viewModel)))
-                
-                switch viewModel.loadingState {
-                    case .data: dataView
-                        
-                    case .loading: LoadingView()
-                        
-                    case .error: Text("--") // placeholder for error message; should never be used currently
+        Group {
+            switch viewModel.loadingState {
+                case .data: dataView
+                    
+                case .loading: LoadingView()
+                    
+                case .error: Text("--") // placeholder for error message; should never be used currently
+            }
+        }
+        .background(Color(.systemGroupedBackground))
+        .navigationTitle("My Exercises")
+        .navigationBarTitleDisplayMode(sizeCategory > .accessibilityExtraLarge ? .inline : .automatic)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink {
+                    ModifyExerciseView(parentViewModel: viewModel)
+                } label: {
+                    Image(systemName: "plus.circle")
                 }
             }
-            .navigationBarHidden(true)
         }
     }
 }
 
 extension ExercisesView {
     var dataView: some View {
-        VStack(spacing: 8) {
+        Group {
             if viewModel.exercises.isEmpty {
                 noDataView
             } else {
-                SearchBar(text: $viewModel.searchText)
-                    .padding(.horizontal, 20)
-                
                 List {
                     ForEach(viewModel.searchableExercises) {exercise in
                         NavigationLink {
@@ -53,6 +53,7 @@ extension ExercisesView {
                         }
                     }
                 }
+                .searchable(text: $viewModel.searchText)
             }
         }
     }
@@ -72,6 +73,13 @@ extension ExercisesView {
 
 struct ExercisesView_Previews: PreviewProvider {
     static var previews: some View {
-        ExercisesView(viewModel: ExercisesViewModel(forPreview: true))
+        NavigationView {
+            ExercisesView(viewModel: ExercisesViewModel(forPreview: true))
+        }
+        
+        NavigationView {
+            ExercisesView(viewModel: ExercisesViewModel(forPreview: true))
+        }
+        .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
     }
 }
