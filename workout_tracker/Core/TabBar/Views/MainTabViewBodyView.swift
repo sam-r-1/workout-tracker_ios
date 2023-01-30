@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainTabViewBodyView: View {
-    @ObservedObject var router: ViewRouter
+    @EnvironmentObject var router: ViewRouter
     let tabBarHeight: CGFloat
     
     var body: some View {
@@ -18,15 +18,15 @@ struct MainTabViewBodyView: View {
             
             HStack(alignment: .center) {
                 Spacer()
-                TabIconView(viewModel: .exercises, router: router)
-                TabIconView(viewModel: .templates, router: router)
+                TabIconView(option: .exercises)
+                TabIconView(option: .templates)
                 
                 // add an object with the same size as the start workout button to space the other tab bar buttons around it
                 Rectangle()
                     .foregroundColor(.clear)
                 
-                TabIconView(viewModel: .history, router: router)
-                TabIconView(viewModel: .settings, router: router)
+                TabIconView(option: .history)
+                TabIconView(option: .settings)
                 
                 Spacer()
 
@@ -40,6 +40,7 @@ struct MainTabViewBodyView: View {
 
 struct MainTabViewBodyView_Previews: PreviewProvider {
     static var previews: some View {
-        MainTabViewBodyView(router: ViewRouter(), tabBarHeight: 50)
+        MainTabViewBodyView(tabBarHeight: 50)
+            .environmentObject(ViewRouter())
     }
 }
