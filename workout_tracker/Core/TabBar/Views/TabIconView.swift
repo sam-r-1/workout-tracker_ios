@@ -8,36 +8,33 @@
 import SwiftUI
 
 struct TabIconView: View {
-    let viewModel: TabBarViewModel
-    @ObservedObject var router: ViewRouter
+    
+    let option: TabBarOption
+    @EnvironmentObject var router: ViewRouter
     
     let selectedScaleFactor: CGFloat = 1.1
     
-    var body: some View {
-        let isSelected = router.currentItem == viewModel
-        
+    var body: some View {        
         Button {
-            if router.currentItem != viewModel {
-                router.currentItem = viewModel
-            }
+            router.toggleSelected(for: option)
         } label: {
             VStack {
-                viewModel.image
+                option.image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 20, height: 20)
                     .frame(maxWidth: .infinity)
                     // fix for dark mode with custom icons for Exercises and Templates
-                    .invertOnDarkTheme(viewModel == .exercises || viewModel == .templates)
+                    .invertOnDarkTheme(option == .exercises || option == .templates)
                 
-                Text(viewModel.title)
+                Text(option.title)
                     .font(.system(size: router.tabBarTextSize()))
-                    .fontWeight(isSelected ? .bold : .regular)
+                    .fontWeight(router.isSelected(option) ? .bold : .regular)
             }
         }
         .foregroundColor(.primary)
-        .scaleEffect(x: isSelected ? selectedScaleFactor : 1.0,
-                     y: isSelected ? selectedScaleFactor : 1.0,
+        .scaleEffect(x: router.isSelected(option) ? selectedScaleFactor : 1.0,
+                     y: router.isSelected(option) ? selectedScaleFactor : 1.0,
                      anchor: .center)
     }
 }

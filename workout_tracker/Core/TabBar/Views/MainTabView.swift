@@ -40,7 +40,8 @@ struct MainTabView: View {
                 .hidden()
 
                 
-                MainTabViewBodyView(router: router, tabBarHeight: tabBarHeight)
+                MainTabViewBodyView(tabBarHeight: tabBarHeight)
+                    .environmentObject(router)
                 
                 if showMenu {
                     // dim the rest of the screen
