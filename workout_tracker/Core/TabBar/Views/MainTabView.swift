@@ -42,6 +42,7 @@ struct MainTabView: View {
                 
                 MainTabViewBodyView(tabBarHeight: tabBarHeight)
                     .environmentObject(router)
+                    .environment(\.legibilityWeight, .regular)
                 
                 if showMenu {
                     // dim the rest of the screen
