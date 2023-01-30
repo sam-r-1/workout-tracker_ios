@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct TimerView: View {
-    @ObservedObject var stopwatchManager = StopwatchManager()
+    @StateObject var stopwatchManager = StopwatchManager()
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     
     let item: ExerciseDataFields
     let setCount: String?
@@ -21,13 +22,13 @@ struct TimerView: View {
     
     var body: some View {
         ZStack {
-            Color(.systemGray5)
-                .ignoresSafeArea()
+            Color(.systemGray5).ignoresSafeArea()
             
-            VStack(spacing: 50) {
+            VStack {
                 HStack {
                     Text(self.item.exercise.name)
                         .bold()
+                        .lineLimit(2)
                         .font(.title)
                     
                     Text(setCount ?? "")
@@ -37,12 +38,17 @@ struct TimerView: View {
                 
                 Spacer()
                 
-                Text(TimeFormatter.timerFormatter.string(from: stopwatchManager.elapsedTime)!)
-                    .bold()
-                    .font(.system(size: 80))
-                    .scaledToFit()
-                
-                timerButton
+                if verticalSizeClass == .compact {
+                    HStack(spacing: 30) {
+                        timerButton
+                        timeDisplayText
+                    }
+                } else {
+                    VStack {
+                        timeDisplayText
+                        timerButton
+                    }
+                }
 
                 Spacer()
                 
@@ -53,15 +59,14 @@ struct TimerView: View {
     }
 }
 
-struct TimerView_Previews: PreviewProvider {
-    static let previewExercise = Exercise(uid: "", name: "Chest Press", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true)
-    
-    static var previews: some View {
-        TimerView(ExerciseDataFields(parent: WorkoutViewModel(), exercise: previewExercise))
-    }
-}
-
 extension TimerView {
+    
+    var timeDisplayText: some View {
+        Text(TimeFormatter.timerFormatter.string(from: stopwatchManager.elapsedTime)!)
+            .bold()
+            .font(.system(size: 80))
+            .scaledToFit()
+    }
     
     // Button to start/stop the timer
     var timerButton: some View {
@@ -119,8 +124,9 @@ extension TimerView {
                     Button {
                         presentationMode.wrappedValue.dismiss()
                     } label: {
-                        Text("X")
-                            .bold()
+                        Image(systemName: "multiply.circle")
+                            .resizable()
+                            .frame(width: 25, height: 25)
                             .padding()
                             .foregroundColor(.white)
                             .frame(width: 155, height: 60)
@@ -131,7 +137,9 @@ extension TimerView {
                         self.item.time = stopwatchManager.elapsedTime
                         presentationMode.wrappedValue.dismiss()
                     } label: {
-                        Image(systemName: "checkmark")
+                        Image(systemName: "checkmark.circle")
+                            .resizable()
+                            .frame(width: 25, height: 25)
                             .padding()
                             .foregroundColor(.white)
                             .frame(width: 155, height: 60)
@@ -144,5 +152,13 @@ extension TimerView {
                 HStack{}.frame(height: 60)
             }
         }
+    }
+}
+
+struct TimerView_Previews: PreviewProvider {
+    static let previewExercise = Exercise(uid: "", name: "Chest Press", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true)
+    
+    static var previews: some View {
+        TimerView(ExerciseDataFields(parent: WorkoutViewModel(), exercise: previewExercise))
     }
 }
