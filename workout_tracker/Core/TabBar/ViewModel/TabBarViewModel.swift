@@ -15,7 +15,7 @@ class ViewRouter: ObservableObject {
     
     // Prevent the text on the tab bar from scaling too high due to Dynamic Type
     public func tabBarTextSize() -> CGFloat {
-        return fmin(UIFont.preferredFont(forTextStyle: .caption1).pointSize, 12.0)
+        return fmin(UIFont.preferredFont(forTextStyle: .caption1).pointSize, 11.0)
     }
     
     public func isSelected(_ option: TabBarOption) -> Bool {
