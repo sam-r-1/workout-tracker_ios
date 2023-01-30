@@ -8,7 +8,9 @@
 import SwiftUI
 
 class ViewRouter: ObservableObject {
-    @Published var currentItem: TabBarOption = .exercises
+    @Published var currentItem: TabBarOption = .exercises {
+        didSet { self.objectWillChange.send() }
+    }
     @Published var startWorkoutOption: PopUpMenuOption = .fromScratch
     
     var view: some View { return currentItem.view }
