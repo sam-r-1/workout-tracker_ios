@@ -80,14 +80,7 @@ struct ExerciseInstanceService {
             .getDocuments { snapshot, _ in
                 guard let documents = snapshot?.documents else { return }
                 
-                var instances = documents.compactMap({ try? $0.data(as: ExerciseInstance.self) })
-                
-                // add the id's
-                if instances.count >= 1 {
-                    for i in 0...(instances.count - 1) {
-                        instances[i].id = documents[i].documentID
-                    }
-                }
+                let instances = documents.compactMap({ try? $0.data(as: ExerciseInstance.self) })
                 
                 completion(instances.sorted(by: { $0.timestamp.dateValue() > $1.timestamp.dateValue() }))
             }

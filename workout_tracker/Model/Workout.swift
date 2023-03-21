@@ -14,18 +14,6 @@ struct Workout: Identifiable, Decodable {
     let timestamp: Timestamp
     var exerciseInstanceIdList: [String]
     
-    enum CodingKeys: String, CodingKey {
-        case uid, timestamp, exerciseInstanceIdList
-    }
-    
-    // initialize from Firebase
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        uid = try container.decode(String.self, forKey: .uid)
-        timestamp = try container.decode(Timestamp.self, forKey: .timestamp)
-        exerciseInstanceIdList = try container.decode([String].self, forKey: .exerciseInstanceIdList)
-    }
-    
     // initialize from code
     init(uid: String, timestamp: Timestamp, exerciseInstanceIdList: [String]) {
         self.uid = uid
