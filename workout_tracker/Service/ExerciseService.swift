@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 
 struct ExerciseService {
+    private let db = Firestore.firestore()
     
     // create/edit an exercise and post it
     func setExercise(id: String? = nil, name: String, type: String, details: String, includeWeight: Bool, includeReps: Bool, includeTime: Bool, completion: @escaping(Bool) -> Void) {
@@ -22,7 +23,7 @@ struct ExerciseService {
                     "includeReps": includeReps,
                     "includeTime": includeTime] as [String: Any]
         
-        let collectionRef = Firestore.firestore().collection("exercises")
+        let collectionRef = db.collection("exercises")
         
         // if an id is provided, set the ref to that location, otherwise give a blank one
         let ref: DocumentReference
@@ -45,7 +46,7 @@ struct ExerciseService {
     
     // fetch a specific exercise from the backend by its ID
     func fetchExerciseById(id: String, completion: @escaping(Exercise) -> Void) {       
-        Firestore.firestore().collection("exercises").document(id)
+        db.collection("exercises").document(id)
             .getDocument { snapshot, _ in
                 guard let snapshot = snapshot else { return }
                 
@@ -58,7 +59,7 @@ struct ExerciseService {
     func fetchExercises(byIdList idList: [String]) async throws -> [Exercise] {
         var exercises = Array(repeating: Exercise(uid: "", name: "", type: "", details: "", includeWeight: false, includeReps: false, includeTime: false), count: idList.count)
         
-        let collectionRef = Firestore.firestore().collection("exercises")
+        let collectionRef = db.collection("exercises")
         
         for i in 0..<idList.count {
             let exercise = try await collectionRef.document(idList[i])
@@ -71,23 +72,24 @@ struct ExerciseService {
     }
     
     // fetch all of the user's exercises from the backend
-    func fetchExercises(completion: @escaping([Exercise]) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+    func fetchExercises() async throws -> [Exercise] {
+        guard let uid = Auth.auth().currentUser?.uid else { throw ExerciseServiceError.authenticationError }
         
-        Firestore.firestore().collection("exercises")
-            .whereField("uid", isEqualTo: uid)
-            .getDocuments { snapshot, _ in
-                guard let documents = snapshot?.documents else { return }
-                
-                let exercises = documents.compactMap({ try? $0.data(as: Exercise.self) })
-                
-                completion(exercises.sorted(by: { $0.name < $1.name }))
-            }
+        do {
+            let snapshot = try await db.collection("exercises")
+                .whereField("uid", isEqualTo: uid)
+                .getDocuments()
+            
+            return snapshot.documents.compactMap({ try? $0.data(as: Exercise.self) })
+            
+        } catch {
+            throw ExerciseServiceError.dataFetchingError
+        }
     }
     
     // Delete an exercise from the backend
     func deleteExercise(id: String, completion: @escaping (Bool) -> Void) {
-        Firestore.firestore().collection("exercises").document(id)
+        db.collection("exercises").document(id)
             .delete { error in
                 guard error == nil else {
                     print("DEBUG: \(error!.localizedDescription)")
@@ -96,5 +98,12 @@ struct ExerciseService {
                 
                 completion(true)
             }
+    }
+}
+
+extension ExerciseService {
+    enum ExerciseServiceError: Error {
+        case authenticationError
+        case dataFetchingError
     }
 }

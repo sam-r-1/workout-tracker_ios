@@ -12,10 +12,10 @@ struct ModifyExerciseView: View {
     @State private var showDeleteDialog = false
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var viewModel: ModifyExerciseViewModel
-    @ObservedObject var parentViewModel: ExercisesViewModel
+    @ObservedObject var parentViewModel: ExercisesView.ViewModel
     
     // init for creating a new exercise
-    init(parentViewModel: ExercisesViewModel, exercise: Exercise? = nil) {
+    init(parentViewModel: ExercisesView.ViewModel, exercise: Exercise? = nil) {
         self.parentViewModel = parentViewModel
         
         if exercise == nil {
@@ -111,11 +111,11 @@ struct ModifyExerciseView: View {
 struct ModifyExerciseView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ModifyExerciseView(parentViewModel: ExercisesViewModel())
+            ModifyExerciseView(parentViewModel: ExercisesView.ViewModel())
         }
         
         NavigationView {
-            ModifyExerciseView(parentViewModel: ExercisesViewModel())
+            ModifyExerciseView(parentViewModel: ExercisesView.ViewModel())
         }
         .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
     }
