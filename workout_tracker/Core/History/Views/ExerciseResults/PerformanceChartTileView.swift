@@ -20,7 +20,6 @@ struct PerformanceChartTileView: View {
         self.title = title
         self.entries = entries
         self.chartFillColor = chartFillColor
-        print("DEBUG: " + chartFillColor.debugDescription)
     }
     
     var body: some View {
