@@ -17,21 +17,6 @@ struct ExerciseInstance: Identifiable, Decodable {
     var time: Double // time in seconds
     var weight: Double
     
-    enum CodingKeys: String, CodingKey {
-        case uid, exerciseId, timestamp, reps, time, weight
-    }
-    
-    // Initialize from Firebase
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        uid = try container.decode(String.self, forKey: .uid)
-        exerciseId = try container.decode(String.self, forKey: .exerciseId)
-        timestamp = try container.decode(Timestamp.self, forKey: .timestamp)
-        reps = try container.decode(Int.self, forKey: .reps)
-        time = try container.decode(Double.self, forKey: .time)
-        weight = try container.decode(Double.self, forKey: .weight)
-    }
-    
     // initialize from code
     init(uid: String, exerciseId: String, timestamp: Timestamp, reps: Int, time: Double, weight: Double) {
         self.uid = uid

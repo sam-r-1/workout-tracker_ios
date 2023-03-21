@@ -50,14 +50,7 @@ struct TemplateService {
             .getDocuments { snapshot, _ in
                 guard let documents = snapshot?.documents else { return }
                 
-                var templates = documents.compactMap({ try? $0.data(as: Template.self) })
-
-                // add the id's
-                if templates.count >= 1 {
-                    for i in 0..<templates.count {
-                        templates[i].id = documents[i].documentID
-                    }
-                }
+                let templates = documents.compactMap({ try? $0.data(as: Template.self) })
                 
                 completion(templates.sorted(by: { $0.name < $1.name }))
             }
