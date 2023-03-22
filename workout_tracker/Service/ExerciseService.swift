@@ -118,18 +118,6 @@ struct ExerciseService {
     }
     
     // Delete an exercise from the backend
-    func deleteExercise(id: String, completion: @escaping (Bool) -> Void) {
-        db.collection("exercises").document(id)
-            .delete { error in
-                guard error == nil else {
-                    print("DEBUG: \(error!.localizedDescription)")
-                    return
-                }
-                
-                completion(true)
-            }
-    }
-    
     func deleteExercise(id: String) async throws {
         do {
             try await db.collection("exercises").document(id)
