@@ -7,22 +7,33 @@
 
 import SwiftUI
 
-class PopUpMenuViewModel: ObservableObject {
-    let exerciseService = ExerciseService()
-    let templateService = TemplateService()
+extension PopUpMenuView {
     
-    func canStartWorkout(_ option: PopUpMenuOption, completion: @escaping(Bool) -> Void) {
+    @MainActor
+    class ViewModel: ObservableObject {
+        let exerciseService = ExerciseService()
+        let templateService = TemplateService()
+        
         // confirm that the user has at least one exercise created
-        exerciseService.fetchExercises { exercises in
-            if exercises.isEmpty {
-                completion(false)
-            } else if option == .fromTemplate {
-                self.templateService.fetchTemplates { templates in
-                    completion(!templates.isEmpty)
+        func canStartWorkout(_ option: PopUpMenuOption) async -> Bool {
+            do {
+                let exercises = try await exerciseService.fetchExercises()
+                
+                if !exercises.isEmpty && option == .fromTemplate {
+//                    templateService.fetchTemplates { templates in
+//                        return !templates.isEmpty
+//                    }
+                    debugPrint("Implement check for templates")
+                    return false
+                } else {
+                    return true
                 }
-            } else {
-                completion(true)
+                
+            } catch {
+                debugPrint("Cannot verify if the user can start a workout.")
+                return false
             }
         }
     }
+    
 }

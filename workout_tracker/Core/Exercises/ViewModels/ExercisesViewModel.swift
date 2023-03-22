@@ -32,7 +32,7 @@ extension ExercisesView {
         
         func fetchExercises() async {
             do {
-                self.exercises = try await service.fetchExercisesAsync()
+                self.exercises = try await service.fetchExercises()
                 self.loadingState = .data
             } catch {
                 debugPrint(error.localizedDescription)

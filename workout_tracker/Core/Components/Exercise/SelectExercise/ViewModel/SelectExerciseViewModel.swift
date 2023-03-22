@@ -8,17 +8,10 @@
 import Foundation
 
 class SelectExerciseViewModel: ObservableObject {
+    @Published var loadingState = LoadingState.loading
     @Published var searchText = ""
     @Published var userExercises = [Exercise]()
     let service = ExerciseService()
-    
-    init(forPreview: Bool = false) {
-        if forPreview {
-            self.userExercises = MockService.sampleExercises
-        } else {
-            fetchExercises()
-        }
-    }
     
     // Allow the user to filter their exercises by title or type
     var searchableExercises: [Exercise] {
@@ -34,9 +27,13 @@ class SelectExerciseViewModel: ObservableObject {
     }
     
     // Fetch the list of the user's exercises for selection
-        private func fetchExercises() {
-            service.fetchExercises { exercises in
-            self.userExercises = exercises
-            }
+    func fetchExercises() async {
+        do {
+            self.userExercises = try await service.fetchExercises()
+            self.loadingState = .data
+        } catch {
+            debugPrint(error.localizedDescription)
+            self.loadingState = .error
         }
+    }
  }

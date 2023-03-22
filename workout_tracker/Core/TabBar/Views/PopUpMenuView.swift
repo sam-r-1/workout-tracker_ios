@@ -13,7 +13,7 @@ struct PopUpMenuView: View {
     @Binding var isActiveWorkout: Bool
     @Binding var isSelectingTemplate: Bool
     @ObservedObject var router: ViewRouter
-    @StateObject var viewModel = PopUpMenuViewModel()
+    @StateObject var viewModel = ViewModel()
     
     var body: some View {
         VStack(spacing: 20) {
@@ -35,7 +35,7 @@ struct PopUpMenuView: View {
 struct MenuItem: View {
     @Environment(\.sizeCategory) var sizeCategory
     let router: ViewRouter
-    let viewModel: PopUpMenuViewModel
+    let viewModel: PopUpMenuView.ViewModel
     let option: PopUpMenuOption
     let size: CGFloat = 48
     @Binding var showMenu: Bool
@@ -46,14 +46,16 @@ struct MenuItem: View {
     var body: some View {
         Button {
             $showMenu.wrappedValue = false
-            viewModel.canStartWorkout(option) { yes in
-                if yes {
+
+            Task {
+                if await viewModel.canStartWorkout(option) {
                     switch option {
                         case .fromScratch: isActiveWorkout = true
                         case .fromTemplate: isSelectingTemplate = true
                     }
+                } else {
+                    $showNoExercisesMessage.wrappedValue.toggle()
                 }
-                else { $showNoExercisesMessage.wrappedValue.toggle() }
             }
         }
         label: {

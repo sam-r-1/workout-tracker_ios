@@ -44,6 +44,34 @@ struct ExerciseService {
         }
     }
     
+    func setExercise(id: String? = nil, name: String, type: String, details: String, includeWeight: Bool, includeReps: Bool, includeTime: Bool) async throws {
+        guard let uid = Auth.auth().currentUser?.uid else { throw ExerciseServiceError.authenticationError }
+        
+        let data = ["uid": uid,
+                    "name": name,
+                    "type": type,
+                    "details": details,
+                    "includeWeight": includeWeight,
+                    "includeReps": includeReps,
+                    "includeTime": includeTime] as [String: Any]
+        
+        let collectionRef = db.collection("exercises")
+        
+        // if an id is provided, set the ref to that location, otherwise give a blank one
+        let ref: DocumentReference
+        if id != nil {
+            ref = collectionRef.document(id!)
+        } else {
+            ref = collectionRef.document()
+        }
+        
+        do {
+            try await ref.setData(data)
+        } catch {
+            throw ExerciseServiceError.setDataError
+        }
+    }
+    
     // fetch a specific exercise from the backend by its ID
     func fetchExerciseById(id: String, completion: @escaping(Exercise) -> Void) {       
         db.collection("exercises").document(id)
@@ -80,7 +108,9 @@ struct ExerciseService {
                 .whereField("uid", isEqualTo: uid)
                 .getDocuments()
             
-            return snapshot.documents.compactMap({ try? $0.data(as: Exercise.self) })
+            let exercises = snapshot.documents.compactMap({ try? $0.data(as: Exercise.self) })
+            
+            return exercises.sorted(by: { $0.name < $1.name })
             
         } catch {
             throw ExerciseServiceError.dataFetchingError
@@ -99,11 +129,21 @@ struct ExerciseService {
                 completion(true)
             }
     }
+    
+    func deleteExercise(id: String) async throws {
+        do {
+            try await db.collection("exercises").document(id)
+                .delete()
+        } catch {
+            throw ExerciseServiceError.setDataError
+        }
+    }
 }
 
 extension ExerciseService {
     enum ExerciseServiceError: Error {
         case authenticationError
         case dataFetchingError
+        case setDataError
     }
 }

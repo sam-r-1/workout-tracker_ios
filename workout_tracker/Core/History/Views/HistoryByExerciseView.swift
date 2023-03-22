@@ -59,6 +59,6 @@ extension HistoryByExerciseView {
 
 struct HistoryByExerciseView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryByExerciseView(viewModel: ExerciseHistoryViewModel(forPreview: true))
+        HistoryByExerciseView()
     }
 }

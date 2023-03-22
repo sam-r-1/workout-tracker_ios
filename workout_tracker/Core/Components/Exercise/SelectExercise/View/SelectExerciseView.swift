@@ -63,7 +63,7 @@ struct SelectExerciseView: View {
 
 struct SelectExerciseView_Previews: PreviewProvider {
     static var previews: some View {
-        SelectExerciseView(viewModel: SelectExerciseViewModel(forPreview: true)) { _ in
+        SelectExerciseView() { _ in
             //
         }
     }
