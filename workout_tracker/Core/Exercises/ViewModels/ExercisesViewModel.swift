@@ -7,39 +7,38 @@
 
 import Foundation
 
-class ExercisesViewModel: ObservableObject {
-    @Published var loadingState = LoadingState.loading
-    @Published var searchText = ""
-    @Published var exercises = [Exercise]()
-    private let service = ExerciseService()
-    private let userService = UserService()
+extension ExercisesView {
     
-    // Allow the user to filter their exercises by title or type
-    var searchableExercises: [Exercise] {
-        if searchText.isEmpty {
-            return exercises
-        } else {
-            let lowercasedQuery = searchText.lowercased()
-            
-            return exercises.filter({
-                $0.name.lowercased().contains(lowercasedQuery) || $0.type.lowercased().contains(lowercasedQuery)
-            })
+    @MainActor
+    class ViewModel: ObservableObject {
+        @Published var loadingState = LoadingState.loading
+        @Published var searchText = ""
+        @Published var exercises = [Exercise]()
+        private let service = ExerciseService()
+        private let userService = UserService()
+        
+        // Allow the user to filter their exercises by title or type
+        var searchableExercises: [Exercise] {
+            if searchText.isEmpty {
+                return exercises
+            } else {
+                let lowercasedQuery = searchText.lowercased()
+                
+                return exercises.filter({
+                    $0.name.lowercased().contains(lowercasedQuery) || $0.type.lowercased().contains(lowercasedQuery)
+                })
+            }
+        }
+        
+        func fetchExercises() async {
+            do {
+                self.exercises = try await service.fetchExercises()
+                self.loadingState = .data
+            } catch {
+                debugPrint(error.localizedDescription)
+                self.loadingState = .error
+            }
         }
     }
     
-    init(forPreview: Bool = false) {
-        if forPreview {
-            self.loadingState = .data
-            self.exercises = MockService.sampleExercises
-        } else {
-            fetchExercises()
-        }
-    }
-    
-    func fetchExercises() {
-        service.fetchExercises { exercises in
-            self.exercises = exercises
-            self.loadingState = .data
-        }
-    }
 }

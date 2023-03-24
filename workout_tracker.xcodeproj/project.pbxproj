@@ -60,6 +60,7 @@
 		7FA320D228A551820071D835 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA320D128A551820071D835 /* SearchBar.swift */; };
 		7FA320D428A552DD0071D835 /* ExercisesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA320D328A552DD0071D835 /* ExercisesViewModel.swift */; };
 		7FA320D928A5927D0071D835 /* ExerciseRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA320D828A5927D0071D835 /* ExerciseRowView.swift */; };
+		7FA3D38429CA855300FFD194 /* ModifyingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3D38329CA855300FFD194 /* ModifyingState.swift */; };
 		7FA5480728EDE8E7009B1508 /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA5480628EDE8E7009B1508 /* LoadingState.swift */; };
 		7FA5480A28EDEF9D009B1508 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA5480928EDEF9D009B1508 /* LoadingView.swift */; };
 		7FA5480C28EDF8A4009B1508 /* TabMenuIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA5480B28EDF8A4009B1508 /* TabMenuIconView.swift */; };
@@ -174,6 +175,7 @@
 		7FA320D128A551820071D835 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		7FA320D328A552DD0071D835 /* ExercisesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesViewModel.swift; sourceTree = "<group>"; };
 		7FA320D828A5927D0071D835 /* ExerciseRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRowView.swift; sourceTree = "<group>"; };
+		7FA3D38329CA855300FFD194 /* ModifyingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyingState.swift; sourceTree = "<group>"; };
 		7FA5480628EDE8E7009B1508 /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		7FA5480928EDEF9D009B1508 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		7FA5480B28EDF8A4009B1508 /* TabMenuIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabMenuIconView.swift; sourceTree = "<group>"; };
@@ -727,6 +729,7 @@
 				7F53D20D28F5E19000FFB09D /* InvertAppIcons.swift */,
 				7F8FAC4929426CA5001D511F /* ModifyObjectMode.swift */,
 				7FC01A88295B5DA6002DAF24 /* AccessibilityStack.swift */,
+				7FA3D38329CA855300FFD194 /* ModifyingState.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -980,6 +983,7 @@
 				7F02753A28A5A6B7009536CF /* TemplatesViewModel.swift in Sources */,
 				7FA320D928A5927D0071D835 /* ExerciseRowView.swift in Sources */,
 				7F0E86002922CD3000D55272 /* SelectTemplateViewModel.swift in Sources */,
+				7FA3D38429CA855300FFD194 /* ModifyingState.swift in Sources */,
 				7FA56BFC28EB792900E977AC /* WorkoutRowView.swift in Sources */,
 				7F8FAC4C294276B4001D511F /* ResetPasswordView.swift in Sources */,
 				7FDA1704294044B400FCFC04 /* WorkoutHistoryItem.swift in Sources */,

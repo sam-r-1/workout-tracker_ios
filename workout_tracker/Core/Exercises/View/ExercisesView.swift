@@ -11,7 +11,7 @@ struct ExercisesView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) var sizeCategory
     @State private var showModifyExerciseView = false
-    @StateObject var viewModel = ExercisesViewModel()
+    @StateObject var viewModel = ViewModel()
     
     var body: some View {
         Group {
@@ -20,7 +20,7 @@ struct ExercisesView: View {
                     
                 case .loading: LoadingView()
                     
-                case .error: Text("--") // placeholder for error message; should never be used currently
+                case .error: errorView // placeholder for error message; should never be used currently
             }
         }
         .background(Color(.systemGroupedBackground))
@@ -34,6 +34,9 @@ struct ExercisesView: View {
                     Image(systemName: "plus.circle")
                 }
             }
+        }
+        .task {
+            await viewModel.fetchExercises()
         }
     }
 }
@@ -69,16 +72,28 @@ extension ExercisesView {
             Spacer()
         }
     }
+    
+    var errorView: some View {
+        VStack {
+            Spacer()
+            
+            Text("There was an error retrieving your exercises.\n Please try again later.")
+                .multilineTextAlignment(.center)
+                .foregroundColor(Color(.systemGray))
+            
+            Spacer()
+        }
+    }
 }
 
 struct ExercisesView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ExercisesView(viewModel: ExercisesViewModel(forPreview: true))
+            ExercisesView()
         }
         
         NavigationView {
-            ExercisesView(viewModel: ExercisesViewModel(forPreview: true))
+            ExercisesView()
         }
         .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
     }
