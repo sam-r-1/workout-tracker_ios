@@ -12,38 +12,6 @@ struct ExerciseService {
     private let db = Firestore.firestore()
     
     // create/edit an exercise and post it
-    func setExercise(id: String? = nil, name: String, type: String, details: String, includeWeight: Bool, includeReps: Bool, includeTime: Bool, completion: @escaping(Bool) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        let data = ["uid": uid,
-                    "name": name,
-                    "type": type,
-                    "details": details,
-                    "includeWeight": includeWeight,
-                    "includeReps": includeReps,
-                    "includeTime": includeTime] as [String: Any]
-        
-        let collectionRef = db.collection("exercises")
-        
-        // if an id is provided, set the ref to that location, otherwise give a blank one
-        let ref: DocumentReference
-        if id != nil {
-            ref = collectionRef.document(id!)
-        } else {
-            ref = collectionRef.document()
-        }
-        
-        ref.setData(data) { error in
-            if let error = error {
-                print("DEBUG: Failed to upload exercise with error \(error.localizedDescription)")
-                completion(false)
-                return
-            }
-            
-            completion(true)
-        }
-    }
-    
     func setExercise(id: String? = nil, name: String, type: String, details: String, includeWeight: Bool, includeReps: Bool, includeTime: Bool) async throws {
         guard let uid = Auth.auth().currentUser?.uid else { throw ExerciseServiceError.authenticationError }
         
