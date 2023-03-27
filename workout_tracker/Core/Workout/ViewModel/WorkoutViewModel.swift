@@ -42,7 +42,7 @@ class WorkoutViewModel: ObservableObject {
     
     func addExercisesFromTemplate(_ template: Template) async {
         do {
-            let exercises = try await exerciseService.fetchExercises(byIdList: template.exerciseIdList)
+            let exercises = try await exerciseService.fetchExercises(fromIdList: template.exerciseIdList)
             
             for exercise in exercises {
                 self.items.append(ExerciseDataFields(parent: self, exercise: exercise))

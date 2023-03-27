@@ -41,9 +41,13 @@ extension ModifyTemplateView {
             }
         }
         
-        func addExercise(_ exerciseId: String) {
-            exerciseService.fetchExerciseById(id: exerciseId) { exercise in
+        func addExercise(_ exerciseId: String) async {
+            do {
+                let exercise = try await exerciseService.fetchExerciseById(id: exerciseId)
+                
                 self.exerciseList.append(ModifyTemplateExerciseItem(exerciseId: exercise.id!, name: exercise.name))
+            } catch {
+                self.modifyingState = .error
             }
         }
         

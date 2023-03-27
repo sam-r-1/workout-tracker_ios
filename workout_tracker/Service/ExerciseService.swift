@@ -41,7 +41,9 @@ struct ExerciseService {
     }
     
     // fetch a specific exercise from the backend by its ID
-    func fetchExerciseById(id: String, completion: @escaping(Exercise) -> Void) {       
+    func fetchExerciseById(id: String, completion: @escaping(Exercise) -> Void) {
+        debugPrint("DEBUG: Delete fetchExerciseById function with closure")
+        
         db.collection("exercises").document(id)
             .getDocument { snapshot, _ in
                 guard let snapshot = snapshot else { return }
@@ -51,17 +53,27 @@ struct ExerciseService {
             }
     }
     
-    // fetch exercises given an id list
-    func fetchExercises(byIdList idList: [String]) async throws -> [Exercise] {
-        var exercises = Array(repeating: Exercise(uid: "", name: "", type: "", details: "", includeWeight: false, includeReps: false, includeTime: false), count: idList.count)
-        
-        let collectionRef = db.collection("exercises")
-        
-        for i in 0..<idList.count {
-            let exercise = try await collectionRef.document(idList[i])
+    func fetchExerciseById(id: String) async throws -> Exercise {
+        do {
+            return try await db.collection("exercises").document(id)
                 .getDocument(as: Exercise.self)
-            
-            exercises[i] = exercise
+        } catch {
+            throw ExerciseServiceError.dataFetchingError
+        }
+    }
+    
+    // fetch exercises given an id list
+    func fetchExercises(fromIdList idList: [String]) async throws -> [Exercise] {
+        var exercises = [Exercise]()
+        
+        let ref = db.collection("exercises")
+
+        for id in idList {
+            do {
+                exercises.append(try await ref.document(id).getDocument(as: Exercise.self))
+            } catch {
+                throw ExerciseServiceError.dataFetchingError
+            }
         }
         
         return(exercises)

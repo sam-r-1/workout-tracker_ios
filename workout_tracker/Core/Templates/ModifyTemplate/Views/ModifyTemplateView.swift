@@ -103,7 +103,9 @@ struct ModifyTemplateView: View {
         }
         .fullScreenCover(isPresented: $showAddExercise) {
             SelectExerciseView { exerciseId in
-                viewModel.addExercise(exerciseId)
+                Task {
+                    await viewModel.addExercise(exerciseId)
+                }
             }
         }
         
