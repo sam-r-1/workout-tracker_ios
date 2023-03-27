@@ -12,7 +12,7 @@ struct TemplatesView: View {
     @Environment(\.sizeCategory) var sizeCategory
     
     @State private var showModifyTemplateView = false
-    @StateObject var viewModel = TemplatesViewModel()
+    @StateObject var viewModel = ViewModel()
     
     var body: some View {
         Group {
@@ -21,20 +21,19 @@ struct TemplatesView: View {
                     
                 case .loading: LoadingView()
                     
-                case .error: Text("--") // placeholder for error message; should never be used currently
+                case .error: errorView
             }
         }
         .background(Color(.systemGroupedBackground))
         .navigationTitle("My Templates")
         .navigationBarTitleDisplayMode(sizeCategory > .accessibilityExtraLarge ? .inline : .automatic)
+        .task {
+            await viewModel.fetchTemplates()
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink {
                     ModifyTemplateView()
-                        .onDisappear {
-                            viewModel.loadingState = .loading
-                            viewModel.fetchTemplates()
-                        }
                 } label: {
                     Image(systemName: "plus.circle")
                 }
@@ -85,16 +84,29 @@ extension TemplatesView {
             Spacer()
         }
     }
+    
+    var errorView: some View {
+        VStack {
+            Spacer()
+            
+            Text("There was an error retrieving your templates.\n Please try again later.")
+                .multilineTextAlignment(.center)
+                .foregroundColor(Color(.systemGray))
+            
+            Spacer()
+        }
+
+    }
 }
 
 struct TemplatesView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            TemplatesView(viewModel: TemplatesViewModel(forPreview: true))
+            TemplatesView()
         }
             
         NavigationView {
-            TemplatesView(viewModel: TemplatesViewModel(forPreview: true))
+            TemplatesView()
         }
         .previewDevice("iPhone SE (3rd generation)")
     }

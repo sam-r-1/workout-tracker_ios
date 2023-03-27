@@ -11,17 +11,18 @@ struct ModifyTemplateView: View {
     let modifyMode: ModifyObjectMode
     @State private var editMode = EditMode.active
     @State private var showDeleteDialog = false
+    @State private var showErrorDialog = false
     @State private var showAddExercise = false
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var viewModel: ModifyTemplateViewModel
+    @StateObject var viewModel: ViewModel
     
     init(template: Template? = nil) {
         if template == nil {
             self.modifyMode = .add
-            self.viewModel = ModifyTemplateViewModel()
+            self._viewModel = StateObject(wrappedValue: ViewModel())
         } else {
             self.modifyMode = .edit
-            self.viewModel = ModifyTemplateViewModel(template: template)
+            self._viewModel = StateObject(wrappedValue: ViewModel(template: template))
         }
     }
     
@@ -31,7 +32,7 @@ struct ModifyTemplateView: View {
     }
     
     var body: some View {
-        VStack {
+        ZStack {
             Form {
                 Section("Name (Required)") {
                     TextField("Template name", text: $viewModel.name)
@@ -42,8 +43,12 @@ struct ModifyTemplateView: View {
                         ForEach(viewModel.exerciseList, id: \.self) { item in
                             Text(item.name)
                         }
-                        .onDelete(perform: viewModel.removeExercise)
-                        .onMove(perform: viewModel.moveExercise)
+                        .onDelete { indexSet in
+                            viewModel.removeExercise(at: indexSet)
+                        }
+                        .onMove { origin, destination in
+                            viewModel.moveExercise(from: origin, to: destination)
+                        }
                     }
                 }
                 
@@ -57,13 +62,18 @@ struct ModifyTemplateView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .alert("Delete this template?", isPresented: $showDeleteDialog) {
                         Button("Delete", role: .destructive) {
-                            viewModel.deleteTemplate()
-                            presentationMode.wrappedValue.dismiss()
+                            Task {
+                                await viewModel.deleteTemplate()
+                            }
                         }
                     }
                 }
             }
             .environment(\.editMode, $editMode)
+            
+            if viewModel.modifyingState == .loading {
+                LoadingView(includeBorder: true).edgesIgnoringSafeArea(.all)
+            }
         }
         .navigationTitle(viewModel.name.isEmpty ? "New Template" : viewModel.name)
         .navigationBarTitleDisplayMode(.inline)
@@ -81,22 +91,39 @@ struct ModifyTemplateView: View {
             // submit button - only enable if form is validated
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    viewModel.modifyTemplate()
+                    Task {
+                        await viewModel.modifyTemplate()
+                    }
                 } label: {
                     Text("Save")
                         .padding(.trailing, 12)
                 }
-                .disabled(!formValidated)
+                .disabled(!formValidated || viewModel.modifyingState == .loading)
             }
         }
         .fullScreenCover(isPresented: $showAddExercise) {
             SelectExerciseView { exerciseId in
-                viewModel.addExercise(exerciseId)
+                Task {
+                    await viewModel.addExercise(exerciseId)
+                }
             }
         }
-        // dismiss view if template created successfully
-        .onReceive(viewModel.$didCreateTemplate) { success in
-            if success {
+        
+        .alert(isPresented: $showErrorDialog) {
+            Alert(
+                title: Text("Something went wrong."),
+                message: Text("Please try again later.")
+            )
+        }
+        
+        .onReceive(viewModel.$modifyingState, perform: { modifyingState in
+            if modifyingState == .error {
+                showErrorDialog = true
+            }
+        })
+        
+        .onReceive(viewModel.$isEditingComplete) { isComplete in
+            if isComplete {
                 presentationMode.wrappedValue.dismiss()
             }
         }
@@ -107,8 +134,6 @@ extension ModifyTemplateView {
     var exerciseSectionHeader: some View {
         HStack {
             Text("Exercises".uppercased())
-                //.font(.subheadline)
-                //.foregroundColor(Color(.systemGray2))
             
             Spacer()
             

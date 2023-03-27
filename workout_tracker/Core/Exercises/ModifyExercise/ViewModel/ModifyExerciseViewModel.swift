@@ -72,7 +72,7 @@ extension ModifyExerciseView {
                 self.instanceService.deleteInstances(ofExercise: id)
                 
                 // delete this exercise from templates
-                self.templateService.deleteExerciseRef(id: id, name: name)
+                try await self.templateService.deleteExerciseRef(id: id, name: name)
                 
                 self.isEditingComplete = true
                 
