@@ -9,10 +9,11 @@ import Foundation
 import Firebase
 
 struct TemplateService {
+    private let db = Firestore.firestore()
     
     // create/edit a template and post it to the database
-    func setTemplate(id: String? = nil, name: String, exerciseIdList: [String], exerciseNameList: [String], completion: @escaping(Bool) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+    func setTemplate(id: String? = nil, name: String, exerciseIdList: [String], exerciseNameList: [String]) async throws {
+        guard let uid = Auth.auth().currentUser?.uid else { throw TemplateServiceError.authenticationError }
         
         let data = ["uid": uid,
                     "name": name,
@@ -20,7 +21,7 @@ struct TemplateService {
                     "exerciseIdList": exerciseIdList,
                     "exerciseNameList": exerciseNameList] as [String: Any]
         
-        let collectionRef = Firestore.firestore().collection("templates")
+        let collectionRef = db.collection("templates")
         
         // if an id is provided, set the ref to that location, otherwise give a blank one
         let ref: DocumentReference
@@ -30,73 +31,65 @@ struct TemplateService {
             ref = collectionRef.document()
         }
         
-        ref.setData(data) { error in
-                if let error = error {
-                    print("DEBUG: Failed to upload template with error \(error.localizedDescription)")
-                    completion(false)
-                    return
-                }
-                
-                completion(true)
-            }
+        do {
+            try await ref.setData(data)
+        } catch {
+            throw TemplateServiceError.setDataError
+        }
     }
     
     // fetch all of the user's templates from the backend
-    func fetchTemplates(completion: @escaping([Template]) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+    func fetchTemplates() async throws -> [Template] {
+        guard let uid = Auth.auth().currentUser?.uid else { throw TemplateServiceError.authenticationError }
         
-        Firestore.firestore().collection("templates")
-            .whereField("uid", isEqualTo: uid)
-            .getDocuments { snapshot, _ in
-                guard let documents = snapshot?.documents else { return }
-                
-                let templates = documents.compactMap({ try? $0.data(as: Template.self) })
-                
-                completion(templates.sorted(by: { $0.name < $1.name }))
-            }
+        do {
+            let snapshot = try await db.collection("templates")
+                .whereField("uid", isEqualTo: uid)
+                .getDocuments()
+            
+            let templates = snapshot.documents.compactMap({ try? $0.data(as: Template.self) })
+            
+            return templates.sorted(by: { $0.name < $1.name })
+            
+        } catch {
+            throw TemplateServiceError.dataFetchingError
+        }
     }
     
     // Delete a template from the backend
-    func deleteTemplate(id: String, completion: @escaping (Bool) -> Void) {
-        Firestore.firestore().collection("templates").document(id)
-            .delete { error in
-                guard error == nil else {
-                    print("DEBUG: \(error!.localizedDescription)")
-                    return
-                }
-                
-                completion(true)
-            }
+    func deleteTemplate(id: String) async throws {
+        do {
+            try await db.collection("templates").document(id)
+                .delete()
+        } catch {
+            throw TemplateServiceError.setDataError
+        }
     }
     
     // Remove exercise id's from the template's exerciseList property. Use after the exercises themselves are deleted
-    func deleteExerciseRef(id: String, name: String) {
-        let query = Firestore.firestore().collection("templates")
+    func deleteExerciseRef(id: String, name: String) async throws {
+        let query = db.collection("templates")
             .whereField("exerciseIdList", arrayContains: id)
         
-        query.getDocuments { snapshot, error in
-            guard error == nil else {
-                print("DEBUG: \(error!.localizedDescription)")
-                return
-            }
+        do {
+            let snapshot = try await query.getDocuments()
             
-            let documents = snapshot!.documents
-            
-            documents.forEach { doc in
-                doc.reference.updateData(["exerciseIdList": FieldValue.arrayRemove([id])]) { error in
-                    guard error == nil else {
-                        print("DEBUG: \(error!.localizedDescription)")
-                        return
-                    }
-                }
+            for doc in snapshot.documents {
+                try await doc.reference.updateData(["exerciseIdList": FieldValue.arrayRemove([id])])
                 
-                doc.reference.updateData(["exerciseNameList": FieldValue.arrayRemove([name])]) { error in
-                    guard error == nil else {
-                        print("DEBUG: \(error!.localizedDescription)")
-                        return
-                    }
-                }
+                try await doc.reference.updateData(["exerciseNameList": FieldValue.arrayRemove([name])])
             }
+        } catch {
+            throw TemplateServiceError.removeExerciseReferenceError
         }
+    }
+}
+
+extension TemplateService {
+    enum TemplateServiceError: Error {
+        case authenticationError
+        case dataFetchingError
+        case setDataError
+        case removeExerciseReferenceError
     }
 }

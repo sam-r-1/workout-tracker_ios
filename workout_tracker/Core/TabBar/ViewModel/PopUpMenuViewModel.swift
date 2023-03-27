@@ -5,7 +5,7 @@
 //  Created by Sam Rankin on 8/11/22.
 //
 
-import SwiftUI
+import Foundation
 
 extension PopUpMenuView {
     
@@ -19,15 +19,15 @@ extension PopUpMenuView {
             do {
                 let exercises = try await exerciseService.fetchExercises()
                 
-                if !exercises.isEmpty && option == .fromTemplate {
-//                    templateService.fetchTemplates { templates in
-//                        return !templates.isEmpty
-//                    }
-                    debugPrint("Implement check for templates")
-                    return false
-                } else {
-                    return true
+                if exercises.isEmpty { return false }
+                
+                if option == .fromTemplate {
+                    let templates = try await templateService.fetchTemplates()
+                    
+                    return !templates.isEmpty
                 }
+                
+                return true
                 
             } catch {
                 debugPrint("Cannot verify if the user can start a workout.")
