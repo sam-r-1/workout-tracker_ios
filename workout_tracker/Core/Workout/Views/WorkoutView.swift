@@ -14,8 +14,11 @@ struct WorkoutView: View {
     @State private var showTimer = false
     @State private var showAddExercise = false
     @State private var showFinishWorkoutDialog = false
-    @StateObject var viewModel = WorkoutViewModel()
+    @State private var showErrorDialog = false
+    
+    @StateObject var viewModel = ViewModel()
     @StateObject private var expansionHandler = ExpansionHandler<ExerciseDataFields>()
+    
     let template: Template?
     
     init(workoutActive: Binding<Bool>, fromTemplate: Template? = nil) {
@@ -40,6 +43,10 @@ struct WorkoutView: View {
                     }
                 }
             }
+            
+            if viewModel.workoutState == .submitting {
+                LoadingView(includeBorder: true)
+            }
         }
         .navigationBarTitle("My Workout")
         .navigationBarBackButtonHidden(true)
@@ -56,7 +63,7 @@ struct WorkoutView: View {
                 } label: {
                     Image(systemName: "checkmark.circle")
                 }
-                .disabled(viewModel.isUploadingWorkout)
+                .disabled(viewModel.workoutState == .submitting)
                 .foregroundColor(Color(.systemGreen))
 
             }
@@ -72,10 +79,18 @@ struct WorkoutView: View {
             }
         }
         // dismiss view if workout created successfully
-        .onReceive(viewModel.$didUploadWorkout) { success in
-            if success {
+        .onReceive(viewModel.$workoutState) { state in
+            if state == .finished {
                 self.workoutActive = false
+            } else if state == .error {
+                self.showErrorDialog = true
             }
+        }
+        .alert(isPresented: $showErrorDialog) {
+            Alert(
+                title: Text("Something went wrong."),
+                message: Text("There was an error uploading your workout. Please try again later.")
+            )
         }
         .alert("Finish Workout?", isPresented: $showFinishWorkoutDialog) {
             Button("No", role: .cancel) {}

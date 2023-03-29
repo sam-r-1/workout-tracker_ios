@@ -6,31 +6,29 @@
 //
 
 import Foundation
+import Firebase
 
 class ExerciseDataFields: Identifiable {
     
-    init(parent: WorkoutViewModel, exercise: Exercise) {
+    init(parent: WorkoutView.ViewModel, exercise: Exercise) {
         self.parent = parent
         self.exercise = exercise
     }
     
     let id = UUID()
-    private let parent: WorkoutViewModel
+    private let parent: WorkoutView.ViewModel
     let exercise: Exercise
     let instanceService = ExerciseInstanceService()
     
     var weight: Double = 0.0 {
-        // didSet { self.parent.update() }
         didSet { self.checkForExerciseCompleted() }
     }
     
     var reps: Int = 0 {
-        // didSet { self.parent.update() }
         didSet { self.checkForExerciseCompleted() }
     }
     
     var time: Double = 0.0 {
-        // didSet { self.parent.update() }
         didSet { self.checkForExerciseCompleted() }
     }
     
@@ -68,6 +66,18 @@ class ExerciseDataFields: Identifiable {
 extension ExerciseDataFields: Equatable {
     static func == (lhs: ExerciseDataFields, rhs: ExerciseDataFields) -> Bool {
         return lhs.id == rhs.id
+    }
+}
+
+extension Array where Element == ExerciseDataFields {
+    func instanceList() -> [ExerciseInstance] {
+        var instanceList = [ExerciseInstance]()
+        
+        for item in self {
+            instanceList.append(ExerciseInstance(uid: "-999", exerciseId: item.exercise.id!, timestamp: Timestamp(), reps: item.reps, time: item.time, weight: item.weight))
+        }
+        
+        return instanceList
     }
 }
 

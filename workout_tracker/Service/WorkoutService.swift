@@ -9,25 +9,23 @@ import Foundation
 import Firebase
 
 struct WorkoutService {
+    private let db = Firestore.firestore()
     
     // create a workout and post it to the database
-    func uploadWorkout(exerciseInstanceIdList: [String], completion: @escaping(Bool) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+    func uploadWorkout(exerciseInstanceIdList: [String]) async throws {
+        guard let uid = Auth.auth().currentUser?.uid else { throw WorkoutServiceError.authenticationError }
         
         let data = ["uid": uid,
                     "timestamp": Timestamp(),
                     "exerciseInstanceIdList": exerciseInstanceIdList] as [String: Any]
         
-        Firestore.firestore().collection("workouts").document()
-            .setData(data) { error in
-                if let error = error {
-                    print("DEBUG: Failed to upload workout with error \(error.localizedDescription)")
-                    completion(false)
-                    return
-                }
-                
-                completion(true)
-            }
+        let ref = db.collection("workouts").document()
+        
+        do {
+            try await ref.setData(data)
+        } catch {
+            throw WorkoutServiceError.setDataError
+        }
     }
     
     // fetch all of the user's workouts from the backend
@@ -90,5 +88,13 @@ struct WorkoutService {
                 }
             }
         }
+    }
+}
+
+extension WorkoutService {
+    enum WorkoutServiceError: Error {
+        case authenticationError
+        case dataFetchingError
+        case setDataError
     }
 }

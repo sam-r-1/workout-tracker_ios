@@ -8,99 +8,69 @@
 import Foundation
 import Firebase
 
-@MainActor
-class WorkoutViewModel: ObservableObject {
-
-    @Published var didUploadWorkout = false
-    @Published var isUploadingWorkout = false
-    private var exerciseInstances = [ExerciseInstance]()
+extension WorkoutView {
     
-    private let exerciseService = ExerciseService()
-    private let workoutService = WorkoutService()
-    private let instanceService = ExerciseInstanceService()
-    
-    @Published var items = [ExerciseDataFields]()
-
-    
-    nonisolated func update() {
-        self.objectWillChange.send()
-    }
-    
-    func addItem(_ exerciseId: String) {
-        fetchAndSetExerciseById(exerciseId) { exercise in
-            self.items.append(ExerciseDataFields(parent: self, exercise: exercise))
+    @MainActor
+    class ViewModel: ObservableObject {
+        
+        @Published var workoutState = WorkoutState.active
+        @Published var items = [ExerciseDataFields]()
+        
+        private let exerciseService = ExerciseService()
+        private let workoutService = WorkoutService()
+        private let instanceService = ExerciseInstanceService()
+        
+        nonisolated func update() {
+            self.objectWillChange.send()
         }
-    }
-    
-    func deleteItem(at index: Int) {
-        items.remove(at: index)
-    }
-    
-    func moveItem(from source: IndexSet, to destination: Int) {
-        self.items.move(fromOffsets: source, toOffset: destination)
-    }
-    
-    func addExercisesFromTemplate(_ template: Template) async {
-        do {
-            let exercises = try await exerciseService.fetchExercises(fromIdList: template.exerciseIdList)
-            
-            for exercise in exercises {
+        
+        func addItem(_ exerciseId: String) {
+            fetchAndSetExerciseById(exerciseId) { exercise in
                 self.items.append(ExerciseDataFields(parent: self, exercise: exercise))
             }
-        } catch _ {}
-    }
-    
-    private func fetchAndSetExerciseById(_ id: String, completion: @escaping (Exercise) -> Void) {
-        exerciseService.fetchExerciseById(id: id) { exercise in
-            completion(exercise)
-        }
-    }
-    
-    private func addExerciseToWorkout(_ item: ExerciseDataFields, uid: String) {
-        exerciseInstances.append(ExerciseInstance(uid: uid, exerciseId: item.exercise.id!, timestamp: Timestamp(), reps: item.reps, time: item.time, weight: item.weight))
-    }
-    
-    // upload the exercise instances to the database, returning a list of their id's in a closure
-    private func uploadInstances(completion: @escaping ([String]) -> Void) async {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        var idList: [String] = []
-        var id: String
-        
-        self.exerciseInstances = []
-        
-        // create exercise instances from the workout items
-        for item in self.items {
-            addExerciseToWorkout(item, uid: uid)
         }
         
-        // upload the individual exercise data
-        for instance in self.exerciseInstances {
-            
+        func deleteItem(at index: Int) {
+            items.remove(at: index)
+        }
+        
+        func moveItem(from source: IndexSet, to destination: Int) {
+            self.items.move(fromOffsets: source, toOffset: destination)
+        }
+        
+        func addExercisesFromTemplate(_ template: Template) async {
             do {
-                id = try await instanceService.uploadInstance(instance)
-                idList.append(id)
-            } catch _ {}
-            
-        }
-        completion(idList)
-    }
-    
-    func finishWorkout() async {
-        self.isUploadingWorkout = true
-        
-        await uploadInstances { idList in
-            
-            self.workoutService.uploadWorkout(exerciseInstanceIdList: idList) { success in
-                self.isUploadingWorkout = false
+                let exercises = try await exerciseService.fetchExercises(fromIdList: template.exerciseIdList)
                 
-                if success {
-                    // dismiss workout screen
-                    self.didUploadWorkout = true
-                } else {
-                    // show error message to user
+                for exercise in exercises {
+                    self.items.append(ExerciseDataFields(parent: self, exercise: exercise))
                 }
+            } catch _ {}
+        }
+        
+        private func fetchAndSetExerciseById(_ id: String, completion: @escaping (Exercise) -> Void) {
+            exerciseService.fetchExerciseById(id: id) { exercise in
+                completion(exercise)
             }
         }
+        
+        func finishWorkout() async {
+            self.workoutState = .submitting
+            
+            do {
+                let instanceIdList = try await instanceService.uploadInstances(self.items.instanceList())
+                
+                try await workoutService.uploadWorkout(exerciseInstanceIdList: instanceIdList)
+                
+                self.workoutState = .finished
+                
+            } catch {
+                self.workoutState = .error
+            }
+        }
+    }
+    
+    enum WorkoutState {
+        case active, submitting, finished, error
     }
 }

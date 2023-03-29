@@ -9,17 +9,10 @@ import Foundation
 import Firebase
 
 struct ExerciseInstanceService {
-    
-    enum UploadError: Error {
-        case authenticationError, uploadFailed
-    }
-    
-    enum DownloadError: Error {
-        case authenticationError, downloadFailed
-    }
+    private let db = Firestore.firestore()
     
     func uploadInstance(_ instance: ExerciseInstance) async throws -> String {
-        guard let uid = Auth.auth().currentUser?.uid else { throw UploadError.authenticationError }
+        guard let uid = Auth.auth().currentUser?.uid else { throw ExerciseInstanceServiceError.authenticationError }
         
         let data = ["uid": uid,
                     "exerciseId": instance.exerciseId,
@@ -34,6 +27,34 @@ struct ExerciseInstanceService {
         try await ref.setData(data)
         
         return ref.documentID
+    }
+    
+    func uploadInstances(_ instances: [ExerciseInstance]) async throws -> [String] {
+        guard let uid = Auth.auth().currentUser?.uid else { throw ExerciseInstanceServiceError.authenticationError }
+        
+        var instanceIdList = [String]()
+        
+        for instance in instances {
+            let data = ["uid": uid,
+                        "exerciseId": instance.exerciseId,
+                        "timestamp": instance.timestamp,
+                        "reps": instance.reps,
+                        "time": instance.time,
+                        "weight": instance.weight,
+                        ] as [String: Any]
+            
+            let ref = db.collection("exercise-instances").document()
+            
+            do {
+                try await ref.setData(data)
+            } catch {
+                throw ExerciseInstanceServiceError.setDataError
+            }
+            
+            instanceIdList.append(ref.documentID)
+        }
+        
+        return instanceIdList
     }
     
     // fetch the previous exercise instance for a given exercise, returning the weight and rep count
@@ -124,5 +145,13 @@ struct ExerciseInstanceService {
                 workoutService.deleteInstanceRef(id)
             }
         }
+    }
+}
+
+extension ExerciseInstanceService {
+    enum ExerciseInstanceServiceError: Error {
+        case authenticationError
+        case dataFetchingError
+        case setDataError
     }
 }
