@@ -69,7 +69,7 @@ extension ModifyExerciseView {
                 try await service.deleteExercise(id: id)
                 
                 // delete associated instances
-                self.instanceService.deleteInstances(ofExercise: id)
+                try await self.instanceService.deleteInstances(ofExercise: id)
                 
                 // delete this exercise from templates
                 try await self.templateService.deleteExerciseRef(id: id, name: name)

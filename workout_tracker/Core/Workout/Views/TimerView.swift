@@ -159,6 +159,6 @@ struct TimerView_Previews: PreviewProvider {
     static let previewExercise = Exercise(uid: "", name: "Chest Press", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true)
     
     static var previews: some View {
-        TimerView(ExerciseDataFields(parent: WorkoutViewModel(), exercise: previewExercise))
+        TimerView(ExerciseDataFields(parent: WorkoutView.ViewModel(), exercise: previewExercise))
     }
 }

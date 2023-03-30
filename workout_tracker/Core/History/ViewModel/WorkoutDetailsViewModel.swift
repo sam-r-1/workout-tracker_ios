@@ -26,8 +26,10 @@ class WorkoutDetailsViewModel: ObservableObject {
         } catch _ {}
     }
     
-    func deleteInstance(by id: String) {
-        service.deleteInstances(fromInstanceIdList: [id]) // delete from Firebase
+    func deleteInstance(by id: String) async {
+        do {
+            try await service.deleteInstance(id: id)
+        } catch _ {}
         
         self.items.remove(at: self.items.firstIndex(where: { $0.instance.id == id })!) // delete from local
     }

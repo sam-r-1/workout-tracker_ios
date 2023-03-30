@@ -8,15 +8,20 @@
 import SwiftUI
 
 struct HistoryByWorkoutView: View {
-    @StateObject var viewModel = WorkoutHistoryViewModel()
+    @StateObject var viewModel = ViewModel()
     
     var body: some View {
-        switch viewModel.loadingState {
-            case .data: dataView
-
-            case .loading: LoadingView()
-                
-            case .error: Text("--") // placeholder for error message; should never be used currently
+        Group {
+            switch viewModel.loadingState {
+                case .data: dataView
+                    
+                case .loading: LoadingView()
+                    
+                case .error: errorView
+            }
+        }
+        .task {
+            await viewModel.fetchWorkouts()
         }
     }
 }
@@ -32,7 +37,7 @@ extension HistoryByWorkoutView {
                     ForEach(viewModel.workouts, id: \.timestamp) { workout in
                         NavigationLink {
                             NavigationLazyView(WorkoutDetailsView(workout, onDelete: {
-                                viewModel.deleteWorkout(workout: workout)
+                                await viewModel.deleteWorkout(workout: workout)
                             }))
                         } label: {
                             WorkoutRowView(workout: workout)
@@ -56,10 +61,22 @@ extension HistoryByWorkoutView {
             Spacer()
         }
     }
+    
+    var errorView: some View {
+        VStack {
+            Spacer()
+            
+            Text("There was an error retrieving your workouts.\n Please try again later.")
+                .multilineTextAlignment(.center)
+                .foregroundColor(Color(.systemGray))
+            
+            Spacer()
+        }
+    }
 }
 
 struct HistoryByWorkoutView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryByWorkoutView(viewModel: WorkoutHistoryViewModel(forPreview: true))
+        HistoryByWorkoutView()
     }
 }

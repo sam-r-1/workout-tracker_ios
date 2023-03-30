@@ -12,7 +12,7 @@ struct InstanceHistoryRowView: View {
     @Environment(\.sizeCategory) var sizeCategory
     let exercise: Exercise?
     let instance: ExerciseInstance
-    let onDelete: (String) -> Void
+    let onDelete: (String) async -> Void
     let iconSize = 20.0
     let accessibilityThreshold = ContentSizeCategory.accessibilityLarge
     

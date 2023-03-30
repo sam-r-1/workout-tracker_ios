@@ -130,7 +130,9 @@ struct ExerciseDisclosureGroupView: View {
                     UIApplication.shared.isIdleTimerDisabled = false
                 }
         }
-        .onAppear(perform: item.fetchPreviousInstance)
+        .task {
+            await item.fetchPreviousInstance()
+        }
     }
 }
 
@@ -203,7 +205,7 @@ struct ExerciseDisclosureGroupView_Previews: PreviewProvider {
             ScrollView {
                 LazyVStack {
                     ForEach(1...6, id: \.self) { num in
-                        ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true)), isExpanded: Binding.constant(num == 1 ? true : false)) {
+                        ExerciseDisclosureGroupView(item: ExerciseDataFields(parent: WorkoutView.ViewModel(), exercise: Exercise(id: "", uid: "", name: "Push-ups", type: "", details: "", includeWeight: true, includeReps: true, includeTime: true)), isExpanded: Binding.constant(num == 1 ? true : false)) {
                             print("DEBUG: deleting")
                         }
                     }

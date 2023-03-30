@@ -13,10 +13,10 @@ struct WorkoutDetailsView: View {
     @Environment(\.sizeCategory) var sizeCategory
     @State private var showDeleteDialog = false
     let workout: Workout
-    let onDelete: () -> Void
+    let onDelete: () async -> Void
     let accessibilityThreshold = ContentSizeCategory.accessibilityLarge
     
-    init(_ workout: Workout, onDelete: @escaping () -> Void = {} ) {
+    init(_ workout: Workout, onDelete: @escaping () async -> Void = {} ) {
         self.workout = workout
         self.onDelete = onDelete
     }
@@ -52,8 +52,10 @@ struct WorkoutDetailsView: View {
                     .foregroundColor(Color(.systemRed))
                     .alert("Delete data for this workout?", isPresented: $showDeleteDialog) {
                         Button("Delete", role: .destructive) {
-                            onDelete()
-                            presentationMode.wrappedValue.dismiss()
+                            Task {
+                                await onDelete()
+                                presentationMode.wrappedValue.dismiss()
+                            }
                         }
                     }
                 }
