@@ -68,39 +68,7 @@ struct WorkoutService {
         }
     }
     
-    // Remove instance id's from the workout's instanceIdList property. Use after the instances themselves are deleted
-//    func deleteInstanceRef(_ id: String) {
-//        let query = Firestore.firestore().collection("workouts")
-//            .whereField("exerciseInstanceIdList", arrayContains: id)
-//
-//        query.getDocuments { snapshot, error in
-//            guard error == nil else {
-//                print("DEBUG: \(error!.localizedDescription)")
-//                return
-//            }
-//
-//            let documents = snapshot!.documents
-//
-//            documents.forEach { doc in
-//                doc.reference.updateData(["exerciseInstanceIdList": FieldValue.arrayRemove([id])]) { error in
-//                    guard error == nil else {
-//                        print("DEBUG: \(error!.localizedDescription)")
-//                        return
-//                    }
-//
-//                    // check if the workout has any remaining instances. If it doesn't, delete it
-//                    doc.reference.getDocument { snapshot, _ in
-//                        guard let snapshot = snapshot else { return }
-//
-//                        guard let workout = try? snapshot.data(as: Workout.self) else { return }
-//
-//                        if workout.exerciseInstanceIdList.count == 0 { doc.reference.delete() }
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
+    // Remove instance id's from the workout's instanceIdList property. Use after the instances themselves are deleted    
     func deleteInstanceRef(_ id: String) async throws {
         let query = db.collection("workouts")
             .whereField("exerciseInstanceIdList", arrayContains: id)
