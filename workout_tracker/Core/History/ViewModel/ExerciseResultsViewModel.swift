@@ -21,18 +21,21 @@ class ExerciseResultsViewModel: ObservableObject {
         return exerciseInstances.sorted(by: { $0.timestamp.dateValue() < $1.timestamp.dateValue() })
     }
     
-    func fetchInstancesFromIdList(_ exerciseId: String?) {
+    func fetchInstancesForExercise(_ exerciseId: String?) async {
         guard exerciseId != nil else { return }
-        service.fetchInstances(byExerciseId: exerciseId!) { instances in
-            self.exerciseInstances = instances
-        }
+        do {
+            self.exerciseInstances = try await service.fetchInstances(byExerciseId: exerciseId!)
+        } catch _ {}
     }
     
     // delete an instance from both the local and backend
-    func deleteInstance(at offsets: IndexSet) {
+    func deleteInstance(at offsets: IndexSet) async {
         guard offsets.count == 1 else { return }
         
-        service.deleteInstances(fromInstanceIdList: [exerciseInstances[offsets.first!].id!])
-        self.exerciseInstances.remove(atOffsets: offsets)
+        do {
+            try await service.deleteInstance(id: exerciseInstances[offsets.first!].id!)
+            
+            self.exerciseInstances.remove(atOffsets: offsets)
+        } catch _ {}
     }
 }

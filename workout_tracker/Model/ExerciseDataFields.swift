@@ -40,10 +40,11 @@ class ExerciseDataFields: Identifiable {
         didSet { self.parent.update() }
     }
     
-    func fetchPreviousInstance() {
-        instanceService.fetchMostRecentInstance(byExerciseId: self.exercise.id!) { instance in
-            self.previousInstance = instance
-        }
+    @MainActor
+    func fetchPreviousInstance() async {
+        do {
+            self.previousInstance = try await instanceService.fetchMostRecentInstance(byExerciseId: self.exercise.id!)
+        } catch _ {}
     }
     
     private func checkForExerciseCompleted() {

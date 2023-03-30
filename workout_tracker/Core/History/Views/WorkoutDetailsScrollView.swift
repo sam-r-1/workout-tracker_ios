@@ -16,7 +16,7 @@ struct WorkoutDetailsScrollView: View {
         List {
             ForEach(viewModel.items) { item in
                 InstanceHistoryRowView(exercise: item.exercise, instance: item.instance, onDelete: { id in
-                    viewModel.deleteInstance(by: id)
+                    await viewModel.deleteInstance(by: id)
                 })
             }
         }

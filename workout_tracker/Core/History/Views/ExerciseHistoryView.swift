@@ -31,14 +31,18 @@ struct ExerciseHistoryView: View {
                                     ExerciseResultRowView(exercise: self.exercise, instance: instance)
                                         .listRowInsets(EdgeInsets())
                                 }
-                                .onDelete(perform: viewModel.deleteInstance)
+                                .onDelete { offset in
+                                    Task {
+                                        await viewModel.deleteInstance(at: offset)
+                                    }
+                                }
                             }
                             .frame(height: geometry.size.height * 0.65)
                         }
                     }
                 }
-                .onAppear {
-                    viewModel.fetchInstancesFromIdList(self.exercise.id)
+                .task {
+                    await viewModel.fetchInstancesForExercise(self.exercise.id)
                 }
             }
             .navigationTitle(exercise.name)

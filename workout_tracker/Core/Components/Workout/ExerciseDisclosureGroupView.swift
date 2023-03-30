@@ -130,7 +130,9 @@ struct ExerciseDisclosureGroupView: View {
                     UIApplication.shared.isIdleTimerDisabled = false
                 }
         }
-        .onAppear(perform: item.fetchPreviousInstance)
+        .task {
+            await item.fetchPreviousInstance()
+        }
     }
 }
 

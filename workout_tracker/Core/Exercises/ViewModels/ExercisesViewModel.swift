@@ -35,7 +35,6 @@ extension ExercisesView {
                 self.exercises = try await service.fetchExercises()
                 self.loadingState = .data
             } catch {
-                debugPrint(error.localizedDescription)
                 self.loadingState = .error
             }
         }
