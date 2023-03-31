@@ -39,9 +39,7 @@ struct HistoryView: View {
             .environmentObject(viewModel)
             .navigationTitle("My History")
             .task {
-                await viewModel.fetchWorkouts()
-                await viewModel.fetchExercises()
-                await viewModel.fetchInstances()
+                await viewModel.fetchUserHistory()
             }
         }
     }

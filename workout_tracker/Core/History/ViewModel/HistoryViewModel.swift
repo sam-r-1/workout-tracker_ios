@@ -31,6 +31,18 @@ extension HistoryView {
         
         // MARK: - Functions
         
+        func fetchUserHistory() async {
+            do {
+                self.exercises = try await exerciseService.fetchExercises()
+                self.instances = try await instanceService.fetchInstances()
+                self.workouts = try await workoutService.fetchWorkouts()
+                
+                self.loadingState = .data
+            } catch {
+                self.loadingState = .error
+            }
+        }
+        
         // Exercises
         func fetchExercises() async {
             do {
