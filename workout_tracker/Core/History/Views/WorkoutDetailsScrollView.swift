@@ -8,20 +8,18 @@
 import SwiftUI
 
 struct WorkoutDetailsScrollView: View {
+    @EnvironmentObject var viewModel: HistoryView.ViewModel
     
     let workout: Workout
-    @StateObject var viewModel = WorkoutDetailsViewModel()
     
     var body: some View {
         List {
-            ForEach(viewModel.items) { item in
-                InstanceHistoryRowView(exercise: item.exercise, instance: item.instance, onDelete: { id in
-                    await viewModel.deleteInstance(by: id)
-                })
+            ForEach(viewModel.historyItems) { item in
+                InstanceHistoryRowView(exercise: item.exercise, instance: item.instance)
             }
         }
-        .task {
-            await viewModel.fetchItems(fromInstanceIdList: workout.exerciseInstanceIdList)
+        .onAppear {
+            viewModel.createItems(forWorkout: workout)
         }
     }
 }

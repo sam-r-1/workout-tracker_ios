@@ -11,14 +11,16 @@ struct WorkoutDetailsView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) var sizeCategory
+    @EnvironmentObject var viewModel: HistoryView.ViewModel
+    
     @State private var showDeleteDialog = false
+    
     let workout: Workout
-    let onDelete: () async -> Void
+    
     let accessibilityThreshold = ContentSizeCategory.accessibilityLarge
     
-    init(_ workout: Workout, onDelete: @escaping () async -> Void = {} ) {
+    init(_ workout: Workout) {
         self.workout = workout
-        self.onDelete = onDelete
     }
     
     var body: some View {
@@ -53,13 +55,13 @@ struct WorkoutDetailsView: View {
                     .alert("Delete data for this workout?", isPresented: $showDeleteDialog) {
                         Button("Delete", role: .destructive) {
                             Task {
-                                await onDelete()
+                                await viewModel.deleteWorkout(workout: workout)
                                 presentationMode.wrappedValue.dismiss()
                             }
                         }
                     }
                 }
-        }
+            }
         }
     }
 }

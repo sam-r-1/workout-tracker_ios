@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HistoryByWorkoutView: View {
-    @StateObject var viewModel = ViewModel()
+    @EnvironmentObject var viewModel: HistoryView.ViewModel
     
     var body: some View {
         Group {
@@ -19,9 +19,6 @@ struct HistoryByWorkoutView: View {
                     
                 case .error: errorView
             }
-        }
-        .task {
-            await viewModel.fetchWorkouts()
         }
     }
 }
@@ -36,9 +33,7 @@ extension HistoryByWorkoutView {
                 List {
                     ForEach(viewModel.workouts, id: \.timestamp) { workout in
                         NavigationLink {
-                            NavigationLazyView(WorkoutDetailsView(workout, onDelete: {
-                                await viewModel.deleteWorkout(workout: workout)
-                            }))
+                            WorkoutDetailsView(workout).environmentObject(viewModel)
                         } label: {
                             WorkoutRowView(workout: workout)
                         }
@@ -66,7 +61,7 @@ extension HistoryByWorkoutView {
         VStack {
             Spacer()
             
-            Text("There was an error retrieving your workouts.\n Please try again later.")
+            Text("There was an error retrieving your history.\n Please try again later.")
                 .multilineTextAlignment(.center)
                 .foregroundColor(Color(.systemGray))
             

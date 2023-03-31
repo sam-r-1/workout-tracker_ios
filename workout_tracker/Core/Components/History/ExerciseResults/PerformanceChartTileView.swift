@@ -57,7 +57,7 @@ struct PerformanceChartTileView_Previews: PreviewProvider {
                 .frame(height: 275)
             
             NavigationView {
-                ExerciseHistoryView(exercise: MockService.sampleExercises[2], viewModel: ExerciseResultsViewModel(fromPreview: true))
+                ExerciseHistoryView(exercise: MockService.sampleExercises[2])
             }
             .preferredColorScheme(.dark)
         }
