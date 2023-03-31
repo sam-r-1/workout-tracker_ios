@@ -17,6 +17,12 @@ struct WorkoutDetailsScrollView: View {
             ForEach(viewModel.historyItems) { item in
                 InstanceHistoryRowView(exercise: item.exercise, instance: item.instance)
             }
+            .onDelete { offset in
+                Task {
+                    guard let idToDelete = viewModel.instances.first(where: { $0.id == viewModel.historyItems[offset.first!].instance.id })?.id else { return }
+                    await viewModel.deleteInstance(by: idToDelete)
+                }
+            }
         }
         .onAppear {
             viewModel.createItems(forWorkout: workout)
