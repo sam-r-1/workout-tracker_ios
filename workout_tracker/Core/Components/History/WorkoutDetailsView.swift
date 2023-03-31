@@ -64,8 +64,8 @@ struct WorkoutDetailsView: View {
     }
 }
 
-//struct WorkoutDetailsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        WorkoutDetailsView(MockService.sampleWorkouts[0])
-//    }
-//}
+struct WorkoutDetailsView_Previews: PreviewProvider {
+    static var previews: some View {
+        WorkoutDetailsView(MockService.sampleWorkouts[0])
+    }
+}

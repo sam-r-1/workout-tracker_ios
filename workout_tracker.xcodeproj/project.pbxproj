@@ -458,10 +458,7 @@
 		7F63BAC328E5E715005B6235 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				7F7638AA29396655006D7D14 /* ExerciseResults */,
 				7F63BAC528E5E732005B6235 /* HistoryView.swift */,
-				7FA56BFF28EB829000E977AC /* WorkoutDetailsView.swift */,
-				7FA56C0528EB9CEA00E977AC /* InstanceHistoryRowView.swift */,
 				7FA56C1028ECCC4F00E977AC /* WorkoutDetailsScrollView.swift */,
 				7FA5481528EE35FD009B1508 /* HistoryByWorkoutView.swift */,
 				7FA5481728EE3796009B1508 /* HistoryByExerciseView.swift */,
@@ -629,6 +626,7 @@
 		7FA320BD28A3FCA20071D835 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				7FA3D38529D692A800FFD194 /* History */,
 				7FA5480828EDEF7A009B1508 /* General */,
 				7F0E8F6528A6F9AF00824BED /* Authentication */,
 				7F02753628A5A40C009536CF /* Header */,
@@ -713,6 +711,17 @@
 			path = Exercise;
 			sourceTree = "<group>";
 		};
+		7FA3D38529D692A800FFD194 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				7F7638AA29396655006D7D14 /* ExerciseResults */,
+				7FA56C0528EB9CEA00E977AC /* InstanceHistoryRowView.swift */,
+				7FA56BFF28EB829000E977AC /* WorkoutDetailsView.swift */,
+				7FA56BFB28EB792900E977AC /* WorkoutRowView.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
 		7FA5480828EDEF7A009B1508 /* General */ = {
 			isa = PBXGroup;
 			children = (
@@ -780,7 +789,6 @@
 			children = (
 				7FC0002128AC307400D484C6 /* StopwatchManager.swift */,
 				7FC0002928AD5D7800D484C6 /* ExerciseDisclosureGroupView.swift */,
-				7FA56BFB28EB792900E977AC /* WorkoutRowView.swift */,
 			);
 			path = Workout;
 			sourceTree = "<group>";
