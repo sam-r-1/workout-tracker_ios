@@ -52,14 +52,7 @@ struct PerformanceChartTileView_Previews: PreviewProvider {
     static let entries = x.map({ ChartDataEntry(x: Double($0), y: y[$0]) })
     
     static var previews: some View {
-        Group {
-            PerformanceChartTileView(title: "Weight", entries: entries)
-                .frame(height: 275)
-            
-            NavigationView {
-                ExerciseHistoryView(exercise: MockService.sampleExercises[2])
-            }
-            .preferredColorScheme(.dark)
-        }
+        PerformanceChartTileView(title: "Weight", entries: entries)
+            .frame(height: 275)
     }
 }

@@ -10,9 +10,14 @@ import Charts
 
 struct ExerciseHistoryView: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var viewModel: HistoryView.ViewModel
     
+    @ObservedObject var viewModel: HistoryView.ViewModel
     let exercise: Exercise
+    
+    init(exercise: Exercise, viewModel: HistoryView.ViewModel) {
+        self.exercise = exercise
+        self.viewModel = viewModel
+    }
     
     @State private var instancesForThisExercise = [ExerciseInstance]()
     
@@ -82,12 +87,12 @@ struct ExerciseHistoryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView {
-                ExerciseHistoryView(exercise: previewExercise)
+                ExerciseHistoryView(exercise: previewExercise, viewModel: HistoryView.ViewModel())
             }
             .environment(\.sizeCategory, .extraExtraLarge)
 
             NavigationView {
-                ExerciseHistoryView(exercise: previewExercise)
+                ExerciseHistoryView(exercise: previewExercise, viewModel: HistoryView.ViewModel())
             }
             .previewInterfaceOrientation(.landscapeLeft)
         }

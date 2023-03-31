@@ -11,16 +11,17 @@ struct WorkoutDetailsView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) var sizeCategory
-    @EnvironmentObject var viewModel: HistoryView.ViewModel
     
+    @ObservedObject var viewModel: HistoryView.ViewModel
     @State private var showDeleteDialog = false
     
     let workout: Workout
     
     let accessibilityThreshold = ContentSizeCategory.accessibilityLarge
     
-    init(_ workout: Workout) {
+    init(workout: Workout, viewModel: HistoryView.ViewModel) {
         self.workout = workout
+        self.viewModel = viewModel
     }
     
     var body: some View {
@@ -40,7 +41,7 @@ struct WorkoutDetailsView: View {
                 
                 Spacer(minLength: 12)
                 
-                WorkoutDetailsScrollView(workout: workout)
+                WorkoutDetailsScrollView(workout: workout, viewModel: viewModel)
             }
             .navigationTitle("Workout Summary")
             .navigationBarTitleDisplayMode(.inline)
@@ -72,6 +73,6 @@ struct WorkoutDetailsView: View {
 
 struct WorkoutDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutDetailsView(MockService.sampleWorkouts[0])
+        WorkoutDetailsView(workout: MockService.sampleWorkouts[0], viewModel: HistoryView.ViewModel())
     }
 }

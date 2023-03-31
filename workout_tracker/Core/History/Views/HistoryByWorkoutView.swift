@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HistoryByWorkoutView: View {
-    @EnvironmentObject var viewModel: HistoryView.ViewModel
+    @ObservedObject var viewModel: HistoryView.ViewModel
     
     var body: some View {
         Group {
@@ -33,7 +33,7 @@ extension HistoryByWorkoutView {
                 List {
                     ForEach(viewModel.workouts, id: \.timestamp) { workout in
                         NavigationLink {
-                            WorkoutDetailsView(workout).environmentObject(viewModel)
+                            WorkoutDetailsView(workout: workout, viewModel: viewModel)
                         } label: {
                             WorkoutRowView(workout: workout)
                         }
@@ -72,6 +72,6 @@ extension HistoryByWorkoutView {
 
 struct HistoryByWorkoutView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryByWorkoutView()
+        HistoryByWorkoutView(viewModel: HistoryView.ViewModel())
     }
 }

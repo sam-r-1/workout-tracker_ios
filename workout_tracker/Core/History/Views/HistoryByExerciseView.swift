@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HistoryByExerciseView: View {
-    @EnvironmentObject var viewModel: HistoryView.ViewModel
+    @ObservedObject var viewModel: HistoryView.ViewModel
     
     var body: some View {
         switch viewModel.loadingState {
@@ -31,7 +31,7 @@ extension HistoryByExerciseView {
                 List {
                     ForEach(viewModel.exercises) { exercise in
                         NavigationLink {
-                            ExerciseHistoryView(exercise: exercise).environmentObject(viewModel)
+                            ExerciseHistoryView(exercise: exercise, viewModel: viewModel)
                         } label: {
                             ExerciseRowView(exercise)
                         }
@@ -71,6 +71,6 @@ extension HistoryByExerciseView {
 
 struct HistoryByExerciseView_Previews: PreviewProvider {
     static var previews: some View {
-        HistoryByExerciseView()
+        HistoryByExerciseView(viewModel: HistoryView.ViewModel())
     }
 }

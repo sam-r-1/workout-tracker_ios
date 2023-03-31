@@ -32,8 +32,8 @@ struct HistoryView: View {
                 .frame(maxWidth: min(UIScreen.main.bounds.width * 0.8, 400))
                 
                 switch historyMode {
-                    case .workout: HistoryByWorkoutView()
-                    case .exercise: HistoryByExerciseView()
+                    case .workout: HistoryByWorkoutView(viewModel: viewModel)
+                    case .exercise: HistoryByExerciseView(viewModel: viewModel)
                 }
             }
             .environmentObject(viewModel)

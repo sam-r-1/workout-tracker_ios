@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct WorkoutDetailsScrollView: View {
-    @EnvironmentObject var viewModel: HistoryView.ViewModel
+    @ObservedObject var viewModel: HistoryView.ViewModel
     
     let workout: Workout
+    
+    init(workout: Workout, viewModel: HistoryView.ViewModel) {
+        self.workout = workout
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         Group {
