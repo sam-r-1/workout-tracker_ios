@@ -12,7 +12,7 @@ struct SelectExerciseView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) var sizeCategory
-    let onAdd: (String) -> Void
+    let onAdd: (String) async -> Void
     
     var body: some View {
         ZStack {
@@ -60,8 +60,10 @@ extension SelectExerciseView {
                         exercise,
                         trailingIcon: AnyView(
                             Button {
-                                onAdd(exercise.id!)
-                                presentationMode.wrappedValue.dismiss()
+                                Task {
+                                    await onAdd(exercise.id!)
+                                    presentationMode.wrappedValue.dismiss()
+                                }
                             } label: {
                                 if self.sizeCategory.isAccessibilityCategory {
                                     Image(systemName: "plus")

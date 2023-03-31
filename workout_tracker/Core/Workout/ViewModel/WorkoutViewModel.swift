@@ -24,10 +24,12 @@ extension WorkoutView {
             self.objectWillChange.send()
         }
         
-        func addItem(_ exerciseId: String) {
-            fetchAndSetExerciseById(exerciseId) { exercise in
+        func addItem(_ exerciseId: String) async {
+            do {
+                let exercise = try await exerciseService.fetchExerciseById(id: exerciseId)
+                
                 self.items.append(ExerciseDataFields(parent: self, exercise: exercise))
-            }
+            } catch _ {}
         }
         
         func deleteItem(at index: Int) {
@@ -46,12 +48,6 @@ extension WorkoutView {
                     self.items.append(ExerciseDataFields(parent: self, exercise: exercise))
                 }
             } catch _ {}
-        }
-        
-        private func fetchAndSetExerciseById(_ id: String, completion: @escaping (Exercise) -> Void) {
-            exerciseService.fetchExerciseById(id: id) { exercise in
-                completion(exercise)
-            }
         }
         
         func finishWorkout() async {

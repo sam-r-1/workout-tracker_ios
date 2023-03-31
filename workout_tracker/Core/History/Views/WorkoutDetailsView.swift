@@ -62,6 +62,10 @@ struct WorkoutDetailsView: View {
                     }
                 }
             }
+            
+            if viewModel.loadingState == .loading {
+                LoadingView(includeBorder: true)
+            }
         }
     }
 }

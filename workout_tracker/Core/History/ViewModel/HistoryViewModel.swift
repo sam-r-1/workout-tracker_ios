@@ -77,6 +77,8 @@ extension HistoryView {
         }
         
         func deleteWorkout(workout: Workout) async {
+            self.loadingState = .loading
+            
             do {
                 try await workoutService.deleteWorkout(id: workout.id!)
                 

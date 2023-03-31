@@ -70,7 +70,7 @@ struct WorkoutView: View {
         }
         .fullScreenCover(isPresented: $showAddExercise) {
             SelectExerciseView { exerciseId in
-                viewModel.addItem(exerciseId)
+                await viewModel.addItem(exerciseId)
             }
         }
         .task {
