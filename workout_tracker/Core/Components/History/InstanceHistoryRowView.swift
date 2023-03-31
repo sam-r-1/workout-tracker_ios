@@ -12,7 +12,6 @@ struct InstanceHistoryRowView: View {
     @Environment(\.sizeCategory) var sizeCategory
     let exercise: Exercise?
     let instance: ExerciseInstance
-    let onDelete: (String) async -> Void
     let iconSize = 20.0
     let accessibilityThreshold = ContentSizeCategory.accessibilityLarge
     
@@ -77,8 +76,6 @@ struct InstanceHistoryRowView: View {
 
 struct InstanceHistoryRowView_Previews: PreviewProvider {
     static var previews: some View {
-        InstanceHistoryRowView(exercise: MockService.sampleExercises[0], instance: MockService.sampleInstances[1]) { _ in
-            //
-        }
+        InstanceHistoryRowView(exercise: MockService.sampleExercises[0], instance: MockService.sampleInstances[1])
     }
 }

@@ -41,18 +41,6 @@ struct ExerciseService {
     }
     
     // fetch a specific exercise from the backend by its ID
-    func fetchExerciseById(id: String, completion: @escaping(Exercise) -> Void) {
-        debugPrint("DEBUG: Delete fetchExerciseById function with closure")
-        
-        db.collection("exercises").document(id)
-            .getDocument { snapshot, _ in
-                guard let snapshot = snapshot else { return }
-                
-                guard let exercise = try? snapshot.data(as: Exercise.self) else { return }
-                completion(exercise)
-            }
-    }
-    
     func fetchExerciseById(id: String) async throws -> Exercise {
         do {
             return try await db.collection("exercises").document(id)

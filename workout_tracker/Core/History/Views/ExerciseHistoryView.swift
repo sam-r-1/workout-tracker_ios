@@ -7,12 +7,14 @@
 
 import SwiftUI
 import Charts
-// import Firebase
 
 struct ExerciseHistoryView: View {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var viewModel: HistoryView.ViewModel
+    
     let exercise: Exercise
-    @StateObject var viewModel = ExerciseResultsViewModel()
+    
+    @State private var instancesForThisExercise = [ExerciseInstance]()
     
     var body: some View {
         GeometryReader { geometry in
@@ -20,20 +22,22 @@ struct ExerciseHistoryView: View {
                 Color(colorScheme == .light ? .systemGray6 : .black).edgesIgnoringSafeArea(.all)
                 
                 Group {
-                    if viewModel.exerciseInstances.isEmpty {
+                    if instancesForThisExercise.isEmpty {
                         Text("No data for \(exercise.name)")
                     } else {
                         VStack(spacing: 4) {
                             performanceChart
                             
                             List {
-                                ForEach(viewModel.exerciseInstances, id: \.timestamp) { instance in
+                                ForEach(instancesForThisExercise, id: \.timestamp) { instance in
                                     ExerciseResultRowView(exercise: self.exercise, instance: instance)
                                         .listRowInsets(EdgeInsets())
                                 }
                                 .onDelete { offset in
                                     Task {
-                                        await viewModel.deleteInstance(at: offset)
+                                        guard let idToDelete = instancesForThisExercise[offset.first!].id else { return }
+                                        self.instancesForThisExercise.remove(atOffsets: offset)
+                                        await viewModel.deleteInstance(by: idToDelete)
                                     }
                                 }
                             }
@@ -41,12 +45,12 @@ struct ExerciseHistoryView: View {
                         }
                     }
                 }
-                .task {
-                    await viewModel.fetchInstancesForExercise(self.exercise.id)
-                }
             }
             .navigationTitle(exercise.name)
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                self.instancesForThisExercise = viewModel.findInstances(forExercise: self.exercise)
+            }
         }
     }
 }
@@ -55,15 +59,15 @@ extension ExerciseHistoryView {
     var performanceChart: some View {
         TabView {
             if self.exercise.includeWeight {
-                PerformanceChartTileView(title: "Weight", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.weight) }, chartFillColor: .purple)
+                PerformanceChartTileView(title: "Weight", entries: instancesForThisExercise.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.weight) }, chartFillColor: .purple)
             }
             
             if self.exercise.includeReps {
-                PerformanceChartTileView(title: "Reps", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: Double($0.reps)) }, chartFillColor: UIColor(red: 46/255, green: 204/255, blue: 113/255, alpha: 1))
+                PerformanceChartTileView(title: "Reps", entries: instancesForThisExercise.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: Double($0.reps)) }, chartFillColor: UIColor(red: 46/255, green: 204/255, blue: 113/255, alpha: 1))
             }
             
             if self.exercise.includeTime {
-                PerformanceChartTileView(title: "Time", entries: viewModel.chronologicalInstances.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.time) }, chartFillColor: .blue)
+                PerformanceChartTileView(title: "Time", entries: instancesForThisExercise.map { ChartDataEntry(x: $0.timestamp.dateValue().timeIntervalSinceReferenceDate.magnitude, y: $0.time) }, chartFillColor: .blue)
             }
             
         }
@@ -78,12 +82,12 @@ struct ExerciseHistoryView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             NavigationView {
-                ExerciseHistoryView(exercise: previewExercise, viewModel: ExerciseResultsViewModel(fromPreview: true))
+                ExerciseHistoryView(exercise: previewExercise)
             }
             .environment(\.sizeCategory, .extraExtraLarge)
 
             NavigationView {
-                ExerciseHistoryView(exercise: previewExercise, viewModel: ExerciseResultsViewModel(fromPreview: true))
+                ExerciseHistoryView(exercise: previewExercise)
             }
             .previewInterfaceOrientation(.landscapeLeft)
         }

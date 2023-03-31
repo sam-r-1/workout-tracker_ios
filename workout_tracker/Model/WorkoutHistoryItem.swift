@@ -13,23 +13,11 @@ class WorkoutHistoryItem: Identifiable, Equatable {
     }
     
     let id = UUID()
-    var exercise: Exercise? = nil {
-        didSet { self.parent.update() }
-    }
+    let exercise: Exercise
     let instance: ExerciseInstance
-    private let parent: WorkoutDetailsViewModel
-    private let exerciseService = ExerciseService()
-    private let instanceService = ExerciseInstanceService()
     
-    init(fromInstance instance: ExerciseInstance, parent: WorkoutDetailsViewModel) {
+    init(exercise: Exercise, instance: ExerciseInstance) {
+        self.exercise = exercise
         self.instance = instance
-        self.parent = parent
-        fetchExerciseById(instance.exerciseId)
-    }
-    
-    private func fetchExerciseById(_ id: String) {
-        exerciseService.fetchExerciseById(id: id) { exercise in
-            self.exercise = exercise
-        }
     }
 }

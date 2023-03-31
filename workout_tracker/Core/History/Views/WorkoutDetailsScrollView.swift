@@ -8,20 +8,41 @@
 import SwiftUI
 
 struct WorkoutDetailsScrollView: View {
+    @EnvironmentObject var viewModel: HistoryView.ViewModel
     
     let workout: Workout
-    @StateObject var viewModel = WorkoutDetailsViewModel()
     
     var body: some View {
-        List {
-            ForEach(viewModel.items) { item in
-                InstanceHistoryRowView(exercise: item.exercise, instance: item.instance, onDelete: { id in
-                    await viewModel.deleteInstance(by: id)
-                })
+        Group {
+            if !viewModel.historyItems.isEmpty {
+                List {
+                    ForEach(viewModel.historyItems) { item in
+                        InstanceHistoryRowView(exercise: item.exercise, instance: item.instance)
+                    }
+                    .onDelete { offset in
+                        Task {
+                            guard let idToDelete = viewModel.instances.first(where: { $0.id == viewModel.historyItems[offset.first!].instance.id })?.id else { return }
+                            
+                            viewModel.historyItems.remove(atOffsets: offset)
+                            
+                            await viewModel.deleteInstance(by: idToDelete)
+                        }
+                    }
+                }
+            } else {
+                VStack {
+                    Spacer()
+                    
+                    Text("No data for this workout.")
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(Color(.systemGray))
+                    
+                    Spacer()
+                }
             }
         }
-        .task {
-            await viewModel.fetchItems(fromInstanceIdList: workout.exerciseInstanceIdList)
+        .onAppear {
+            viewModel.createItems(forWorkout: workout)
         }
     }
 }

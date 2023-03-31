@@ -11,24 +11,6 @@ import Firebase
 struct ExerciseInstanceService {
     private let db = Firestore.firestore()
     
-    func uploadInstance(_ instance: ExerciseInstance) async throws -> String {
-        guard let uid = Auth.auth().currentUser?.uid else { throw ExerciseInstanceServiceError.authenticationError }
-        
-        let data = ["uid": uid,
-                    "exerciseId": instance.exerciseId,
-                    "timestamp": instance.timestamp,
-                    "reps": instance.reps,
-                    "time": instance.time,
-                    "weight": instance.weight,
-                    ] as [String: Any]
-    
-        let ref = Firestore.firestore().collection("exercise-instances").document()
-
-        try await ref.setData(data)
-        
-        return ref.documentID
-    }
-    
     func uploadInstances(_ instances: [ExerciseInstance]) async throws -> [String] {
         guard let uid = Auth.auth().currentUser?.uid else { throw ExerciseInstanceServiceError.authenticationError }
         
@@ -75,6 +57,23 @@ struct ExerciseInstanceService {
             return instance.first!
         } catch {
             throw  ExerciseInstanceServiceError.dataFetchingError
+        }
+    }
+    
+    // fetch all of the user's instances
+    func fetchInstances() async throws -> [ExerciseInstance] {
+        guard let uid = Auth.auth().currentUser?.uid else { throw ExerciseInstanceServiceError.authenticationError }
+        
+        do {
+            let snapshot = try await db.collection("exercise-instances")
+                .whereField("uid", isEqualTo: uid)
+                .getDocuments()
+            
+            let instances = snapshot.documents.compactMap({ try? $0.data(as: ExerciseInstance.self) })
+            
+            return instances
+        } catch {
+            throw ExerciseInstanceServiceError.dataFetchingError
         }
     }
     

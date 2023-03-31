@@ -10,6 +10,8 @@ import SwiftfulLoadingIndicators
 
 struct HistoryView: View {
     @Environment(\.colorScheme) var colorScheme
+    
+    @StateObject var viewModel = ViewModel()
     @State private var historyMode = HistoryMode.workout
 
     
@@ -34,7 +36,11 @@ struct HistoryView: View {
                     case .exercise: HistoryByExerciseView()
                 }
             }
+            .environmentObject(viewModel)
             .navigationTitle("My History")
+            .task {
+                await viewModel.fetchUserHistory()
+            }
         }
     }
 }
