@@ -8,7 +8,20 @@
 import Foundation
 import Firebase
 
-struct ExerciseService {
+protocol ExerciseService {
+    
+    func setExercise(id: String?, name: String, type: String, details: String, includeWeight: Bool, includeReps: Bool, includeTime: Bool) async throws
+    func fetchExerciseById(id: String) async throws -> Exercise
+    
+    func fetchExercises(fromIdList: [String]) async throws -> [Exercise]
+    
+    func fetchExercises() async throws -> [Exercise]
+    
+    func deleteExercise(id: String) async throws
+    
+}
+
+struct RealExerciseService: ExerciseService {
     private let db = Firestore.firestore()
     
     // create/edit an exercise and post it
@@ -96,7 +109,7 @@ struct ExerciseService {
     }
 }
 
-extension ExerciseService {
+extension RealExerciseService {
     enum ExerciseServiceError: Error {
         case authenticationError
         case dataFetchingError

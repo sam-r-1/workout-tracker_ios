@@ -25,7 +25,7 @@ extension HistoryView {
         @Published var historyItems = [WorkoutHistoryItem]()
         
         // Services
-        private let exerciseService = ExerciseService()
+        private let exerciseService = RealExerciseService()
         private let instanceService = ExerciseInstanceService()
         private let workoutService = WorkoutService()
         

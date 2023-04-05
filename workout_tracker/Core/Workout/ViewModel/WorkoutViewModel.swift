@@ -16,7 +16,7 @@ extension WorkoutView {
         @Published var workoutState = WorkoutState.active
         @Published var items = [ExerciseDataFields]()
         
-        private let exerciseService = ExerciseService()
+        private let exerciseService = RealExerciseService()
         private let workoutService = WorkoutService()
         private let instanceService = ExerciseInstanceService()
         

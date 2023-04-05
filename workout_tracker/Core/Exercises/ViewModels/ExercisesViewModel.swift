@@ -14,8 +14,13 @@ extension ExercisesView {
         @Published var loadingState = LoadingState.loading
         @Published var searchText = ""
         @Published var exercises = [Exercise]()
-        private let service = ExerciseService()
+        
+        private let exerciseService: ExerciseService
         private let userService = UserService()
+        
+        init(exerciseService: ExerciseService) {
+            self.exerciseService = RealExerciseService()
+        }
         
         // Allow the user to filter their exercises by title or type
         var searchableExercises: [Exercise] {
@@ -32,7 +37,7 @@ extension ExercisesView {
         
         func fetchExercises() async {
             do {
-                self.exercises = try await service.fetchExercises()
+                self.exercises = try await exerciseService.fetchExercises()
                 self.loadingState = .data
             } catch {
                 self.loadingState = .error

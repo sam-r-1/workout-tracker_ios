@@ -14,7 +14,7 @@ extension SelectExerciseView {
         @Published var loadingState = LoadingState.loading
         @Published var searchText = ""
         @Published var userExercises = [Exercise]()
-        let service = ExerciseService()
+        let service = RealExerciseService()
         
         // Allow the user to filter their exercises by title or type
         var searchableExercises: [Exercise] {

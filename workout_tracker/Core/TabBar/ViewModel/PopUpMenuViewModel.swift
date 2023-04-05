@@ -11,7 +11,7 @@ extension PopUpMenuView {
     
     @MainActor
     class ViewModel: ObservableObject {
-        let exerciseService = ExerciseService()
+        let exerciseService = RealExerciseService()
         let templateService = TemplateService()
         
         // confirm that the user has at least one exercise created

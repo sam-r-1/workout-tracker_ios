@@ -132,11 +132,11 @@ struct ModifyExerciseView: View {
 struct ModifyExerciseView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ModifyExerciseView(parentViewModel: ExercisesView.ViewModel())
+            ModifyExerciseView(parentViewModel: ExercisesView.ViewModel(exerciseService: RealExerciseService()))
         }
         
         NavigationView {
-            ModifyExerciseView(parentViewModel: ExercisesView.ViewModel())
+            ModifyExerciseView(parentViewModel: ExercisesView.ViewModel(exerciseService: RealExerciseService()))
         }
         .previewDevice(PreviewDevice(rawValue: "iPhone SE (3rd generation)"))
     }

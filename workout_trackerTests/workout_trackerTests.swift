@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import workout_tracker
+@testable import Workout_Tracker
 
 class workout_trackerTests: XCTestCase {
 

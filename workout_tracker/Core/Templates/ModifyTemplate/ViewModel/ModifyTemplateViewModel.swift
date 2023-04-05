@@ -24,7 +24,7 @@ extension ModifyTemplateView {
         @Published var isEditingComplete = false
         
         let service = TemplateService()
-        let exerciseService = ExerciseService()
+        let exerciseService = RealExerciseService()
         
         init(template: Template? = nil) {
             self.template = template
