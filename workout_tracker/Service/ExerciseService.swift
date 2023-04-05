@@ -116,3 +116,44 @@ extension RealExerciseService {
         case setDataError
     }
 }
+
+// MARK: - Stub
+struct StubExerciseService: ExerciseService {
+    func setExercise(id: String?, name: String, type: String, details: String, includeWeight: Bool, includeReps: Bool, includeTime: Bool) async throws {
+        return
+    }
+    
+    func fetchExerciseById(id: String) async throws -> Exercise {
+        guard let exercise = MockService.sampleExercises.first(where: { $0.id == id }) else { throw ServiceError.stubServiceError }
+        
+        return exercise
+    }
+    
+    func fetchExercises(fromIdList: [String]) async throws -> [Exercise] {
+        var exercises = [Exercise]()
+        
+        for id in fromIdList {
+            guard let exercise = MockService.sampleExercises.first(where: { $0.id == id }) else { throw ServiceError.stubServiceError }
+            
+            exercises.append(exercise)
+        }
+        
+        return exercises
+    }
+    
+    func fetchExercises() async throws -> [Exercise] {
+        return MockService.sampleExercises
+    }
+    
+    func deleteExercise(id: String) async throws {
+        return
+    }
+    
+    
+}
+
+extension StubExerciseService {
+    enum ServiceError: Error {
+        case stubServiceError
+    }
+}
