@@ -9,7 +9,7 @@
 * See [here](https://github.com/sam-r-1/workout-tracker_ios/tree/main/app-screen-captures) for more screenshots
 
 ![in a workout](https://github.com/sam-r-1/workout-tracker_ios/blob/main/app-screen-captures/in-workout.png)
-![exercise history](https://github.com/sam-r-1/workout-tracker_ios/blob/main/app-screen-captures/exercise-results.png)
+![exercise history](https://github.com/sam-r-1/workout-tracker_ios/blob/main/app-screen-captures/edit-exercise-screen.png)
 
 ### Future Improvements
 * Bug fixes and accessibility improvements
