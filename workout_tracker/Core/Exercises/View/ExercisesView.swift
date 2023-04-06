@@ -11,7 +11,7 @@ struct ExercisesView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.sizeCategory) var sizeCategory
     @State private var showModifyExerciseView = false
-    @StateObject var viewModel = ViewModel(exerciseService: RealExerciseService())
+    @StateObject var viewModel = ViewModel()
     
     var body: some View {
         Group {

@@ -16,10 +16,9 @@ extension ExercisesView {
         @Published var exercises = [Exercise]()
         
         private let exerciseService: ExerciseService
-        private let userService = UserService()
         
-        init(exerciseService: ExerciseService) {
-            self.exerciseService = RealExerciseService()
+        init(exerciseService: ExerciseService = RealExerciseService()) {
+            self.exerciseService = exerciseService
         }
         
         // Allow the user to filter their exercises by title or type
