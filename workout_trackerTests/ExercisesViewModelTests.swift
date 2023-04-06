@@ -1,5 +1,5 @@
 //
-//  workout_trackerTests.swift
+//  ExercisesViewModelTests.swift
 //  workout_trackerTests
 //
 //  Created by Sam Rankin on 8/10/22.
@@ -10,28 +10,65 @@ import XCTest
 
 @MainActor
 class ExercisesViewModelTests: XCTestCase {
+    
+    private var vm: ExercisesView.ViewModel?
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        vm = ExercisesView.ViewModel(exerciseService: StubExerciseService())
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func test_ExercisesViewModel_loadingState_shouldStartInLoading() throws {
+    
+    // MARK: - Variables
+    func test_ExercisesViewModel_loadingState_shouldStartInLoading() {
         // Given
-        let vm = ExercisesView.ViewModel(exerciseService: StubExerciseService())
+        guard let vm else { XCTFail(); return }
         
         // Then
         XCTAssertEqual(vm.loadingState, LoadingState.loading)
     }
+    
+    func test_ExercisesViewModel_searchText_shouldStartEmpty() {
+        // Given
+        guard let vm else { XCTFail(); return }
+        
+        // Then
+        XCTAssertEqual(vm.searchText, "")
+    }
 
-//    func testPerformanceExample() throws {
-//        // This is an example of a performance test case.
-//        self.measure {
-//            // Put the code you want to measure the time of here.
-//        }
-//    }
+    func test_ExercisesViewModel_exercises_shouldStartEmpty() {
+        // Given
+        guard let vm else { XCTFail(); return }
+        
+        // Then
+        XCTAssert(vm.exercises.isEmpty)
+    }
+    
+    
+    // MARK: - Functions
+    func test_ExercisesViewModel_fetchExercises_shouldSetLoadingStateToDataOnSuccess() async {
+        // Given
+        guard let vm else { XCTFail(); return }
+        
+        // When
+        await vm.fetchExercises()
+        
+        // Then
+        XCTAssertEqual(vm.loadingState, LoadingState.data)
+    }
+    
+    func test_ExercisesViewModel_fetchExercises_shouldSetExercises() async {
+        // Given
+        guard let vm else { XCTFail(); return }
+        
+        // When
+        await vm.fetchExercises()
+        
+        // Then
+        XCTAssert(!vm.exercises.isEmpty)
+    }
 
 }
