@@ -8,7 +8,20 @@
 import Foundation
 import Firebase
 
-struct ExerciseService {
+protocol ExerciseService {
+    
+    func setExercise(id: String?, name: String, type: String, details: String, includeWeight: Bool, includeReps: Bool, includeTime: Bool) async throws
+    func fetchExerciseById(id: String) async throws -> Exercise
+    
+    func fetchExercises(fromIdList: [String]) async throws -> [Exercise]
+    
+    func fetchExercises() async throws -> [Exercise]
+    
+    func deleteExercise(id: String) async throws
+    
+}
+
+struct RealExerciseService: ExerciseService {
     private let db = Firestore.firestore()
     
     // create/edit an exercise and post it
@@ -96,10 +109,82 @@ struct ExerciseService {
     }
 }
 
-extension ExerciseService {
+extension RealExerciseService {
     enum ExerciseServiceError: Error {
         case authenticationError
         case dataFetchingError
         case setDataError
     }
 }
+
+// MARK: - Stub
+struct StubExerciseService: ExerciseService {
+    func setExercise(id: String?, name: String, type: String, details: String, includeWeight: Bool, includeReps: Bool, includeTime: Bool) async throws {
+        return
+    }
+    
+    func fetchExerciseById(id: String) async throws -> Exercise {
+        guard let exercise = MockService.sampleExercises.first(where: { $0.id == id }) else { throw ServiceError.stubServiceError }
+        
+        return exercise
+    }
+    
+    func fetchExercises(fromIdList: [String]) async throws -> [Exercise] {
+        var exercises = [Exercise]()
+        
+        for id in fromIdList {
+            guard let exercise = MockService.sampleExercises.first(where: { $0.id == id }) else { throw ServiceError.stubServiceError }
+            
+            exercises.append(exercise)
+        }
+        
+        return exercises
+    }
+    
+    func fetchExercises() async throws -> [Exercise] {
+        return MockService.sampleExercises
+    }
+    
+    func deleteExercise(id: String) async throws {
+        return
+    }
+    
+    
+}
+
+extension StubExerciseService {
+    enum ServiceError: Error {
+        case stubServiceError
+    }
+}
+
+struct ErrorStubExerciseService: ExerciseService {
+    func setExercise(id: String?, name: String, type: String, details: String, includeWeight: Bool, includeReps: Bool, includeTime: Bool) async throws {
+        throw ServiceError.stubServiceError
+    }
+    
+    func fetchExerciseById(id: String) async throws -> Exercise {
+        throw ServiceError.stubServiceError
+    }
+    
+    func fetchExercises(fromIdList: [String]) async throws -> [Exercise] {
+        throw ServiceError.stubServiceError
+    }
+    
+    func fetchExercises() async throws -> [Exercise] {
+        throw ServiceError.stubServiceError
+    }
+    
+    func deleteExercise(id: String) async throws {
+        throw ServiceError.stubServiceError
+    }
+    
+    
+}
+
+extension ErrorStubExerciseService {
+    enum ServiceError: Error {
+        case stubServiceError
+    }
+}
+

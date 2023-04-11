@@ -21,7 +21,7 @@ extension ModifyExerciseView {
         @Published var includeTime: Bool
         @Published var isEditingComplete = false
         
-        let service = ExerciseService()
+        let service = RealExerciseService()
         let instanceService = ExerciseInstanceService()
         let templateService = TemplateService()
         

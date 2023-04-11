@@ -15,7 +15,7 @@ extension TemplatesView {
         @Published var searchText = ""
         @Published var templates = [Template]()
         private let service = TemplateService()
-        private let exerciseService = ExerciseService()
+        private let exerciseService = RealExerciseService()
         
         // Allow the user to filter their templates by title or type
         var searchableTemplates: [Template] {

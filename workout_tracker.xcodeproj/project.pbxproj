@@ -38,6 +38,7 @@
 		7F53D20E28F5E19000FFB09D /* InvertAppIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53D20D28F5E19000FFB09D /* InvertAppIcons.swift */; };
 		7F53D21028F5E88700FFB09D /* ReorderableForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53D20F28F5E88700FFB09D /* ReorderableForEach.swift */; };
 		7F53D21328F5E91000FFB09D /* DragRelocateDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F53D21228F5E91000FFB09D /* DragRelocateDelegate.swift */; };
+		7F54FB9229E5DB16003D4757 /* RandomString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F54FB9129E5DB16003D4757 /* RandomString.swift */; };
 		7F63BAC628E5E732005B6235 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F63BAC528E5E732005B6235 /* HistoryView.swift */; };
 		7F7638A029367FBC006D7D14 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 7F76389F29367FBC006D7D14 /* Charts */; };
 		7F7638A329368578006D7D14 /* SmallPerformanceLineChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7638A229368578006D7D14 /* SmallPerformanceLineChart.swift */; };
@@ -50,7 +51,7 @@
 		7FA3209328A3F8F30071D835 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA3209228A3F8F30071D835 /* ContentView.swift */; };
 		7FA3209528A3F8F30071D835 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA3209428A3F8F30071D835 /* Assets.xcassets */; };
 		7FA3209828A3F8F30071D835 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA3209728A3F8F30071D835 /* Preview Assets.xcassets */; };
-		7FA320A228A3F8F40071D835 /* workout_trackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA320A128A3F8F40071D835 /* workout_trackerTests.swift */; };
+		7FA320A228A3F8F40071D835 /* ExercisesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA320A128A3F8F40071D835 /* ExercisesViewModelTests.swift */; };
 		7FA320AC28A3F8F40071D835 /* workout_trackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA320AB28A3F8F40071D835 /* workout_trackerUITests.swift */; };
 		7FA320AE28A3F8F40071D835 /* workout_trackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA320AD28A3F8F40071D835 /* workout_trackerUITestsLaunchTests.swift */; };
 		7FA320C128A3FDA20071D835 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA320C028A3FDA20071D835 /* MainTabView.swift */; };
@@ -148,6 +149,7 @@
 		7F53D20D28F5E19000FFB09D /* InvertAppIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvertAppIcons.swift; sourceTree = "<group>"; };
 		7F53D20F28F5E88700FFB09D /* ReorderableForEach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderableForEach.swift; sourceTree = "<group>"; };
 		7F53D21228F5E91000FFB09D /* DragRelocateDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragRelocateDelegate.swift; sourceTree = "<group>"; };
+		7F54FB9129E5DB16003D4757 /* RandomString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomString.swift; sourceTree = "<group>"; };
 		7F63BAC528E5E732005B6235 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		7F7638A229368578006D7D14 /* SmallPerformanceLineChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallPerformanceLineChart.swift; sourceTree = "<group>"; };
 		7F7638A829393999006D7D14 /* MockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockService.swift; sourceTree = "<group>"; };
@@ -161,7 +163,7 @@
 		7FA3209428A3F8F30071D835 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7FA3209728A3F8F30071D835 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7FA3209D28A3F8F40071D835 /* workout_trackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = workout_trackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7FA320A128A3F8F40071D835 /* workout_trackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = workout_trackerTests.swift; sourceTree = "<group>"; };
+		7FA320A128A3F8F40071D835 /* ExercisesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesViewModelTests.swift; sourceTree = "<group>"; };
 		7FA320A728A3F8F40071D835 /* workout_trackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = workout_trackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA320AB28A3F8F40071D835 /* workout_trackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = workout_trackerUITests.swift; sourceTree = "<group>"; };
 		7FA320AD28A3F8F40071D835 /* workout_trackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = workout_trackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -449,6 +451,14 @@
 			path = DragAndDrop;
 			sourceTree = "<group>";
 		};
+		7F54FB9329E5DB1B003D4757 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				7F54FB9129E5DB16003D4757 /* RandomString.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		7F63BAC328E5E715005B6235 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -560,7 +570,8 @@
 		7FA320A028A3F8F40071D835 /* workout_trackerTests */ = {
 			isa = PBXGroup;
 			children = (
-				7FA320A128A3F8F40071D835 /* workout_trackerTests.swift */,
+				7F54FB9329E5DB1B003D4757 /* Helpers */,
+				7FA320A128A3F8F40071D835 /* ExercisesViewModelTests.swift */,
 			);
 			path = workout_trackerTests;
 			sourceTree = "<group>";
@@ -837,6 +848,8 @@
 				7FA3209F28A3F8F40071D835 /* PBXTargetDependency */,
 			);
 			name = workout_trackerTests;
+			packageProductDependencies = (
+			);
 			productName = workout_trackerTests;
 			productReference = 7FA3209D28A3F8F40071D835 /* workout_trackerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1028,7 +1041,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FA320A228A3F8F40071D835 /* workout_trackerTests.swift in Sources */,
+				7FA320A228A3F8F40071D835 /* ExercisesViewModelTests.swift in Sources */,
+				7F54FB9229E5DB16003D4757 /* RandomString.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1250,6 +1264,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PCJW34NLVX;
 				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_PKGINFO_FILE = NO;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rsam.workout-trackerTests";
@@ -1257,7 +1273,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/workout_tracker.app/workout_tracker";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Workout Tracker.app/Workout Tracker";
 			};
 			name = Debug;
 		};
@@ -1270,6 +1286,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = PCJW34NLVX;
 				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_PKGINFO_FILE = NO;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.rsam.workout-trackerTests";
@@ -1277,7 +1295,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/workout_tracker.app/workout_tracker";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Workout Tracker.app/Workout Tracker";
 			};
 			name = Release;
 		};
