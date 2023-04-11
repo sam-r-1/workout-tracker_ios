@@ -47,6 +47,25 @@ class ExercisesViewModelTests: XCTestCase {
         XCTAssert(vm.exercises.isEmpty)
     }
     
+    func test_ExercisesViewModel_searchableExercises_shouldFilterExercises() async {
+        // Given
+        guard let vm else { XCTFail(); return }
+        await vm.fetchExercises()
+        
+        for _ in 1...50 {
+            // When
+            vm.searchText = randomString(length: 1)
+            let query = vm.searchText.lowercased()
+            
+            // Then
+            for exercise in vm.searchableExercises {
+                XCTAssert(exercise.name.lowercased().contains(query) || exercise.type.lowercased().contains(query))
+            }
+            
+            XCTAssert(vm.searchableExercises.count <= vm.exercises.count)
+        }
+    }
+    
     
     // MARK: - Functions
     func test_ExercisesViewModel_fetchExercises_shouldSetLoadingStateToDataOnSuccess() async {
