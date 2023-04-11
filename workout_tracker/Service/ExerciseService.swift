@@ -157,3 +157,34 @@ extension StubExerciseService {
         case stubServiceError
     }
 }
+
+struct ErrorStubExerciseService: ExerciseService {
+    func setExercise(id: String?, name: String, type: String, details: String, includeWeight: Bool, includeReps: Bool, includeTime: Bool) async throws {
+        throw ServiceError.stubServiceError
+    }
+    
+    func fetchExerciseById(id: String) async throws -> Exercise {
+        throw ServiceError.stubServiceError
+    }
+    
+    func fetchExercises(fromIdList: [String]) async throws -> [Exercise] {
+        throw ServiceError.stubServiceError
+    }
+    
+    func fetchExercises() async throws -> [Exercise] {
+        throw ServiceError.stubServiceError
+    }
+    
+    func deleteExercise(id: String) async throws {
+        throw ServiceError.stubServiceError
+    }
+    
+    
+}
+
+extension ErrorStubExerciseService {
+    enum ServiceError: Error {
+        case stubServiceError
+    }
+}
+

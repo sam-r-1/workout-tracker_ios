@@ -70,5 +70,17 @@ class ExercisesViewModelTests: XCTestCase {
         // Then
         XCTAssert(!vm.exercises.isEmpty)
     }
+    
+    func test_ExercisesViewModel_fetchExercises_shouldCatchError() async {
+        // Given
+        let errorVM = ExercisesView.ViewModel(exerciseService: ErrorStubExerciseService())
+        
+        // When
+        await errorVM.fetchExercises()
+        
+        // Then
+        XCTAssertEqual(errorVM.loadingState, LoadingState.error)
+        XCTAssert(errorVM.exercises.isEmpty)
+    }
 
 }
