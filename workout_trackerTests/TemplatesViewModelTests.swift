@@ -64,5 +64,40 @@ final class TemplatesViewModelTests: XCTestCase {
             XCTAssert(vm.searchableTemplates.count <= vm.templates.count)
         }
     }
+    
+    // MARK: - Functions
+    func test_TemplatesViewModel_fetchTemplates_shouldSetLoadingStateToDataOnSuccess() async {
+        // Given
+        guard let vm else { XCTFail(); return }
+        
+        // When
+        await vm.fetchTemplates()
+        
+        // Then
+        XCTAssertEqual(vm.loadingState, LoadingState.data)
+    }
+    
+    func test_TemplatesViewModel_fetchTemplates_shouldSetTemplates() async {
+        // Given
+        guard let vm else { XCTFail(); return }
+        
+        // When
+        await vm.fetchTemplates()
+        
+        // Then
+        XCTAssert(!vm.templates.isEmpty)
+    }
+    
+    func test_TemplatesViewModel_fetchTemplates_shouldCatchError() async {
+        // Given
+        let errorVM = TemplatesView.ViewModel(templateService: ErrorStubTemplateService())
+        
+        // When
+        await errorVM.fetchTemplates()
+        
+        // Then
+        XCTAssertEqual(errorVM.loadingState, LoadingState.error)
+        XCTAssert(errorVM.templates.isEmpty)
+    }
 
 }

@@ -125,3 +125,29 @@ struct StubTemplateService: TemplateService {
     }
     
 }
+
+struct ErrorStubTemplateService: TemplateService {
+    
+    func setTemplate(id: String?, name: String, exerciseIdList: [String], exerciseNameList: [String]) async throws {
+        throw ServiceError.stubServiceError
+    }
+    
+    func fetchTemplates() async throws -> [Template] {
+        throw ServiceError.stubServiceError
+    }
+    
+    func deleteTemplate(id: String) async throws {
+        throw ServiceError.stubServiceError
+    }
+    
+    func deleteExerciseRef(id: String, name: String) async throws {
+        throw ServiceError.stubServiceError
+    }
+    
+}
+
+extension ErrorStubTemplateService {
+    enum ServiceError: Error {
+        case stubServiceError
+    }
+}
