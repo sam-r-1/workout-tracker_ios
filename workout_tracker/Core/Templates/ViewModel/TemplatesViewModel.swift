@@ -16,11 +16,9 @@ extension TemplatesView {
         @Published var templates = [Template]()
         
         private let templateService: TemplateService
-        private let exerciseService: ExerciseService
         
-        init(templateService: TemplateService = RealTemplateService(), exerciseService: ExerciseService = RealExerciseService()) {
+        init(templateService: TemplateService = RealTemplateService()) {
             self.templateService = templateService
-            self.exerciseService = exerciseService
         }
         
         // Allow the user to filter their templates by title or type
