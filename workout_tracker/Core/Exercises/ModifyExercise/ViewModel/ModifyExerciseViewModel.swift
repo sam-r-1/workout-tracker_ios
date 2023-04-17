@@ -23,7 +23,7 @@ extension ModifyExerciseView {
         
         let service = RealExerciseService()
         let instanceService = ExerciseInstanceService()
-        let templateService = TemplateService()
+        let templateService = RealTemplateService()
         
         init(exercise: Exercise? = nil) {
             self.exercise = exercise

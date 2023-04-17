@@ -14,8 +14,14 @@ extension TemplatesView {
         @Published var loadingState = LoadingState.loading
         @Published var searchText = ""
         @Published var templates = [Template]()
-        private let service = TemplateService()
-        private let exerciseService = RealExerciseService()
+        
+        private let templateService: TemplateService
+        private let exerciseService: ExerciseService
+        
+        init(templateService: TemplateService = RealTemplateService(), exerciseService: ExerciseService = RealExerciseService()) {
+            self.templateService = templateService
+            self.exerciseService = exerciseService
+        }
         
         // Allow the user to filter their templates by title or type
         var searchableTemplates: [Template] {
@@ -32,7 +38,7 @@ extension TemplatesView {
         
         func fetchTemplates() async {
             do {
-                self.templates = try await service.fetchTemplates()
+                self.templates = try await templateService.fetchTemplates()
                 self.loadingState = .data
             } catch {
                 debugPrint(error.localizedDescription)

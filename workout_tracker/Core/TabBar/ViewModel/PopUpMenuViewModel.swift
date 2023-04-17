@@ -12,7 +12,7 @@ extension PopUpMenuView {
     @MainActor
     class ViewModel: ObservableObject {
         let exerciseService = RealExerciseService()
-        let templateService = TemplateService()
+        let templateService = RealTemplateService()
         
         // confirm that the user has at least one exercise created
         func canStartWorkout(_ option: PopUpMenuOption) async -> Bool {

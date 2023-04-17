@@ -8,7 +8,19 @@
 import Foundation
 import Firebase
 
-struct TemplateService {
+protocol TemplateService {
+    
+    func setTemplate(id: String?, name: String, exerciseIdList: [String], exerciseNameList: [String]) async throws
+    
+    func fetchTemplates() async throws -> [Template]
+    
+    func deleteTemplate(id: String) async throws
+    
+    func deleteExerciseRef(id: String, name: String) async throws
+    
+}
+
+struct RealTemplateService: TemplateService {
     private let db = Firestore.firestore()
     
     // create/edit a template and post it to the database
@@ -85,11 +97,31 @@ struct TemplateService {
     }
 }
 
-extension TemplateService {
+extension RealTemplateService {
     enum TemplateServiceError: Error {
         case authenticationError
         case dataFetchingError
         case setDataError
         case removeExerciseReferenceError
     }
+}
+
+// MARK: - Stub
+struct StubTemplateService: TemplateService {
+    func setTemplate(id: String?, name: String, exerciseIdList: [String], exerciseNameList: [String]) async throws {
+        return
+    }
+    
+    func fetchTemplates() async throws -> [Template] {
+        return MockService.sampleTemplates
+    }
+    
+    func deleteTemplate(id: String) async throws {
+        return
+    }
+    
+    func deleteExerciseRef(id: String, name: String) async throws {
+        return
+    }
+    
 }
