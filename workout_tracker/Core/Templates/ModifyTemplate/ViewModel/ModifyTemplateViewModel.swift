@@ -23,7 +23,7 @@ extension ModifyTemplateView {
         @Published var exerciseList: [ModifyTemplateExerciseItem]
         @Published var isEditingComplete = false
         
-        let service = TemplateService()
+        let service = RealTemplateService()
         let exerciseService = RealExerciseService()
         
         init(template: Template? = nil) {

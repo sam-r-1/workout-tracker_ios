@@ -15,7 +15,7 @@ extension SelectTemplateView {
         @Published var searchText = ""
         @Published var userTemplates = [Template]()
         @Published var selectedTemplate: Template? = nil
-        let service = TemplateService()
+        let service = RealTemplateService()
         
         // Allow the user to filter their exercises by title or type
         var searchableTemplates: [Template] {

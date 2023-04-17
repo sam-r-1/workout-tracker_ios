@@ -1,29 +1,28 @@
 //
-//  ExercisesViewModelTests.swift
+//  TemplatesViewModelTests.swift
 //  workout_trackerTests
 //
-//  Created by Sam Rankin on 8/10/22.
+//  Created by Sam Rankin on 4/17/23.
 //
 
 import XCTest
 @testable import Workout_Tracker
 
 @MainActor
-final class ExercisesViewModelTests: XCTestCase {
+final class TemplatesViewModelTests: XCTestCase {
     
-    private var vm: ExercisesView.ViewModel?
+    private var vm: TemplatesView.ViewModel?
 
     override func setUpWithError() throws {
-        vm = ExercisesView.ViewModel(exerciseService: StubExerciseService())
+        vm = TemplatesView.ViewModel(templateService: StubTemplateService())
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    
-    // MARK: - Variables
-    func test_ExercisesViewModel_loadingState_shouldStartInLoading() {
+// MARK: - Variables
+    func test_TemplatesViewModel_loadingState_shouldStartInLoading() {
         // Given
         guard let vm else { XCTFail(); return }
         
@@ -31,7 +30,7 @@ final class ExercisesViewModelTests: XCTestCase {
         XCTAssertEqual(vm.loadingState, LoadingState.loading)
     }
     
-    func test_ExercisesViewModel_searchText_shouldStartEmpty() {
+    func test_TemplatesViewModel_searchText_shouldStartEmpty() {
         // Given
         guard let vm else { XCTFail(); return }
         
@@ -39,18 +38,18 @@ final class ExercisesViewModelTests: XCTestCase {
         XCTAssertEqual(vm.searchText, "")
     }
 
-    func test_ExercisesViewModel_exercises_shouldStartEmpty() {
+    func test_TemplatesViewModel_templates_shouldStartEmpty() {
         // Given
         guard let vm else { XCTFail(); return }
         
         // Then
-        XCTAssert(vm.exercises.isEmpty)
+        XCTAssert(vm.templates.isEmpty)
     }
     
-    func test_ExercisesViewModel_searchableExercises_shouldFilterExercises() async {
+    func test_TemplatesViewModel_searchableTemplates_shouldFilterTemplates() async {
         // Given
         guard let vm else { XCTFail(); return }
-        await vm.fetchExercises()
+        await vm.fetchTemplates()
         
         for _ in 1...50 {
             // When
@@ -58,48 +57,47 @@ final class ExercisesViewModelTests: XCTestCase {
             let query = vm.searchText.lowercased()
             
             // Then
-            for exercise in vm.searchableExercises {
-                XCTAssert(exercise.name.lowercased().contains(query) || exercise.type.lowercased().contains(query))
+            for template in vm.searchableTemplates {
+                XCTAssert(template.name.lowercased().contains(query))
             }
             
-            XCTAssert(vm.searchableExercises.count <= vm.exercises.count)
+            XCTAssert(vm.searchableTemplates.count <= vm.templates.count)
         }
     }
     
-    
     // MARK: - Functions
-    func test_ExercisesViewModel_fetchExercises_shouldSetLoadingStateToDataOnSuccess() async {
+    func test_TemplatesViewModel_fetchTemplates_shouldSetLoadingStateToDataOnSuccess() async {
         // Given
         guard let vm else { XCTFail(); return }
         
         // When
-        await vm.fetchExercises()
+        await vm.fetchTemplates()
         
         // Then
         XCTAssertEqual(vm.loadingState, LoadingState.data)
     }
     
-    func test_ExercisesViewModel_fetchExercises_shouldSetExercises() async {
+    func test_TemplatesViewModel_fetchTemplates_shouldSetTemplates() async {
         // Given
         guard let vm else { XCTFail(); return }
         
         // When
-        await vm.fetchExercises()
+        await vm.fetchTemplates()
         
         // Then
-        XCTAssert(!vm.exercises.isEmpty)
+        XCTAssert(!vm.templates.isEmpty)
     }
     
-    func test_ExercisesViewModel_fetchExercises_shouldCatchError() async {
+    func test_TemplatesViewModel_fetchTemplates_shouldCatchError() async {
         // Given
-        let errorVM = ExercisesView.ViewModel(exerciseService: ErrorStubExerciseService())
+        let errorVM = TemplatesView.ViewModel(templateService: ErrorStubTemplateService())
         
         // When
-        await errorVM.fetchExercises()
+        await errorVM.fetchTemplates()
         
         // Then
         XCTAssertEqual(errorVM.loadingState, LoadingState.error)
-        XCTAssert(errorVM.exercises.isEmpty)
+        XCTAssert(errorVM.templates.isEmpty)
     }
 
 }
