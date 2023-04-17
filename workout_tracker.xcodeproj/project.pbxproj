@@ -16,6 +16,7 @@
 		7F02754928A6ED2B009536CF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754828A6ED2B009536CF /* FirebaseAuth */; };
 		7F02754B28A6ED2B009536CF /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754A28A6ED2B009536CF /* FirebaseFirestore */; };
 		7F02754D28A6ED2B009536CF /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7F02754C28A6ED2B009536CF /* FirebaseFirestoreSwift */; };
+		7F04E7C929ED94CB00D12C45 /* TemplatesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F04E7C829ED94CB00D12C45 /* TemplatesViewModelTests.swift */; };
 		7F0E85FE2922CCD500D55272 /* SelectTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E85FD2922CCD500D55272 /* SelectTemplateView.swift */; };
 		7F0E86002922CD3000D55272 /* SelectTemplateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0E85FF2922CD3000D55272 /* SelectTemplateViewModel.swift */; };
 		7F0E8F5E28A6F18100824BED /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F0E8F5D28A6F18100824BED /* GoogleService-Info.plist */; };
@@ -127,6 +128,7 @@
 		7F02753C28A5A932009536CF /* TemplateGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateGridView.swift; sourceTree = "<group>"; };
 		7F02754128A6B362009536CF /* ModifyExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyExerciseView.swift; sourceTree = "<group>"; };
 		7F02754328A6E968009536CF /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		7F04E7C829ED94CB00D12C45 /* TemplatesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatesViewModelTests.swift; sourceTree = "<group>"; };
 		7F0E85FD2922CCD500D55272 /* SelectTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateView.swift; sourceTree = "<group>"; };
 		7F0E85FF2922CD3000D55272 /* SelectTemplateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTemplateViewModel.swift; sourceTree = "<group>"; };
 		7F0E8F5D28A6F18100824BED /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -572,6 +574,7 @@
 			children = (
 				7F54FB9329E5DB1B003D4757 /* Helpers */,
 				7FA320A128A3F8F40071D835 /* ExercisesViewModelTests.swift */,
+				7F04E7C829ED94CB00D12C45 /* TemplatesViewModelTests.swift */,
 			);
 			path = workout_trackerTests;
 			sourceTree = "<group>";
@@ -1043,6 +1046,7 @@
 			files = (
 				7FA320A228A3F8F40071D835 /* ExercisesViewModelTests.swift in Sources */,
 				7F54FB9229E5DB16003D4757 /* RandomString.swift in Sources */,
+				7F04E7C929ED94CB00D12C45 /* TemplatesViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

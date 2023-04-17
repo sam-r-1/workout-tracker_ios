@@ -9,7 +9,7 @@ import XCTest
 @testable import Workout_Tracker
 
 @MainActor
-class ExercisesViewModelTests: XCTestCase {
+final class ExercisesViewModelTests: XCTestCase {
     
     private var vm: ExercisesView.ViewModel?
 
